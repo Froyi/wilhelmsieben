@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Project\View\ValueObject;
 
@@ -26,7 +25,7 @@ class CacheDir
     protected static function ensureValueIsValid(string $templateDir): void
     {
         if (strlen($templateDir) < 3) {
-            throw new \Exception('this cache dir is too short ... minimum three chars');
+            throw new \InvalidArgumentException('this cache dir is too short ... minimum three chars');
         }
     }
 
@@ -40,7 +39,7 @@ class CacheDir
     protected static function ensureTemplateDirExists(string $templateDir): void
     {
         if (is_dir($templateDir) === false) {
-            throw new \Exception('this template dir is no valid dir ... it does not exists.');
+            throw new \InvalidArgumentException('this template dir ' . $templateDir . ' is no valid dir ... it does not exists.');
         }
     }
 
