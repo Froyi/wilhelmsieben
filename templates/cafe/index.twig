@@ -1,0 +1,13 @@
+{% include ('basic/header.twig') %}
+
+<div class="main-content js-main-content">
+    <div class="sidebar-content">
+        {% include ('basic/sidebar.twig') %}
+    </div>
+
+    <div class="page-content">
+        {% include ('page/' ~ page ~ '.twig') %}
+    </div>
+</div>
+
+{{ include ('basic/footer.twig') }}

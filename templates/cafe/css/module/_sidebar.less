@@ -1,0 +1,56 @@
+.sidebar-content {
+  width: 298px;
+
+  .sidebar-wrapper {
+    padding: 20px;
+    background-color: fade(@color-4, 80%);
+    margin-bottom: 20px;
+  }
+
+  .logo-container img {
+    width: 100%;
+  }
+
+  .welcome-container h1 {
+    font-family: @font-family-2;
+    font-size: 1.5em;
+    line-height: 1.2em;
+    text-align: center;
+    font-weight: normal;
+  }
+}
+
+.daily-soup {
+  h2 {
+    font-family: @font-family-2;
+    font-size: 1.5em;
+    border-bottom: 1px dashed @color-2;
+    font-weight: normal;
+    margin-bottom: 15px;
+  }
+
+  .daily-soup-day {
+    font-family: @font-family-2;
+    letter-spacing: 0.1em;
+    font-size: 0.75em;
+    margin-bottom: 5px;
+  }
+
+  .daily-soup-soup {
+    color: @color-1;
+    line-height: 1.4em;
+    font-size: 1.125em;
+    font-family: @font-family-2;
+
+    &:nth-of-type(2n-1) {
+      color: @color-3;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 0.75em;
+    float: right;
+    margin-top: 10px;
+  }
+}

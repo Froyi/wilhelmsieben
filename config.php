@@ -1,19 +1,19 @@
 <?php
 return [
     'project' => [
-        'name' => 'Testproject',
+        'name' => 'Cafe Wilhelm Sieben',
         'namespace' => 'Project'
     ],
     'template' => [
-        'name' => 'default',
-        'dir' =>  '/default',
+        'name' => 'cafe',
+        'dir' =>  '/cafe',
         'cacheDir' => '/cache'
     ],
     'database' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
-        'database' => 'boilerplate'
+        'database' => 'cafe'
     ],
     'controller' => [
         'namespace' => 'Controller'

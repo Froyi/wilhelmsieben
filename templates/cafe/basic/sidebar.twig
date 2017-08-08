@@ -1,0 +1,30 @@
+<div class="sidebar">
+    <div class="sidebar-wrapper">
+        <div class="logo-container">
+            <img src="{{ templateDir }}/img/logo.png"/>
+        </div>
+
+        <div class="welcome-container">
+            <h1>Herzlich Willkommen<br/>
+                Café Wilhelm 7ieben<br/>
+                Bernburg</h1>
+        </div>
+    </div>
+
+    <div class="sidebar-wrapper">
+        <div class="daily-soup">
+            <h2>Tagessuppen</h2>
+
+            {#hier muss noch geschaut werden, wie man mit Twig daten formatiert, oder ob man diese im Backend formatieren soll.#}
+            <p class="daily-soup-day">{{ dailySoup.day }}</p>
+
+            {% for soup in dailySoup.soup %}
+                <p class="daily-soup-soup">{{ soup }}</p>
+            {% endfor %}
+
+            <a href="#">Zum Suppenkalender >></a>
+
+            <p class="clear"></p>
+        </div>
+    </div>
+</div>
