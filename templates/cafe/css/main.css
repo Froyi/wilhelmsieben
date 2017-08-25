@@ -432,11 +432,12 @@ header .header-content {
   padding: 0 20px;
   display: flex;
   justify-content: flex-end;
+  font-size: 0.875em;
 }
 header .header-content > p,
 header .header-content span {
   color: #ffffff;
-  font-family: 'Soria', 'Times New Roman';
+  font-family: Arial, sans-serif;
   line-height: 40px;
 }
 header .header-content .header-adress {
@@ -478,6 +479,7 @@ header .header-content .header-telephone {
 }
 .main-content .page-content {
   margin-bottom: 100px;
+  width: 626px;
 }
 footer {
   width: 100%;
@@ -612,4 +614,36 @@ footer .footer-container .team-foto {
   font-size: 0.75em;
   float: right;
   margin-top: 10px;
+}
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+}
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+}
+.slider-container {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
 }
