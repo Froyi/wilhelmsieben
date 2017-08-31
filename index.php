@@ -2,6 +2,9 @@
 
 namespace Project;
 
+use Project\Module\Soup\ValueObject\SoupId;
+use Ramsey\Uuid\Uuid;
+
 define('ROOT_PATH', getcwd());
 
 require ROOT_PATH . '/vendor/autoload.php';
