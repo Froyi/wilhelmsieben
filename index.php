@@ -2,6 +2,7 @@
 
 namespace Project;
 
+use Project\Module\GenericValueObject\Id;
 use Project\Module\Soup\ValueObject\SoupId;
 use Ramsey\Uuid\Uuid;
 

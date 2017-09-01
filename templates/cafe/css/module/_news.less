@@ -1,0 +1,31 @@
+.news-container {
+
+
+    .single-news {
+        margin-top: 20px;
+        background-color: fade(@color-4, 80%);
+        padding: 15px;
+        width: 100%;
+
+        .news-image {
+            width: 100%;
+            overflow: hidden;
+            height: auto;
+            max-height: 400px;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .news-banderole {
+            width: calc(100% + 50px);
+            height: 50px;
+            margin-left: -25px;
+            margin-top: -40px;
+            background-color: @color-1;
+            z-index: 2;
+            position: relative;
+        }
+    }
+}

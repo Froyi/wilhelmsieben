@@ -65,6 +65,14 @@ class Database
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    public function fetchAllOrderBy(string $table, string $orderBy, string $orderKind = 'ASC'): array
+    {
+        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind);
+
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+
     public function fetchById(string $table, array $parameter)
     {
         $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $parameter['idName'] . ' = ' . $parameter['idValue']);

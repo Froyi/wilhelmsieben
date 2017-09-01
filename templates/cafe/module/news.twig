@@ -1,0 +1,29 @@
+{%  if news|length > 0 %}
+    <div class="news-container">
+        {% for singleNews in news %}
+            <div class="single-news">
+                <div class="news-image">
+                    <img src="{{ singleNews.getImage }}" alt="">
+                </div>
+
+                <div class="news-banderole">
+                    <h2>{{ singleNews.getTitle }}</h2>
+
+                    <span class="news-date">{{ singleNews.getDate }}</span>
+                </div>
+
+                <div class="news-text">
+                    <p>{{ singleNews.getText }}</p>
+                </div>
+
+                {% if singleNews.facebookLink|length > 0 %}
+                    <div class="facebook-link">
+                        <a href="{{ singleNews.facebookLink }}" target="new">
+                            <img src="{{ templateDir }}/img/fb.png" alt="Teaserbild vom Café">
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

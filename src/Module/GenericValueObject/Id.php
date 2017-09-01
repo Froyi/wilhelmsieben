@@ -20,12 +20,21 @@ class Id
         return new self($uuId);
     }
 
-    protected function __construct(Uuid $id)
+    public static function fromString(string $id): self
+    {
+        $uuId = Uuid::fromString($id);
+
+        self::ensureValueIsValid($uuId);
+
+        return new self($uuId);
+    }
+
+    protected function __construct($id)
     {
         $this->id = $id;
     }
 
-    protected static function ensureValueIsValid(Uuid $uuId): void
+    protected static function ensureValueIsValid($uuId): void
     {
         if (Uuid::isValid($uuId) === false) {
             throw new \InvalidArgumentException('This value is not valid $uuId');
