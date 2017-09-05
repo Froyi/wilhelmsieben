@@ -1,6 +1,4 @@
 .news-container {
-
-
     .single-news {
         margin-top: 20px;
         background-color: fade(@color-4, 80%);
@@ -18,13 +16,54 @@
         }
 
         .news-banderole {
-            width: calc(100% + 50px);
+            width: 658px;
             height: 50px;
-            margin-left: -25px;
-            margin-top: -40px;
+            margin-left: -31px;
+            margin-top: -10px;
             background-color: @color-1;
             z-index: 2;
             position: relative;
+
+            .news-banderole-content {
+                padding: 0 30px;
+                display: flex;
+                justify-content: space-between;
+
+                .banderole(@color-3);
+
+                h2 {
+                    color: @color-4;
+                    font-size: 30px;
+                    font-family: @font-family-2;
+                    line-height: 50px;
+                }
+
+                .news-date {
+                    color: @color-4;
+                    font-size: 14px;
+                    font-family: @font-family-1;
+                    line-height: 50px;
+                }
+            }
+        }
+
+        .news-text {
+            margin-top: 10px;
+            padding-top: 10px;
+            min-height: 280px;
+            background: url('@{basic-path}img/news_bg.png') center center no-repeat;
+
+            p {
+                line-height: 1.5em;
+            }
+        }
+
+        .facebook-link {
+            text-align: right;
+
+            img {
+                width: 23px;
+            }
         }
     }
 }

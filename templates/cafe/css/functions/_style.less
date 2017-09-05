@@ -1,0 +1,20 @@
+.banderole(@color: #000000) {
+    &:before, &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        border-style: solid;
+        border-color: @color transparent transparent transparent;
+        bottom: -1em;
+    }
+
+    &:before {
+        left: 0;
+        border-width: 1em 0 0 1em;
+    }
+
+    &:after {
+        right: 0;
+        border-width: 1em 1em 0 0;
+    }
+}

@@ -15,7 +15,6 @@ class IndexController extends DefaultController
         $newsService = new NewsService($database);
         $allNews = $newsService->getAllNewsOrderByDate();
 
-
         $pageTemplate = 'index.twig';
         $config = [
             'page' => 'home',
