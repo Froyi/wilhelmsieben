@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Project\Module\News;
 
+use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
@@ -16,7 +17,7 @@ class NewsFactory
         $image = $object->image;
         $text = Text::fromString($object->text);
         $facebookLink = $object->facebookLink;
-        $newsDate = $object->newsDate;
+        $newsDate = Date::fromValue($object->newsDate);
 
         $news = new News($newsId, $title, $text, $newsDate);
         $news->setImage($image);

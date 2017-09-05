@@ -3,6 +3,7 @@
 namespace Project\View;
 
 use Project\Configuration;
+use Project\Utilities\Converter;
 use Project\View\ValueObject\TemplateDir;
 use Project\View\ValueObject\CacheDir;
 
@@ -31,6 +32,8 @@ class ViewRenderer
         $this->viewRenderer = new \Twig_Environment($loaderFilesystem, array(
             //'cache' => $template['cacheDir'],
         ));
+
+        $this->addViewFilter();
     }
 
     /**
@@ -43,5 +46,14 @@ class ViewRenderer
         $config['templateDir'] =  "templates/" . $this->templateName;
 
         echo $this->viewRenderer->render($template, $config);
+    }
+
+    protected function addViewFilter(): void
+    {
+        $weekDayFilter = new \Twig_SimpleFilter('weekday', function ($integer) {
+            return Converter::convertIntToWeekday($integer);
+        });
+
+        $this->viewRenderer->addFilter($weekDayFilter);
     }
 }

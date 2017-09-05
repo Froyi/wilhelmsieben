@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Project\Module\News;
 
+use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
@@ -24,9 +25,10 @@ class News
 
     protected $facebookLink;
 
+    /** @var  Date $date */
     protected $date;
 
-    public function __construct(Id $id, Title $title, Text $text, $date)
+    public function __construct(Id $id, Title $title, Text $text, Date $date)
     {
         $this->newsId = $id;
         $this->title = $title;
@@ -35,7 +37,7 @@ class News
     }
 
     /**
-     * @return mixed
+     * @return Date
      */
     public function getDate()
     {

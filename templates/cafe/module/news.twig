@@ -9,7 +9,7 @@
                 <div class="news-banderole">
                     <h2>{{ singleNews.getTitle }}</h2>
 
-                    <span class="news-date">{{ singleNews.getDate }}</span>
+                    <span class="news-date">{{ singleNews.getDate.getWeekday | weekday }}</span>
                 </div>
 
                 <div class="news-text">
