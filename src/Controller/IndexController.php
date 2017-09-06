@@ -5,6 +5,7 @@ namespace Project\Controller;
 
 use Project\Module\Database\Database;
 use Project\Module\News\NewsService;
+use Project\Module\SoupCalendar\SoupCalendarService;
 
 class IndexController extends DefaultController
 {
@@ -12,12 +13,24 @@ class IndexController extends DefaultController
     {
         $database = Database::getInstance();
 
+        /**
+         * News Data
+         */
         $newsService = new NewsService($database);
         $allNews = $newsService->getAllNewsOrderByDate();
 
+        /**
+         * Slider images
+         */
         $slider = $this->configuration->getEntryByName('slider');
         shuffle($slider);
 
+        /**
+         * Soup Data
+         */
+        $soupCalendarService = new SoupCalendarService($database);
+        $allSoupEntries = $soupCalendarService->getAllSoupCalendarEntriesByDate();
+        var_dump($allSoupEntries);
         $pageTemplate = 'index.twig';
         $config = [
             'page' => 'home',
