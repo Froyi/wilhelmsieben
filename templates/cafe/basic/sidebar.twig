@@ -12,15 +12,6 @@
     </div>
 
     <div class="sidebar-wrapper">
-        <div class="daily-soup">
-            <h2>Tagessuppen</h2>
-
-            {#hier muss noch geschaut werden, wie man mit Twig daten formatiert, oder ob man diese im Backend formatieren soll.#}
-            <p class="daily-soup-day">{{ dailySoup.day }}</p>
-
-            {% for soup in dailySoup.soup %}
-                <p class="daily-soup-soup">{{ soup }}</p>
-            {% endfor %}
-        </div>
+        {% include ('module/soupCalendar.twig') %}
     </div>
 </div>

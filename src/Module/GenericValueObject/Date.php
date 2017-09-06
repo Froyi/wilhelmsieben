@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Project\Module\GenericValueObject;
 
 
-class Date extends Datetime
+class Date extends Datetime implements DateInterface
 {
     const DATE_FORMAT = 'Y-m-d';
 

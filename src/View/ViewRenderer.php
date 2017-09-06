@@ -55,5 +55,12 @@ class ViewRenderer
         });
 
         $this->viewRenderer->addFilter($weekDayFilter);
+
+        $weekDayShortFilter = new \Twig_SimpleFilter('weekdayShort', function ($integer) {
+            return Converter::convertIntToWeekdayShort($integer);
+        });
+
+        $this->viewRenderer->addFilter($weekDayShortFilter);
+
     }
 }

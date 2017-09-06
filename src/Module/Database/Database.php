@@ -79,4 +79,13 @@ class Database
 
         return $sql->fetch(\PDO::FETCH_OBJ);
     }
+
+    public function fetchByStringParameter(string $table, $parameter, $value)
+    {
+        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $parameter. ' = "' . $value . '"');
+
+        $result = $sql->fetchAll(\PDO::FETCH_OBJ);
+
+        return $result;
+    }
 }

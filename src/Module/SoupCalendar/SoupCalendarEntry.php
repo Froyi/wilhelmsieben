@@ -5,6 +5,7 @@ namespace Project\Module\SoupCalendar;
 
 
 use Project\Module\GenericValueObject\Date;
+use Project\Module\GenericValueObject\DateInterface;
 
 class SoupCalendarEntry
 {
@@ -17,9 +18,9 @@ class SoupCalendarEntry
     /**
      * SoupCalendarEntry constructor.
      * @param Soup $soup
-     * @param Date $date
+     * @param DateInterface $date
      */
-    protected function __construct(Soup $soup, Date $date)
+    protected function __construct(Soup $soup, DateInterface $date)
     {
       $this->soup = $soup;
       $this->date = $date;
@@ -27,10 +28,10 @@ class SoupCalendarEntry
 
     /**
      * @param Soup $soup
-     * @param Date $date
+     * @param DateInterface $date
      * @return SoupCalendarEntry
      */
-    public static function generateSoupCalendarEntry(Soup $soup, Date $date): self
+    public static function generateSoupCalendarEntry(Soup $soup, DateInterface $date): self
     {
         return new self($soup, $date);
     }
@@ -46,7 +47,7 @@ class SoupCalendarEntry
     /**
      * @return Date
      */
-    public function getDate(): Date
+    public function getDate(): DateInterface
     {
         return $this->date;
     }

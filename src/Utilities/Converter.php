@@ -7,6 +7,7 @@ namespace Project\Utilities;
 class Converter
 {
     const GERMAN_WEEKDAYS = [
+        'long' => [
         0 => 'Sonntag',
         1 => 'Montag',
         2 => 'Dienstag',
@@ -14,6 +15,16 @@ class Converter
         4 => 'Donnerstag',
         5 => 'Freitag',
         6 => 'Samstag'
+            ],
+        'short' => [
+            0 => 'So',
+            1 => 'Mo',
+            2 => 'Di',
+            3 => 'Mi',
+            4 => 'Do',
+            5 => 'Fr',
+            6 => 'Sa'
+        ]
     ];
 
     public static function convertIntToWeekday(int $day): string
@@ -22,6 +33,15 @@ class Converter
             throw new \InvalidArgumentException('Der Wochentag liegt außerhalb des Bereiches.');
         }
 
-        return self::GERMAN_WEEKDAYS[$day];
+        return self::GERMAN_WEEKDAYS['long'][$day];
+    }
+
+    public static function convertIntToWeekdayShort(int $day): string
+    {
+        if ($day < 0 && $day > 6) {
+            throw new \InvalidArgumentException('Der Wochentag liegt außerhalb des Bereiches.');
+        }
+
+        return self::GERMAN_WEEKDAYS['short'][$day];
     }
 }

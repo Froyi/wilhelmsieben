@@ -1,0 +1,9 @@
+<div class="daily-soup">
+    <h2>Tagessuppen</h2>
+
+    <p class="daily-soup-day">{{  dailySoup.date.getWeekday | weekdayShort }} | {{ dailySoup.date }}</p>
+
+    {% for soup in dailySoup.soups %}
+        <p class="daily-soup-soup">{{ soup.getSoup }}</p>
+    {% endfor %}
+</div>
