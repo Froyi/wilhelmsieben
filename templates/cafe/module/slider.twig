@@ -1,7 +1,7 @@
 <div class="slider-container">
     <ul class="rslides">
-        <li><img src="{{ templateDir }}/img/teaser.jpg" alt="Teaserbild vom Café"></li>
-        <li><img src="{{ templateDir }}/img/teaser.jpg" alt="Teaserbild vom Café"></li>
-        <li><img src="{{ templateDir }}/img/teaser.jpg" alt="Teaserbild vom Café"></li>
+        {% for slide in slider %}
+            <li><img src="{{ templateDir }}{{ slide }}" alt="Teaserbild vom Café"></li>
+        {% endfor %}
     </ul>
 </div>
