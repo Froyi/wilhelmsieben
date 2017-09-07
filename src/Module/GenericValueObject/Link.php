@@ -22,6 +22,8 @@ class Link
         $this->link = $link;
     }
 
+
+
     /**
      * @return Http
      */
