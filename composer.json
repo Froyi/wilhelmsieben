@@ -15,7 +15,8 @@
         "php": "^7.0",
         "paragonie/random_compat": "^1.0|^2.0",
         "twig/twig": "2.4.3",
-        "ramsey/uuid": "3.6.1"
+        "ramsey/uuid": "3.6.1",
+        "league/uri": "5.*"
     },
     "autoload": {
         "psr-4": {"Project\\": "src/"}
