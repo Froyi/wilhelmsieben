@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace Project\Module\GenericValueObject;
 
-
-class Date extends Datetime implements DateInterface
+class Date extends AbstractDatetime implements DateInterface
 {
     const DATE_FORMAT = 'Y-m-d';
 
@@ -28,12 +27,19 @@ class Date extends Datetime implements DateInterface
         return (string) date(self::DATE_FORMAT, $this->datetime);
     }
 
+    /**
+     * @return int
+     */
     public function getWeekday(): int
     {
         return (int) date(self::WEEKDAY_FORMAT, $this->datetime);
     }
 
-    public static function fromValue($datetime): self
+    /**
+     * @param $datetime
+     * @return AbstractDatetime|DateInterface
+     */
+    public static function fromValue($datetime)
     {
         return parent::fromValue($datetime);
     }

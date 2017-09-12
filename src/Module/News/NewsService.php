@@ -35,8 +35,13 @@ class NewsService
         }
 
         foreach ($newsResult as $singleNews) {
-            $news[] = $this->newsFactory->getNewsWithEventFromObject($singleNews);
+            if (isset($singleNews->eventId) && !empty($singleNews->eventId)) {
+                $event = $this->eventService->getEventByEventId($singleNews->eventId);
 
+                $news[] = $this->newsFactory->getNewsWithEventFromObject($singleNews, $event);
+            } else {
+                $news[] = $this->newsFactory->getNewsFromObject($singleNews);
+            }
         }
 
         return $news;

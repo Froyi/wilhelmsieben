@@ -1,90 +1,47 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\GenericValueObject;
 
-abstract class Datetime
+
+class Datetime extends AbstractDatetime implements DatetimeInterface
 {
-    const DATE_FORMAT = 'Y-m-d H:i:s';
+    const DATE_FORMAT = 'Y-m-d H:s';
 
-    /** @var  \DateTime $datetime */
-    protected $datetime;
+    const DATE_OUTPUT_FORMAT = 'd.m.Y H:s';
 
-    /**
-     * @return string
-     */
-    abstract public function __toString(): string;
+    const WEEKDAY_FORMAT = 'w';
 
     /**
      * @return string
      */
-    abstract public function toString(): string;
-
-    /**
-     * Datetime constructor.
-     * @param $datetime
-     */
-    protected function __construct($datetime)
+    public function __toString(): string
     {
-        $this->datetime = $datetime;
+        return (string)date(self::DATE_OUTPUT_FORMAT, $this->datetime);
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    protected function isPastDatetime(): bool
+    public function toString(): string
     {
-        return !($this->datetime > time());
+        return (string)date(self::DATE_FORMAT, $this->datetime);
     }
 
     /**
-     * @param string $format
-     * @return false|string
+     * @return int
      */
-    public function toDateFormat(string $format) {
-        return date($format, $this->datetime);
-    }
-
-    /**
-     * @param Datetime $datetimeInput
-     * @return bool
-     */
-    public function equals(Datetime $datetimeInput): bool
+    public function getWeekday(): int
     {
-        return ($datetimeInput->toString() === $this->toString());
+        return (int)date(self::WEEKDAY_FORMAT, $this->datetime);
     }
 
     /**
      * @param $datetime
-     * @return Datetime
+     * @return AbstractDatetime|DatetimeInterface
      */
     public static function fromValue($datetime)
     {
-        self::ensureDatetimeIsValid($datetime);
-
-        $datetime = self::convertDatetime($datetime);
-
-        return new static($datetime);
-    }
-
-    /**
-     * @param $datetime
-     */
-    protected static function ensureDatetimeIsValid($datetime): void
-    {
-        $datetime = strtotime($datetime);
-
-        if ($datetime === false) {
-            throw new \InvalidArgumentException('Datetime konnte nicht umgewandelt werden');
-        }
-    }
-
-    /**
-     * @param $datetime
-     * @return int
-     */
-    protected static function convertDatetime($datetime): int
-    {
-        return strtotime($datetime);
+        return parent::fromValue($datetime);
     }
 }

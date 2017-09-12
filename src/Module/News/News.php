@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Project\Module\News;
 
 use Project\Module\Event\Event;
-use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\DateInterface;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Link;

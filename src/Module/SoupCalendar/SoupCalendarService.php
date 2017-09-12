@@ -12,6 +12,9 @@ class SoupCalendarService
     /** @var  SoupCalendarRepository $soupCalendarRepository */
     protected $soupCalendarRepository;
 
+    /** @var SoupCalendarEntryFactory $soupCalendarEntryFactory */
+    protected $soupCalendarEntryFactory;
+
     /**
      * SoupCalendarService constructor.
      * @param Database $database
@@ -19,16 +22,15 @@ class SoupCalendarService
     public function __construct(Database $database)
     {
         $this->soupCalendarRepository = new SoupCalendarRepository($database);
+        $this->soupCalendarEntryFactory = new SoupCalendarEntryFactory();
     }
 
-
     /**
-     * @todo prüfe, ob die Funktion überhaupt notwendig ist
      * @return array
      */
     public function getAllSoupCalendarEntriesByDate(): array
     {
-        return $this->soupCalendarRepository->getAllSoupCalendarEntries(self::SOUP_VIEW_ENTRIES);
+        return $this->handleResponse($this->soupCalendarRepository->getAllSoupCalendarEntries());
     }
 
     /**
@@ -36,6 +38,25 @@ class SoupCalendarService
      */
     public function getDailySoup(): array
     {
-        return $this->soupCalendarRepository->getDailySoup();
+        return $this->handleResponse($this->soupCalendarRepository->getDailySoup());
+    }
+
+    /**
+     * @param $response
+     * @return array
+     */
+    protected function handleResponse($response): array
+    {
+        $soupCalendarEntries = [];
+
+        if ($response === false) {
+            return $soupCalendarEntries;
+        }
+
+        foreach ($response as $soupCalendarEntry) {
+            $soupCalendarEntries[] = $this->soupCalendarEntryFactory->getSoupCalendarEntryFromObject($soupCalendarEntry);
+        }
+
+        return $soupCalendarEntries;
     }
 }

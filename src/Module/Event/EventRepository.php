@@ -1,17 +1,23 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\Event;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Datetime;
+use Project\Module\GenericValueObject\Id;
 
 class EventRepository
 {
-    const TABLE = 'news';
+    const TABLE = 'event';
 
     const ORDERBY = 'eventDate';
 
     const ORDERKIND = 'ASC';
+
+    const EVENT_ID_NAME = 'eventId';
+
+    const EVENT_DATE_NAME = 'eventDate';
 
     /** @var  Database $database */
     protected $database;
@@ -21,8 +27,15 @@ class EventRepository
         $this->database = $database;
     }
 
-    public function getAllEvents(int $limit = null): array
+    public function getAllUpcommingEvents(int $limit = null)
     {
-        return $this->database->fetchAllOrderBy(self::TABLE, self::ORDERBY, self::ORDERKIND);
+        $now = Datetime::fromValue('now');
+
+        return $this->database->fetchByDateParameterFuture(self::TABLE, self::EVENT_DATE_NAME, $now->toString(), self::ORDERBY, self::ORDERKIND, $limit);
+    }
+
+    public function getEventByEventId(Id $eventId)
+    {
+        return $this->database->fetchById(self::TABLE, self::EVENT_ID_NAME, $eventId->toString());
     }
 }

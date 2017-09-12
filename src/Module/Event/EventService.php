@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Project\Module\Event;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Id;
 
 class EventService
 {
@@ -23,6 +24,25 @@ class EventService
 
     public function getUpcommingEvents(): array
     {
-        $resultEvents = $this->eventRepository->getAllEvents(self::EVENT_MAX_ENTRIES);
+        $events = [];
+
+        $upcommingEvents = $this->eventRepository->getAllUpcommingEvents(self::EVENT_MAX_ENTRIES);
+
+        foreach ($upcommingEvents as $upcommingEvent) {
+            $events[] = $this->eventFactory->getEventFromObject($upcommingEvent);
+        }
+
+        return $events;
+    }
+
+    public function getEventByEventId($eventId): Event
+    {
+        if ($eventId instanceof Id === false) {
+            $eventId = Id::fromString($eventId);
+        }
+
+        $event = $this->eventRepository->getEventByEventId($eventId);
+
+        return $this->eventFactory->getEventFromObject($event);
     }
 }

@@ -3,23 +3,47 @@ declare(strict_types = 1);
 
 namespace Project\Module\Event;
 
-use Project\Module\GenericValueObject\Date;
-use Project\Module\GenericValueObject\DateInterface;
+use Project\Module\GenericValueObject\DatetimeInterface;
+use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Name;
-use Project\Module\News\News;
 
 class Event
 {
-    /** @var  DateInterface */
+    /** @var  Id $eventId */
+    protected $eventId;
+
+    /** @var  Name $name */
+    protected $name;
+
+    /** @var  Link $facebookLink */
+    protected $facebookLink;
+
+    /** @var  DatetimeInterface */
     protected $date;
 
-    /** @var  News $news */
-    protected $news;
+    /** @var  Id $newsId */
+    protected $newsId;
 
-    public function __construct(DateInterface $date)
+    /**
+     * Event constructor.
+     * @param Id                $eventId
+     * @param Name              $name
+     * @param DatetimeInterface $date
+     */
+    public function __construct(Id $eventId, Name $name, DatetimeInterface $date)
     {
+        $this->eventId = $eventId;
         $this->name = $name;
         $this->date = $date;
+    }
+
+    /**
+     * @return Id
+     */
+    public function getEventId(): Id
+    {
+        return $this->eventId;
     }
 
     /**
@@ -31,26 +55,42 @@ class Event
     }
 
     /**
-     * @return DateInterface
+     * @return Link
      */
-    public function getDate(): DateInterface
+    public function getFacebookLink(): Link
+    {
+        return $this->facebookLink;
+    }
+
+    /**
+     * @param Link $facebookLink
+     */
+    public function setFacebookLink(Link $facebookLink)
+    {
+        $this->facebookLink = $facebookLink;
+    }
+
+    /**
+     * @return Id
+     */
+    public function getNewsId(): Id
+    {
+        return $this->newsId;
+    }
+
+    /**
+     * @param Id $newsId
+     */
+    public function setNewsId(Id $newsId)
+    {
+        $this->newsId = $newsId;
+    }
+
+    /**
+     * @return DatetimeInterface
+     */
+    public function getDate(): DatetimeInterface
     {
         return $this->date;
-    }
-
-    /**
-     * @return News
-     */
-    public function getNews(): ?News
-    {
-        return $this->news;
-    }
-
-    /**
-     * @param News $news
-     */
-    public function setNews(News $news)
-    {
-        $this->news = $news;
     }
 }

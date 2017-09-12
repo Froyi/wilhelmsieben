@@ -67,10 +67,24 @@ class Database
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
 
-
-    public function fetchById(string $table, array $parameter)
+    public function fetchLimitedOrderBy(string $table, string $orderBy, string $orderKind = 'ASC', int $limit = 1): array
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $parameter['idName'] . ' = ' . $parameter['idValue']);
+        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
+
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function fetchByDateParameterFuture(string $table, string $dateName, string $dateValue, string $orderBy, string $orderKind = 'ASC', int $limit = 1)
+    {
+        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $dateName . ' > "' . $dateValue . '" ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
+
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+
+    public function fetchById(string $table, string $idName, string $idValue)
+    {
+        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $idName . ' = "' . $idValue . '"');
 
         return $sql->fetch(\PDO::FETCH_OBJ);
     }

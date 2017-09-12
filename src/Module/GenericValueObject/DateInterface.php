@@ -5,5 +5,8 @@ namespace Project\Module\GenericValueObject;
 
 interface DateInterface
 {
+    /**
+     * @return int
+     */
     public function getWeekday(): int;
 }

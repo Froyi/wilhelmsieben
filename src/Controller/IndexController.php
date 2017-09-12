@@ -4,6 +4,7 @@ namespace Project\Controller;
 
 
 use Project\Module\Database\Database;
+use Project\Module\Event\EventService;
 use Project\Module\GenericValueObject\Date;
 use Project\Module\News\NewsService;
 use Project\Module\SoupCalendar\SoupCalendarService;
@@ -12,12 +13,18 @@ class IndexController extends DefaultController
 {
     public function indexAction(): void
     {
+        /** @var Database $database */
         $database = Database::getInstance();
+
+        /**
+         * Services
+         */
+        $eventService = new EventService($database);
+        $newsService = new NewsService($database, $eventService);
 
         /**
          * News Data
          */
-        $newsService = new NewsService($database);
         $allNews = $newsService->getAllNewsOrderByDate();
 
         /**
@@ -35,9 +42,11 @@ class IndexController extends DefaultController
         /**
          * Events
          */
-        $eventService = new EventService($database);
         $events = $eventService->getUpcommingEvents();
 
+        /**
+         * Template & Config
+         */
         $pageTemplate = 'index.twig';
         $config = [
             'page' => 'home',
@@ -46,7 +55,8 @@ class IndexController extends DefaultController
             'dailySoup' => [
                 'soups' => $dailySoups,
                 'date' => Date::fromValue('now')
-            ]
+            ],
+            'events' => $events
         ];
 
         $this->viewRenderer->renderTemplate($pageTemplate, $config);

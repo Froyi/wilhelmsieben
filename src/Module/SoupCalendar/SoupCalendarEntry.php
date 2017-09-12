@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Project\Module\SoupCalendar;
 
-
-use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\DateInterface;
 
 class SoupCalendarEntry
@@ -12,7 +10,7 @@ class SoupCalendarEntry
     /** @var  Soup $soup */
     protected $soup;
 
-    /** @var  Date $date */
+    /** @var  DateInterface $date */
     protected $date;
 
     /**
@@ -45,7 +43,7 @@ class SoupCalendarEntry
     }
 
     /**
-     * @return Date
+     * @return DateInterface
      */
     public function getDate(): DateInterface
     {

@@ -1,8 +1,9 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\News;
 
+use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Link;
@@ -15,14 +16,31 @@ class NewsFactory
     {
         $newsId = Id::fromString($object->newsId);
         $title = Title::fromString($object->title);
-        $image = $object->image;
         $text = Text::fromString($object->text);
-        $facebookLink = Link::fromString($object->facebookLink);
         $newsDate = Date::fromValue($object->newsDate);
 
         $news = new News($newsId, $title, $text, $newsDate);
-        $news->setImage($image);
-        $news->setFacebookLink($facebookLink);
+
+        if (isset($object->image) && !empty($object->image)) {
+            $image = $object->image;
+
+            $news->setImage($image);
+        }
+
+        if (isset($object->facebookLink) && !empty($object->facebookLink)) {
+            $facebookLink = Link::fromString($object->facebookLink);
+
+            $news->setFacebookLink($facebookLink);
+        }
+
+        return $news;
+    }
+
+    public function getNewsWithEventFromObject($object, Event $event): News
+    {
+        $news = $this->getNewsFromObject($object);
+
+        $news->setEvent($event);
 
         return $news;
     }
