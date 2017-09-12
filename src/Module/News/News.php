@@ -121,4 +121,12 @@ class News
     {
         $this->event = $event;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasEvent(): bool
+    {
+        return ($this->event !== null);
+    }
 }
