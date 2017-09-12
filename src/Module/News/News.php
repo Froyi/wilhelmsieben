@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace Project\Module\News;
 
+use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\Date;
+use Project\Module\GenericValueObject\DateInterface;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
 
@@ -23,12 +26,16 @@ class News
     /** @var  Text $text */
     protected $text;
 
+    /** @var Link $facebookLink */
     protected $facebookLink;
 
-    /** @var  Date $date */
+    /** @var  DateInterface $date */
     protected $date;
 
-    public function __construct(Id $id, Title $title, Text $text, Date $date)
+    /** @var  Event $event */
+    protected $event;
+
+    public function __construct(Id $id, Title $title, Text $text, DateInterface $date)
     {
         $this->newsId = $id;
         $this->title = $title;
@@ -37,25 +44,25 @@ class News
     }
 
     /**
-     * @return Date
+     * @return DateInterface
      */
-    public function getDate()
+    public function getDate(): DateInterface
     {
         return $this->date;
     }
 
     /**
-     * @return mixed
+     * @return Link
      */
-    public function getFacebookLink()
+    public function getFacebookLink(): Link
     {
         return $this->facebookLink;
     }
 
     /**
-     * @param mixed $facebookLink
+     * @param Link $facebookLink
      */
-    public function setFacebookLink($facebookLink)
+    public function setFacebookLink(Link $facebookLink): void
     {
         $this->facebookLink = $facebookLink;
     }
@@ -71,7 +78,7 @@ class News
     /**
      * @param mixed $image
      */
-    public function setImage($image)
+    public function setImage($image): void
     {
         $this->image = self::NEWS_IMAGE_ROOT_PATH . $image;
     }
@@ -98,5 +105,21 @@ class News
     public function getText(): Text
     {
         return $this->text;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function setEvent(Event $event)
+    {
+        $this->event = $event;
     }
 }

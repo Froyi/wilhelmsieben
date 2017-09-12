@@ -32,4 +32,9 @@ class Date extends Datetime implements DateInterface
     {
         return (int) date(self::WEEKDAY_FORMAT, $this->datetime);
     }
+
+    public static function fromValue($datetime): self
+    {
+        return parent::fromValue($datetime);
+    }
 }

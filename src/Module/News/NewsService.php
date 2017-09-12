@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Project\Module\News;
 
 use Project\Module\Database\Database;
+use Project\Module\Event\EventService;
 
 class NewsService
 {
@@ -13,14 +14,32 @@ class NewsService
     /** @var  NewsRepository $newsRepository */
     protected $newsRepository;
 
-    public function __construct(Database $database)
+    /** @var EventService $eventService */
+    protected $eventService;
+
+    public function __construct(Database $database, EventService $eventService)
     {
         $this->newsFactory = new NewsFactory();
-        $this->newsRepository = new NewsRepository($this->newsFactory, $database);
+        $this->newsRepository = new NewsRepository($database);
+        $this->eventService = new EventService($database);
     }
 
     public function getAllNewsOrderByDate(): array
     {
-        return $this->newsRepository->getAllNews();
+        $news = [];
+
+        $newsResult = $this->newsRepository->getAllNews();
+
+        if (count($newsResult) === 0) {
+            return $news;
+        }
+
+        foreach ($newsResult as $singleNews) {
+            $news[] = $this->newsFactory->getNewsWithEventFromObject($singleNews);
+
+        }
+
+        return $news;
     }
+
 }

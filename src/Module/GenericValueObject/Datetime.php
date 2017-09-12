@@ -58,7 +58,7 @@ abstract class Datetime
      * @param $datetime
      * @return Datetime
      */
-    public static function fromValue($datetime): self
+    public static function fromValue($datetime)
     {
         self::ensureDatetimeIsValid($datetime);
 
