@@ -6,20 +6,20 @@ namespace Project\Module\News;
 use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\DateInterface;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image;
 use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
 
 class News
 {
-    const NEWS_IMAGE_ROOT_PATH = 'data/img/news/';
-
     /** @var Id $newsId */
     protected $newsId;
 
     /** @var Title $title */
     protected $title;
 
+    /** @var  Image $image */
     protected $image;
 
     /** @var  Text $text */
@@ -53,7 +53,7 @@ class News
     /**
      * @return Link
      */
-    public function getFacebookLink(): Link
+    public function getFacebookLink(): ?Link
     {
         return $this->facebookLink;
     }
@@ -67,19 +67,19 @@ class News
     }
 
     /**
-     * @return mixed
+     * @return Image
      */
-    public function getImage()
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
     /**
-     * @param mixed $image
+     * @param Image $image
      */
-    public function setImage($image): void
+    public function setImage(Image $image): void
     {
-        $this->image = self::NEWS_IMAGE_ROOT_PATH . $image;
+        $this->image = $image;
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Project\Module\News;
 use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image;
 use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
@@ -22,7 +23,7 @@ class NewsFactory
         $news = new News($newsId, $title, $text, $newsDate);
 
         if (isset($object->image) && !empty($object->image)) {
-            $image = $object->image;
+            $image = Image::fromFile($object->image);
 
             $news->setImage($image);
         }
