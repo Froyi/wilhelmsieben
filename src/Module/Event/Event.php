@@ -10,16 +10,13 @@ use Project\Module\News\News;
 
 class Event
 {
-    /** @var  Name $name */
-    protected $name;
-
     /** @var  DateInterface */
     protected $date;
 
     /** @var  News $news */
     protected $news;
 
-    public function __construct(Name $name, DateInterface $date)
+    public function __construct(DateInterface $date)
     {
         $this->name = $name;
         $this->date = $date;

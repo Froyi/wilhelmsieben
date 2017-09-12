@@ -1,20 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace Project\Module\News;
-
+namespace Project\Module\Event;
 
 use Project\Module\Database\Database;
-use Project\Module\GenericValueObject\Id;
-use Project\Module\GenericValueObject\Title;
 
-class NewsRepository
+class EventRepository
 {
     const TABLE = 'news';
 
-    const ORDERBY = 'newsDate';
+    const ORDERBY = 'eventDate';
 
-    const ORDERKIND = 'DESC';
+    const ORDERKIND = 'ASC';
 
     /** @var  Database $database */
     protected $database;
@@ -24,7 +21,7 @@ class NewsRepository
         $this->database = $database;
     }
 
-    public function getAllNews(): array
+    public function getAllEvents(int $limit = null): array
     {
         return $this->database->fetchAllOrderBy(self::TABLE, self::ORDERBY, self::ORDERKIND);
     }

@@ -31,11 +31,6 @@ class Database
         $this->database = $databaseConfiguration['database'];
 
         $this->connect();
-
-            # make connection
-
-            # set is connected variable
-            $this->bIsConnected = true;
     }
 
     public function connect(): void

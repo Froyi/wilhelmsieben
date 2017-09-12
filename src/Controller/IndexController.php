@@ -32,6 +32,12 @@ class IndexController extends DefaultController
         $soupCalendarService = new SoupCalendarService($database);
         $dailySoups = $soupCalendarService->getDailySoup();
 
+        /**
+         * Events
+         */
+        $eventService = new EventService($database);
+        $events = $eventService->getUpcommingEvents();
+
         $pageTemplate = 'index.twig';
         $config = [
             'page' => 'home',
