@@ -4,22 +4,32 @@ namespace Project\View;
 
 use Project\Configuration;
 use Project\Utilities\Converter;
-use Project\View\ValueObject\TemplateDir;
 use Project\View\ValueObject\CacheDir;
+use Project\View\ValueObject\TemplateDir;
 
 class ViewRenderer
 {
-    /**
-     * @var TemplateDir $templateDir
-     */
+    const DEFAULT_PAGE_TEMPLATE = 'index.twig';
+
+    /** @var TemplateDir $templateDir */
     protected $templateDir;
 
+    /** @var CacheDir $cacheDir */
     protected $cacheDir;
 
+    /** @var \Twig_Environment $viewRenderer */
     protected $viewRenderer;
 
+    /** @var  string $templateName */
     protected $templateName;
 
+    /** @var  array $config */
+    protected $config = [];
+
+    /**
+     * ViewRenderer constructor.
+     * @param Configuration $configuration
+     */
     public function __construct(Configuration $configuration)
     {
         $template = $configuration->getEntryByName('template');
@@ -29,25 +39,24 @@ class ViewRenderer
         $this->templateName = $template['name'];
 
         $loaderFilesystem = new \Twig_Loader_Filesystem($this->templateDir->getTemplateDir());
-        $this->viewRenderer = new \Twig_Environment($loaderFilesystem, array(
-            //'cache' => $template['cacheDir'],
-        ));
+        $this->viewRenderer = new \Twig_Environment($loaderFilesystem);
 
         $this->addViewFilter();
+
+        $this->addViewConfig('templateDir', 'templates/' . $this->templateName);
     }
 
     /**
-     * @todo Man kann auch template switchen und optional machen, denn meist wird ja eh index als basis geladen werden. Bei jedem Aufruf spart man somit.
      * @param string $template
-     * @param array $config
      */
-    public function renderTemplate(string $template, array $config = []): void
+    public function renderTemplate(string $template = self::DEFAULT_PAGE_TEMPLATE): void
     {
-        $config['templateDir'] =  'templates/' . $this->templateName;
-
-        echo $this->viewRenderer->render($template, $config);
+        echo $this->viewRenderer->render($template, $this->config);
     }
 
+    /**
+     * Add filter
+     */
     protected function addViewFilter(): void
     {
         $weekDayFilter = new \Twig_SimpleFilter('weekday', function ($integer) {
@@ -61,6 +70,14 @@ class ViewRenderer
         });
 
         $this->viewRenderer->addFilter($weekDayShortFilter);
+    }
 
+    /**
+     * @param string $name
+     * @param        $value
+     */
+    public function addViewConfig(string $name, $value): void
+    {
+        $this->config[$name] = $value;
     }
 }

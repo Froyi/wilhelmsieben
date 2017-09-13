@@ -6,15 +6,15 @@ namespace Project\Module\GenericValueObject;
 
 class Datetime extends AbstractDatetime implements DatetimeInterface
 {
-    const DATETIME_FORMAT = 'Y-m-d H:s';
+    const DATETIME_FORMAT = 'Y-m-d H:i';
 
     const DATE_FORMAT = 'Y-m-d';
 
-    const DATETIME_OUTPUT_FORMAT = 'd.m.Y H:s';
+    const DATETIME_OUTPUT_FORMAT = 'd.m.Y H:i';
 
     const DATE_OUTPUT_FORMAT = 'd.m.Y';
 
-    const TIME_FORMAT = 'H:s';
+    const TIME_FORMAT = 'H:i';
 
     const WEEKDAY_FORMAT = 'w';
 

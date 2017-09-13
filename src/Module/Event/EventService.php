@@ -8,7 +8,7 @@ use Project\Module\GenericValueObject\Id;
 
 class EventService
 {
-    const EVENT_MAX_ENTRIES = 3;
+    const EVENT_MAX_ENTRIES = 4;
 
     /** @var  EventRepository $eventRepository */
     protected $eventRepository;

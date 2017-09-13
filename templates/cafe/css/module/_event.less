@@ -10,23 +10,41 @@
     .event-date {
         font-family: @font-family-2;
         letter-spacing: 0.1em;
-        font-size: 0.75em;
-        margin-bottom: 5px;
+        font-size: 1em;
+        margin-top: 20px;
+        display: block;
+        cursor: default;
     }
 
-    .daily-soup-soup {
-        color: @color-1;
-        line-height: 1.4em;
-        font-size: 1.125em;
-        font-family: @font-family-2;
+    .event-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
         cursor: default;
 
-        &:nth-of-type(2n-1) {
-            color: @color-3;
+        .event-information {
+            position: relative;
+            max-width: 85%;
+
+            .event-name {
+                color: @color-3;
+                line-height: 1.4em;
+                font-size: 1.125em;
+                font-family: @font-family-2;
+            }
+
+            .event-time {
+                color: @color-1;
+                font-size: 0.875em;
+                font-family: @font-family-2;
+                line-height: 0.75em;
+            }
         }
-    }
 
-    .event-information {
-
+        .facebook-link {
+            img {
+                width: 23px;
+            }
+        }
     }
 }

@@ -2,21 +2,27 @@
     <h2>Veranstaltungen</h2>
 
     {% for eventday in events %}
-        <span class="event-date">{{ eventday | first.getDate.getWeekday | weekdayShort}} | {{ eventday | first.getDate.getDateString }}</span>
+        <span class="event-date">{{ eventday | first.getDate.getWeekday | weekdayShort }}
+            | {{ eventday | first.getDate.getDateString }}</span>
 
         {% for event in eventday %}
-            <div class="event-information">
-                <div>{{ event.getName }}</div>
-                <div>{{ event.getDate.getTimeString }}Uhr</div>
-            </div>
-
-            {% if event.facebookLink|length > 0 %}
-                <div class="facebook-link">
-                    <a href="{{ singleNews.facebookLink }}" target="new">
-                        <img src="{{ templateDir }}/img/fb.png" alt="Teaserbild vom Café">
-                    </a>
+            <div class="event-container">
+                <div class="event-information">
+                    {% if event.getNewsId | length > 0 %}
+                        <a href="index.php?route=news&newsId={{ event.getNewsId }}" class="area-link"></a>
+                    {% endif %}
+                    <div class="event-name">{{ event.getName }}</div>
+                    <div class="event-time">{{ event.getDate.getTimeString }}Uhr</div>
                 </div>
-            {% endif %}
+
+                {% if event.facebookLink | length > 0 %}
+                    <div class="facebook-link">
+                        <a href="{{ event.getFacebookLink }}" target="new">
+                            <img src="{{ templateDir }}/img/fb.png" alt="Teaserbild vom Café">
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
         {% endfor %}
     {% endfor %}
 

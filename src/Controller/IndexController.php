@@ -3,63 +3,40 @@
 namespace Project\Controller;
 
 
-use Project\Module\Database\Database;
 use Project\Module\Event\EventService;
-use Project\Module\GenericValueObject\Date;
 use Project\Module\News\NewsService;
-use Project\Module\SoupCalendar\SoupCalendarService;
 
 class IndexController extends DefaultController
 {
+    /**
+     * Index Action for landing page
+     */
     public function indexAction(): void
     {
-        /** @var Database $database */
-        $database = Database::getInstance();
+        $eventService = new EventService($this->database);
+        $newsService = new NewsService($this->database, $eventService);
 
-        /**
-         * Services
-         */
-        $eventService = new EventService($database);
-        $newsService = new NewsService($database, $eventService);
-
-        /**
-         * News Data
-         */
+        /** News */
         $allNews = $newsService->getAllNewsOrderByDate();
 
-        /**
-         * Slider images
-         */
+        $this->viewRenderer->addViewConfig('news', $allNews);
+
+        /** Slider */
         $slider = $this->configuration->getEntryByName('slider');
         shuffle($slider);
 
-        /**
-         * Soup Data
-         */
-        $soupCalendarService = new SoupCalendarService($database);
-        $dailySoups = $soupCalendarService->getDailySoup();
+        $this->viewRenderer->addViewConfig('slider', $slider);
 
-        /**
-         * Events
-         */
-        $events = $eventService->getUpcommingEvents();
-        $events = $eventService->sortEventByDateArray($events);
+        $this->viewRenderer->addViewConfig('page', 'home');
 
-        /**
-         * Template & Config
-         */
-        $pageTemplate = 'index.twig';
-        $config = [
-            'page' => 'home',
-            'news' => $allNews,
-            'slider' => $slider,
-            'dailySoup' => [
-                'soups' => $dailySoups,
-                'date' => Date::fromValue('now')
-            ],
-            'events' => $events
-        ];
+        $this->viewRenderer->renderTemplate();
+    }
 
-        $this->viewRenderer->renderTemplate($pageTemplate, $config);
+    public function newsPageAction(): void
+    {
+        // $eventService = new EventService($this->database);
+        // $newsService = new NewsService($this->database, $eventService);
+
+        // $news = $newsService->getNewsByNewsId();
     }
 }
