@@ -43,6 +43,7 @@ class IndexController extends DefaultController
          * Events
          */
         $events = $eventService->getUpcommingEvents();
+        $events = $eventService->sortEventByDateArray($events);
 
         /**
          * Template & Config

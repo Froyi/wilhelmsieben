@@ -45,4 +45,16 @@ class EventService
 
         return $this->eventFactory->getEventFromObject($event);
     }
+
+    public function sortEventByDateArray(array $events): array
+    {
+        $eventArray = [];
+
+        /** @var Event $event */
+        foreach ($events as $event) {
+            $eventArray[$event->getDate()->getDate()][] = $event;
+        }
+
+        return $eventArray;
+    }
 }

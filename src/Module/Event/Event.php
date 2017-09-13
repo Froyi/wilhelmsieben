@@ -57,7 +57,7 @@ class Event
     /**
      * @return Link
      */
-    public function getFacebookLink(): Link
+    public function getFacebookLink(): ?Link
     {
         return $this->facebookLink;
     }
@@ -73,7 +73,7 @@ class Event
     /**
      * @return Id
      */
-    public function getNewsId(): Id
+    public function getNewsId(): ?Id
     {
         return $this->newsId;
     }

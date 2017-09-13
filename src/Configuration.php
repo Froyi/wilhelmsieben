@@ -6,10 +6,12 @@ class Configuration
 {
     const CONFIG_PATH = ROOT_PATH . '/config.php';
 
+    /** @var array $configuration */
     protected $configuration;
 
     public function __construct()
     {
+        /** @noinspection PhpIncludeInspection */
         $this->configuration = include self::CONFIG_PATH;
     }
 

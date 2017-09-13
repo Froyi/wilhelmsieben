@@ -6,9 +6,15 @@ namespace Project\Module\GenericValueObject;
 
 class Datetime extends AbstractDatetime implements DatetimeInterface
 {
-    const DATE_FORMAT = 'Y-m-d H:s';
+    const DATETIME_FORMAT = 'Y-m-d H:s';
 
-    const DATE_OUTPUT_FORMAT = 'd.m.Y H:s';
+    const DATE_FORMAT = 'Y-m-d';
+
+    const DATETIME_OUTPUT_FORMAT = 'd.m.Y H:s';
+
+    const DATE_OUTPUT_FORMAT = 'd.m.Y';
+
+    const TIME_FORMAT = 'H:s';
 
     const WEEKDAY_FORMAT = 'w';
 
@@ -17,7 +23,7 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
      */
     public function __toString(): string
     {
-        return (string)date(self::DATE_OUTPUT_FORMAT, $this->datetime);
+        return (string)date(self::DATETIME_OUTPUT_FORMAT, $this->datetime);
     }
 
     /**
@@ -25,7 +31,7 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
      */
     public function toString(): string
     {
-        return (string)date(self::DATE_FORMAT, $this->datetime);
+        return (string)date(self::DATETIME_FORMAT, $this->datetime);
     }
 
     /**
@@ -43,5 +49,20 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
     public static function fromValue($datetime)
     {
         return parent::fromValue($datetime);
+    }
+
+    public function getDate(): string
+    {
+        return (string)date(self::DATE_FORMAT, $this->datetime);
+    }
+
+    public function getDateString(): string
+    {
+        return (string)date(self::DATE_OUTPUT_FORMAT, $this->datetime);
+    }
+
+    public function getTimeString(): string
+    {
+        return (string)date(self::TIME_FORMAT, $this->datetime);
     }
 }

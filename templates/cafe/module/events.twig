@@ -1,0 +1,23 @@
+<div class="events-container">
+    <h2>Veranstaltungen</h2>
+
+    {% for eventday in events %}
+        <span class="event-date">{{ eventday | first.getDate.getWeekday | weekdayShort}} | {{ eventday | first.getDate.getDateString }}</span>
+
+        {% for event in eventday %}
+            <div class="event-information">
+                <div>{{ event.getName }}</div>
+                <div>{{ event.getDate.getTimeString }}Uhr</div>
+            </div>
+
+            {% if event.facebookLink|length > 0 %}
+                <div class="facebook-link">
+                    <a href="{{ singleNews.facebookLink }}" target="new">
+                        <img src="{{ templateDir }}/img/fb.png" alt="Teaserbild vom Café">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+</div>

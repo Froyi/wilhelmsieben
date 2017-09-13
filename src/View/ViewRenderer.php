@@ -43,7 +43,7 @@ class ViewRenderer
      */
     public function renderTemplate(string $template, array $config = []): void
     {
-        $config['templateDir'] =  "templates/" . $this->templateName;
+        $config['templateDir'] =  'templates/' . $this->templateName;
 
         echo $this->viewRenderer->render($template, $config);
     }

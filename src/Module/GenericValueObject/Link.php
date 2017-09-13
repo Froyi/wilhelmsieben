@@ -10,6 +10,10 @@ class Link
     /** @var  Http $link */
     protected $link;
 
+    /**
+     * @param string $link
+     * @return Link
+     */
     public static function fromString(string $link): self
     {
         $link = Http::createFromString($link);
@@ -17,6 +21,10 @@ class Link
         return new self($link);
     }
 
+    /**
+     * Link constructor.
+     * @param Http $link
+     */
     protected function __construct(Http $link)
     {
         $this->link = $link;

@@ -48,11 +48,7 @@ class Id
 
     public function eval(Uuid $evalUuId): bool
     {
-        if ($evalUuId === $this->id) {
-            return true;
-        }
-
-        return false;
+        return ($evalUuId === $this->id);
     }
 
     public function __toString(): string
