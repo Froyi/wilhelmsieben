@@ -48,11 +48,19 @@ return [
         'impressum' => [
             'controller' => 'IndexController',
             'action' => 'impressumAction'
+        ],
+        'archive' => [
+            'controller' => 'IndexController',
+            'action' => 'archiveAction'
         ]
     ],
     'slider' => [
         '/img/slider/teaser.jpg',
         '/img/slider/teaser2.jpg',
         '/img/slider/teaser3.jpg',
+    ],
+    'news' => [
+        'minNewsShown' => 2,
+        'maxAgeOfNewsInDays' => 5
     ]
 ];

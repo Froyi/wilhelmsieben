@@ -2,4 +2,10 @@
 
 <div class="home-page js-home-page">
     {% include 'module/news.twig' %}
+
+    {% if showArchiveLink == true %}
+        <div class="news-archive page-container">
+            <a href="index.php?route=archive">ältere News anzeigen</a>
+        </div>
+    {% endif %}
 </div>

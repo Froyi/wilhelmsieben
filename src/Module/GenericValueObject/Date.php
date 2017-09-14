@@ -43,4 +43,13 @@ class Date extends AbstractDatetime implements DateInterface
     {
         return parent::fromValue($datetime);
     }
+
+    public function isOlderThanDays(int $days): bool
+    {
+        if ($this->datetime < strtotime('-' . $days . ' days')) {
+            return true;
+        }
+
+        return false;
+    }
 }

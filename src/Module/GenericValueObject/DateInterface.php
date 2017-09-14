@@ -9,4 +9,6 @@ interface DateInterface
      * @return int
      */
     public function getWeekday(): int;
+
+    public function isOlderThanDays(int $days): bool;
 }

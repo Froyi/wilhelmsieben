@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\News;
 
@@ -36,13 +36,7 @@ class NewsService
         }
 
         foreach ($newsResult as $singleNews) {
-            if (isset($singleNews->eventId) && !empty($singleNews->eventId)) {
-                $event = $this->eventService->getEventByEventId($singleNews->eventId);
-
-                $news[] = $this->newsFactory->getNewsWithEventFromObject($singleNews, $event);
-            } else {
-                $news[] = $this->newsFactory->getNewsFromObject($singleNews);
-            }
+            $news[] = $this->getNewsWithAllAttributes($singleNews);
         }
 
         return $news;
@@ -52,7 +46,57 @@ class NewsService
     {
         $newsResult = $this->newsRepository->getNewsByNewsId($newsId);
 
-        return $this->newsFactory->getNewsFromObject($newsResult);
+        return $this->getNewsWithAllAttributes($newsResult);
     }
 
+    public function getNewsWithMinNewsShownAndMaxAgeOfNews(int $minNewsShown, int $maxAgeOfNews): array
+    {
+        $newsArray = [];
+
+        $newsResult = $this->getAllNewsOrderByDate();
+
+        foreach ($newsResult as $singleNews) {
+            if ($singleNews->getDate()->isOlderThanDays($maxAgeOfNews) === false || count($newsArray) < $minNewsShown) {
+                $newsArray[] = $singleNews;
+            } else {
+                break;
+            }
+        }
+
+        return $newsArray;
+    }
+
+    public function getArchivedNews(int $minNewsShown, int $maxAgeOfNews): array
+    {
+        $newsArray = [];
+        $newsCount = 0;
+
+        $newsResult = $this->getAllNewsOrderByDate();
+
+        foreach ($newsResult as $singleNews) {
+            if ($singleNews->getDate()->isOlderThanDays($maxAgeOfNews) === false || $newsCount < $minNewsShown) {
+                $newsCount++;
+            } else {
+                $newsArray[] = $singleNews;;
+            }
+        }
+
+        return $newsArray;
+    }
+
+    public function isArchiveLinkNeeded(int $minNewsShown, int $maxAgeOfNews): bool
+    {
+        return (count($this->getNewsWithMinNewsShownAndMaxAgeOfNews($minNewsShown, $maxAgeOfNews)) < count($this->getAllNewsOrderByDate()));
+    }
+
+    protected function getNewsWithAllAttributes($newsResult): News
+    {
+        if (isset($newsResult->eventId) && !empty($newsResult->eventId)) {
+            $event = $this->eventService->getEventByEventId($newsResult->eventId);
+
+            return $this->newsFactory->getNewsWithEventFromObject($newsResult, $event);
+        }
+
+        return $this->newsFactory->getNewsFromObject($newsResult);
+    }
 }

@@ -4,37 +4,34 @@
 {% include ('basic/header.twig') %}
 
 <body>
-    <header>
-        <div class="header-content">
-            <p class="header-adress">Wilhelmstraße 7 <span>06406 Bernburg</span></p>
-            <p class="header-open">Do-Di 10-19Uhr</p>
-            <p class="header-telephone">01525-5366682</p>
-        </div>
-    </header>
+<header>
+    <div class="header-content">
+        <p class="header-adress">Wilhelmstraße 7 <span>06406 Bernburg</span></p>
+        <p class="header-open">Do-Di 10-19Uhr</p>
+        <p class="header-telephone">01525-5366682</p>
+    </div>
+</header>
 
-    <div class="navigation">
-        <p><a href="index.php">Zu Hause</a></p>
-        <p><a href="index.php?route=philosophie">Philosophie</a></p>
-        <p><a href="{{ templateDir }}/document/speisekarte.pdf" target="_blank">Speisekarte</a></p>
-        <p><a href="#">Impressionen</a></p>
-        <p><a href="index.php?route=anfahrt">Anfahrt</a></p>
-        <p><a href="index.php?route=impressum">Kontakt & Impressum</a></p>
+<div class="navigation">
+    <p><a href="index.php" class="{% if page == 'home' %}active{% endif %}">Zu Hause</a></p>
+    <p><a href="index.php?route=philosophie" class="{% if page == 'philosophie' %}active{% endif %}">Philosophie</a></p>
+    <p><a href="{{ templateDir }}/document/speisekarte.pdf" target="_blank">Speisekarte</a></p>
+    <p><a href="#">Impressionen</a></p>
+    <p><a href="index.php?route=anfahrt" class="{% if page == 'anfahrt' %}active{% endif %}">Anfahrt</a></p>
+    <p><a href="index.php?route=impressum" class="{% if page == 'impressum' %}active{% endif %}">Kontakt & Impressum</a>
+    </p>
+</div>
+
+<div class="main-content js-main-content">
+    <div class="sidebar-content">
+        {% include ('basic/sidebar.twig') %}
     </div>
 
-    <div class="main-content js-main-content">
-        <div class="sidebar-content">
-            {% include ('basic/sidebar.twig') %}
-        </div>
-
-        <div class="page-content">
-            {% include ('page/' ~ page ~ '.twig') %}
-        </div>
+    <div class="page-content">
+        {% include ('page/' ~ page ~ '.twig') %}
     </div>
+</div>
 
-    {% include ('basic/footer.twig') %}
-
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARPWbd1uzbl816_a7JsR00vLmswNlKfJU&callback=initMap">
-    </script>
+{% include ('basic/footer.twig') %}
 </body>
 </html>

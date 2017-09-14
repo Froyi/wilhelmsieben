@@ -19,9 +19,14 @@ class IndexController extends DefaultController
             $newsService = new NewsService($this->database, $eventService);
 
             /** News */
-            $allNews = $newsService->getAllNewsOrderByDate();
+            $newsConfiguration = $this->configuration->getEntryByName('news');
+            $showNews = $newsService->getNewsWithMinNewsShownAndMaxAgeOfNews($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
 
-            $this->viewRenderer->addViewConfig('news', $allNews);
+            $this->viewRenderer->addViewConfig('news', $showNews);
+
+            $showArchiveLink = $newsService->isArchiveLinkNeeded($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
+
+            $this->viewRenderer->addViewConfig('showArchiveLink', $showArchiveLink);
 
             /** Slider */
             $slider = $this->configuration->getEntryByName('slider');
@@ -70,5 +75,25 @@ class IndexController extends DefaultController
     public function philosophieAction(): void
     {
         $this->showStandardPage('philosophie');
+    }
+
+    public function archiveAction(): void
+    {
+        try {
+            $eventService = new EventService($this->database);
+            $newsService = new NewsService($this->database, $eventService);
+
+            /** News */
+            $newsConfiguration = $this->configuration->getEntryByName('news');
+            $allNews = $newsService->getArchivedNews($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
+
+            $this->viewRenderer->addViewConfig('news', $allNews);
+
+            $this->viewRenderer->addViewConfig('page', 'archive');
+
+            $this->viewRenderer->renderTemplate();
+        } catch (\InvalidArgumentException $error) {
+            $this->notFoundAction();
+        }
     }
 }
