@@ -30,8 +30,24 @@ return [
             'action' => 'indexAction'
         ],
         'notfound' => [
-            'controller' => 'BasicController',
+            'controller' => 'DefaultController',
             'action' => 'notFoundAction'
+        ],
+        'news' => [
+            'controller' => 'IndexController',
+            'action' => 'newsPageAction'
+        ],
+        'philosophie' => [
+            'controller' => 'IndexController',
+            'action' => 'philosophieAction'
+        ],
+        'anfahrt' => [
+            'controller' => 'IndexController',
+            'action' => 'anfahrtAction'
+        ],
+        'impressum' => [
+            'controller' => 'IndexController',
+            'action' => 'impressumAction'
         ]
     ],
     'slider' => [

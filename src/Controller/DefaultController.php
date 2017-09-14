@@ -67,4 +67,22 @@ class DefaultController
 
         $this->viewRenderer->addViewConfig('dailySoup', $soupData);
     }
+
+    public function notFoundAction(): void
+    {
+        $this->viewRenderer->addViewConfig('page', 'error');
+
+        $this->viewRenderer->renderTemplate();
+    }
+
+    protected function showStandardPage(string $name): void
+    {
+        try {
+            $this->viewRenderer->addViewConfig('page', $name);
+
+            $this->viewRenderer->renderTemplate();
+        } catch (\InvalidArgumentException $error) {
+            $this->notFoundAction();
+        }
+    }
 }

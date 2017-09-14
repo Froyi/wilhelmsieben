@@ -5,6 +5,7 @@ namespace Project\Module\News;
 
 use Project\Module\Database\Database;
 use Project\Module\Event\EventService;
+use Project\Module\GenericValueObject\Id;
 
 class NewsService
 {
@@ -45,6 +46,13 @@ class NewsService
         }
 
         return $news;
+    }
+
+    public function getNewsByNewsId(Id $newsId): ?News
+    {
+        $newsResult = $this->newsRepository->getNewsByNewsId($newsId);
+
+        return $this->newsFactory->getNewsFromObject($newsResult);
     }
 
 }

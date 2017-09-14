@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 
+{% include ('basic/header.twig') %}
+
 <body>
     <header>
         <div class="header-content">
@@ -11,15 +13,13 @@
     </header>
 
     <div class="navigation">
-        <p><a href="#">Zu Hause</a></p>
-        <p><a href="#">Philosophie</a></p>
+        <p><a href="index.php">Zu Hause</a></p>
+        <p><a href="index.php?route=philosophie">Philosophie</a></p>
         <p><a href="{{ templateDir }}/document/speisekarte.pdf" target="_blank">Speisekarte</a></p>
         <p><a href="#">Impressionen</a></p>
-        <p><a href="#">Anfahrt</a></p>
-        <p><a href="#">Kontakt & Impressum</a></p>
+        <p><a href="index.php?route=anfahrt">Anfahrt</a></p>
+        <p><a href="index.php?route=impressum">Kontakt & Impressum</a></p>
     </div>
-
-    {% include ('basic/header.twig') %}
 
     <div class="main-content js-main-content">
         <div class="sidebar-content">
@@ -32,5 +32,9 @@
     </div>
 
     {% include ('basic/footer.twig') %}
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARPWbd1uzbl816_a7JsR00vLmswNlKfJU&callback=initMap">
+    </script>
 </body>
 </html>

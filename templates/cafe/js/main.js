@@ -19,3 +19,18 @@ $(document).ready(function(){
         after: function(){}     // Function: After callback
     });
 });
+
+//noinspection JSUnusedGlobalSymbols
+function initMap() {
+    debugger;
+    var uluru = {lat: -25.363, lng: 131.044};
+    var map = new google.maps.Map(document.getElementById('googleMaps'), {
+        zoom: 10,
+        center: uluru
+    });
+    //noinspection JSUnusedLocalSymbols
+    var marker = new google.maps.Marker({
+        position: uluru,
+        map: map
+    });
+}

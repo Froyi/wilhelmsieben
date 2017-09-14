@@ -1,5 +1,5 @@
-{% if news|length > 0 %}
-    <div class="news-container">
+<div class="news-container">
+    {% if news|length > 0 %}
         {% for singleNews in news %}
             <div class="single-news">
                 <div class="news-image">
@@ -10,7 +10,8 @@
                     <div class="news-banderole-content">
                         <h2>{{ singleNews.getTitle }}</h2>
 
-                        <span class="news-date">{{ singleNews.getDate.getWeekday | weekday }} | {{ singleNews.getDate }}</span>
+                        <span class="news-date">{{ singleNews.getDate.getWeekday | weekday }}
+                            | {{ singleNews.getDate }}</span>
                     </div>
                 </div>
 
@@ -27,5 +28,9 @@
                 {% endif %}
             </div>
         {% endfor %}
-    </div>
-{% endif %}
+    {% else %}
+        <div class="no-news">
+            Es sinf keine aktuellen News vorhanden. Bitte schauen Sie später erneut nach.
+        </div>
+    {% endif %}
+</div>

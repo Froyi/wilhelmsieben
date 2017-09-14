@@ -48,6 +48,7 @@ class ViewRenderer
 
     /**
      * @param string $template
+     * @throws \Twig_Error_Loader
      */
     public function renderTemplate(string $template = self::DEFAULT_PAGE_TEMPLATE): void
     {
