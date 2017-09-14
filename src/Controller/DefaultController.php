@@ -43,7 +43,7 @@ class DefaultController
      */
     protected function setDefaultViewConfig(): void
     {
-        $this->viewRenderer->addViewConfig('page', 'error');
+        $this->viewRenderer->addViewConfig('page', 'notfound');
 
         /**
          * Events
@@ -70,9 +70,14 @@ class DefaultController
 
     public function notFoundAction(): void
     {
-        $this->viewRenderer->addViewConfig('page', 'error');
+        $this->viewRenderer->addViewConfig('page', 'notfound');
 
         $this->viewRenderer->renderTemplate();
+    }
+
+    public function errorPageAction(): void
+    {
+        $this->showStandardPage('error');
     }
 
     protected function showStandardPage(string $name): void

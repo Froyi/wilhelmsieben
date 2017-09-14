@@ -2,6 +2,7 @@
 
 namespace Project;
 
+use Project\Controller\IndexController;
 use Project\Utilities\Tools;
 
 define('ROOT_PATH', getcwd());
@@ -15,4 +16,10 @@ if (Tools::getValue('route') !== false) {
 }
 
 $routing = new Routing(new Configuration());
-$routing->startRoute($route);
+try {
+    $routing->startRoute($route);
+} catch (\InvalidArgumentException $error) {
+    $indexController = new IndexController();
+    $indexController->errorPageAction();
+}
+

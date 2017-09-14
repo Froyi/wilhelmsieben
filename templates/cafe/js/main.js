@@ -22,15 +22,25 @@ $(document).ready(function(){
 
 //noinspection JSUnusedGlobalSymbols
 function initMap() {
-    debugger;
-    var uluru = {lat: -25.363, lng: 131.044};
+    var cafe = {lat: 51.797032, lng: 11.740374};
     var map = new google.maps.Map(document.getElementById('googleMaps'), {
-        zoom: 10,
-        center: uluru
+        zoom: 15,
+        center: cafe
     });
+
     //noinspection JSUnusedLocalSymbols
     var marker = new google.maps.Marker({
-        position: uluru,
+        position: cafe,
         map: map
+    });
+
+    var infoWindow = new google.maps.InfoWindow({
+        content: "<div class='maps-info-window'><h3>Café Wilhelm 7ieben</h3><span>Wilhelmstraße 7</span><span>06406 Bernburg</span><span>01525-5366682</span></div>"
+    });
+
+    infoWindow.open(map, marker);
+
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker);
     });
 }
