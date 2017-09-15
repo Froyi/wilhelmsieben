@@ -1,0 +1,35 @@
+<div class="reservierung-container page-container">
+    <div class="reservierung-banderole banderole"><h1>Reservierung</h1></div>
+
+    <div class="reservierung-form">
+        <form action="index.php?route=reservierung-add" method="POST" name="reservierung-form">
+            <div>
+                <label for="name">
+                    Ihr Name<br>
+                    <input name="name" required/>
+                </label>
+            </div>
+            <div>
+                <label for="datum">
+                    Wann wollen Sie kommen?<br>
+                    <input type="datetime-local" name="datum" required/>
+                </label>
+            </div>
+            <div>
+                <label for="plaetze">
+                    Wie viele Personen?<br>
+                    <input type="number" name="plaetze" min="1" max="20" required/>
+                </label>
+            </div>
+            <div>
+                <label for="sonderwuensche">
+                    Sonderwünsche? (Couchplatz gewünscht, ...)<br>
+                    <textarea name="sonderwuensche" cols="30" rows="10"></textarea>
+                </label>
+            </div>
+            <div>
+                <input type="submit" name="submit" value="absenden">
+            </div>
+        </form>
+    </div>
+</div>

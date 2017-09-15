@@ -52,6 +52,14 @@ return [
         'archive' => [
             'controller' => 'IndexController',
             'action' => 'archiveAction'
+        ],
+        'reservierung' => [
+            'controller' => 'IndexController',
+            'action' => 'reservierungAction'
+        ],
+        'reservierung-add' => [
+            'controller' => 'BackendController',
+            'action' => 'reservierungAddAction'
         ]
     ],
     'slider' => [

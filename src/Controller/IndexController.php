@@ -96,4 +96,9 @@ class IndexController extends DefaultController
             $this->notFoundAction();
         }
     }
+
+    public function reservierungAction(): void
+    {
+        $this->showStandardPage('reservierung');
+    }
 }
