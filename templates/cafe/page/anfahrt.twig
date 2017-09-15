@@ -1,10 +1,26 @@
 <div class="anfahrt-container">
     <div class="page-container">
-        {% include ('module/googleMaps.twig') %}
+        <div class="anfahrt-banderole banderole"><h1>Anfahrt</h1></div>
+
+        <div class="google-maps-container">
+            {% include ('module/googleMaps.twig') %}
+        </div>
     </div>
 
     <div class="page-container">
-        <h2>Wie kommt ihr am besten zu uns?</h2>
+        <h2>Uns können Sie auf vielen Wegen erreichen</h2>
+
+        <span class="anfahrt-miniheadline">Mit dem Auto:</span>
+        <p>Es gibt öffentliche Parkplätze direkt in der Wilhelmstraße mit einer kostenlosen Parkdauer von 2 Stunden oder
+            Sie parken direkt im Stadtzentrum auf dem Rheineplatz kostenpflichtig. Von hier laufen Sie 3 Minuten zu Fuß
+            über die Friedensallee und dann rechts folgend die Wilhelmstraße.</p>
+
+        <span class="anfahrt-miniheadline">Mit dem Fahhrad:</span>
+        <p>Sie können Ihr Fahrrad direkt gegenüber vom Café Wilhelm 7ieben am Eulenspiegelbrunnen anschließen.</p>
+
+        <span class="anfahrt-miniheadline">Zu Fuß:</span>
+        <p>Vom Karlsplatz kommend erreichen Sie uns in 2 Minuten zu Fuß, immer der Wilhelmstraße bergab folgend. Vom
+            alten Marktplatz geht es umgekehrt bergauf, aber auch hier erreichen Sie uns in zwei Minuten.</p>
     </div>
 </div>
 
