@@ -5,8 +5,6 @@ namespace Project\Controller;
 use Project\Configuration;
 use Project\Module\Database\Database;
 use Project\Module\Event\EventService;
-use Project\Module\GenericValueObject\Date;
-use Project\Module\SoupCalendar\SoupCalendarService;
 use Project\View\ViewRenderer;
 
 /**
@@ -53,19 +51,6 @@ class DefaultController
         $events = $eventService->sortEventByDateArray($events);
 
         $this->viewRenderer->addViewConfig('events', $events);
-
-        /**
-         * Soup Data
-         */
-        $soupCalendarService = new SoupCalendarService($this->database);
-        $dailySoups = $soupCalendarService->getDailySoup();
-
-        $soupData = [
-            'soups' => $dailySoups,
-            'date' => Date::fromValue('now')
-        ];
-
-        $this->viewRenderer->addViewConfig('dailySoup', $soupData);
     }
 
     public function notFoundAction(): void
