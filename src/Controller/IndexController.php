@@ -2,9 +2,10 @@
 
 namespace Project\Controller;
 
-use Project\Module\Event\EventService;
 use Project\Module\Galerie\GalerieService;
+use Project\Module\GenericValueObject\Email;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Password;
 use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
 
@@ -16,8 +17,7 @@ class IndexController extends DefaultController
     public function indexAction(): void
     {
         try {
-            $eventService = new EventService($this->database);
-            $newsService = new NewsService($this->database, $eventService);
+            $newsService = new NewsService($this->database, $this->eventService);
 
             /** News */
             $newsConfiguration = $this->configuration->getEntryByName('news');
@@ -46,14 +46,13 @@ class IndexController extends DefaultController
     public function newsPageAction(): void
     {
         try {
-            $eventService = new EventService($this->database);
-            $newsService = new NewsService($this->database, $eventService);
+            $newsService = new NewsService($this->database, $this->eventService);
 
             $newsId = Id::fromString(Tools::getValue('newsId'));
 
             $news = $newsService->getNewsByNewsId($newsId);
 
-            $this->viewRenderer->addViewConfig('news', array($news));
+            $this->viewRenderer->addViewConfig('news', [$news]);
 
             $this->viewRenderer->addViewConfig('page', 'news');
 
@@ -81,8 +80,7 @@ class IndexController extends DefaultController
     public function archiveAction(): void
     {
         try {
-            $eventService = new EventService($this->database);
-            $newsService = new NewsService($this->database, $eventService);
+            $newsService = new NewsService($this->database, $this->eventService);
 
             /** News */
             $newsConfiguration = $this->configuration->getEntryByName('news');
@@ -117,6 +115,43 @@ class IndexController extends DefaultController
 
         } catch (\InvalidArgumentException $error) {
             $this->notFoundAction();
+        }
+    }
+
+    /**
+     * @todo insert mail to kontakt@cafewilhelmsieben.de if all dates are valid
+     */
+    public function reservierungAddAction(): void
+    {
+        $sentReservierung = false;
+
+        $this->viewRenderer->addViewConfig('sentReservierung', $sentReservierung);
+
+        $this->viewRenderer->addViewConfig('page', 'reservierung');
+
+        $this->viewRenderer->renderTemplate();
+    }
+
+    public function loginRedirectAction(): void
+    {
+        if ($this->loggedInUser === null) {
+            $password = Password::fromString(Tools::getValue('password'));
+            $email = Email::fromString(Tools::getValue('email'));
+            $this->loggedInUser = $this->userService->getLogedInUserByEmailAndPassword($email, $password);
+        }
+
+        if ($this->loggedInUser !== null) {
+            $this->viewRenderer->addViewConfig('loggedInUser', $this->loggedInUser);
+            $this->showStandardPage('loggedin');
+        }
+    }
+
+    public function loginAction(): void
+    {
+        if ($this->loggedInUser !== null) {
+            $this->showStandardPage('loggedIn');
+        } else {
+            $this->showStandardPage('login');
         }
     }
 }

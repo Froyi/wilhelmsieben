@@ -2,34 +2,35 @@
 
 namespace Project\Controller;
 
-use Project\Module\GenericValueObject\Email;
-use Project\Module\GenericValueObject\Password;
-use Project\Module\GenericValueObject\PasswordHash;
-use Project\Module\User\UserService;
+use Project\Module\User\User;
 use Project\Utilities\Tools;
 
 class BackendController extends DefaultController
 {
-    public function reservierungAddAction(): void
+    /** @var  User */
+    protected $loggedInUser;
+
+    public function __construct()
     {
-        var_dump($_POST);
-    }
+        parent::__construct();
 
-    public function loginRedirectAction(): void
-    {
-        $userService = new UserService($this->database);
-
-        $password = Password::fromString(Tools::getValue('password'));
-        $email = Email::fromString(Tools::getValue('email'));
-        $user = $userService->getLogedInUserByEmailAndPassword($email, $password);
-
-        if ($user !== null) {
-            $this->showStandardPage('loggedin');
+        if ($this->loggedInUser === null) {
+            $this->showStandardPage('notfound');
         }
     }
 
-    public function loginAction(): void
+    public function loggedinAction(): void
     {
-        $this->showStandardPage('login');
+        $this->showStandardPage('loggedin');
+    }
+
+    public function logoutAction(): void
+    {
+        if ($this->userService->logoutUser($this->loggedInUser)) {
+            $this->viewRenderer->removeViewConfig('loggedInUser');
+        };
+
+        /** redirect because of logout action */
+        header('Location: ' . Tools::getRouteUrl('index'));
     }
 }

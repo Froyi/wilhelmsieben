@@ -5,6 +5,8 @@ namespace Project\Utilities;
 
 class Tools
 {
+    const STANDARD_URL = 'index.php';
+
     /**
      * @param string $name
      * @return bool|string|int
@@ -24,5 +26,18 @@ class Tools
         }
 
         return false;
+    }
+
+    /**
+     * @param string $route
+     * @return string
+     */
+    public static function getRouteUrl(string $route = ''): string
+    {
+        if (empty($route)) {
+            return self::STANDARD_URL;
+        }
+
+        return self::STANDARD_URL . '?route=' . $route;
     }
 }

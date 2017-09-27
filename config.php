@@ -58,21 +58,29 @@ return [
             'action' => 'reservierungAction'
         ],
         'reservierung-add' => [
-            'controller' => 'BackendController',
+            'controller' => 'IndexController',
             'action' => 'reservierungAddAction'
         ],
         'login-redirect' => [
-            'controller' => 'BackendController',
+            'controller' => 'IndexController',
             'action' => 'loginRedirectAction'
         ],
         'login' => [
-            'controller' => 'BackendController',
+            'controller' => 'IndexController',
             'action' => 'loginAction'
         ],
         'galerie' => [
             'controller' => 'IndexController',
             'action' => 'galerieAction'
-        ]
+        ],
+        'loggedin' => [
+            'controller' => 'BackendController',
+            'action' => 'loggedinAction'
+        ],
+        'logout' => [
+            'controller' => 'BackendController',
+            'action' => 'logoutAction'
+        ],
     ],
     'slider' => [
         '/img/slider/teaser.jpg',

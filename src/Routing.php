@@ -3,6 +3,8 @@
 namespace Project;
 
 
+use Project\Controller\IndexController;
+
 class Routing
 {
     const ERROR_ROUTE = 'notfound';
@@ -34,7 +36,12 @@ class Routing
         $controllerName = $this->projectNamespace . '\\' . $this->controllerNamespace . '\\' . $route['controller'];
         $actionName = $route['action'];
 
-        $controller = new $controllerName();
-        $controller->$actionName();
+        try {
+            $controller = new $controllerName();
+            $controller->$actionName();
+        } catch (\Exception $error) {
+            $indexController = new IndexController();
+            $indexController->errorPageAction();
+        }
     }
 }

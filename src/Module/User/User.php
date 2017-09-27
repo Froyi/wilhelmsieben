@@ -46,6 +46,10 @@ class User
         return $this->email;
     }
 
+    /**
+     * @param Password $password
+     * @return bool
+     */
     public function loginUser(Password $password): bool
     {
         if ($this->passwordHash->verifyPassword($password) === true) {
@@ -59,9 +63,12 @@ class User
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function loginUserBySession(): bool
     {
-        if (isset($_SESSION['user'][$this->userId->toString()]['loggedIn']) && $_SESSION['user'][$this->userId->getId()]['loggedIn'] === true) {
+        if (isset($_SESSION['userId']) && $_SESSION['userId'] === $this->userId->toString()) {
             $this->loginSuccessUser();
 
             return true;
@@ -72,18 +79,28 @@ class User
         return false;
     }
 
+    public function logout(): bool
+    {
+        return $this->logoutUser();
+    }
+
+    /**
+     *
+     */
     protected function loginSuccessUser(): void
     {
         $this->isLoggedIn = true;
-        $_SESSION['user'][$this->userId->toString()]['loggedIn'] = true;
+        $_SESSION['userId'] = $this->userId->toString();
     }
 
-    protected function logoutUser(): void
+    protected function logoutUser(): bool
     {
         $this->isLoggedIn = false;
 
         if (isset($_SESSION)) {
-            unset($_SESSION['user'][$this->userId->toString()]['loggedIn']);
+            unset($_SESSION['userId']);
         }
+
+        return true;
     }
 }

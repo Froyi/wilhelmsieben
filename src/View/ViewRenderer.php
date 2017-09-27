@@ -4,6 +4,7 @@ namespace Project\View;
 
 use Project\Configuration;
 use Project\Utilities\Converter;
+use Project\Utilities\Tools;
 use Project\View\ValueObject\CacheDir;
 use Project\View\ValueObject\TemplateDir;
 
@@ -71,6 +72,12 @@ class ViewRenderer
         });
 
         $this->viewRenderer->addFilter($weekDayShortFilter);
+
+        $routeFilter = new \Twig_SimpleFilter('route', function ($route) {
+            return Tools::getRouteUrl($route);
+        });
+
+        $this->viewRenderer->addFilter($routeFilter);
     }
 
     /**
@@ -80,5 +87,12 @@ class ViewRenderer
     public function addViewConfig(string $name, $value): void
     {
         $this->config[$name] = $value;
+    }
+
+    public function removeViewConfig(string $name): void
+    {
+        if (isset($this->config[$name])) {
+            unset($this->config[$name]);
+        }
     }
 }

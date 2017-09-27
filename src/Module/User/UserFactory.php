@@ -26,4 +26,21 @@ class UserFactory
 
         return $user;
     }
+
+    public function getLoggedInUserByUserId($object): ?User
+    {
+        $userId = Id::fromString($object->userId);
+
+        $email = Email::fromString($object->email);
+
+        $passwordHash = PasswordHash::fromString($object->passwordHash);
+
+        $user = new User($userId, $email, $passwordHash);
+
+        if ($user->loginUserBySession() === false) {
+            return null;
+        }
+
+        return $user;
+    }
 }

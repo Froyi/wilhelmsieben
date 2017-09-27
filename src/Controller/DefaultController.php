@@ -5,6 +5,10 @@ namespace Project\Controller;
 use Project\Configuration;
 use Project\Module\Database\Database;
 use Project\Module\Event\EventService;
+use Project\Module\GenericValueObject\Id;
+use Project\Module\User\User;
+use Project\Module\User\UserService;
+use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
 
 /**
@@ -22,7 +26,14 @@ class DefaultController
     /** @var Database $database */
     protected $database;
 
-    protected $valueObjectService;
+    /** @var  User $loggedInUser */
+    protected $loggedInUser;
+
+    /** @var  UserService $userService */
+    protected $userService;
+
+    /** @var  EventService $eventService */
+    protected $eventService;
 
     /**
      * DefaultController constructor.
@@ -32,6 +43,12 @@ class DefaultController
         $this->configuration = new Configuration();
         $this->viewRenderer = new ViewRenderer($this->configuration);
         $this->database = Database::getInstance();
+        $this->userService = new UserService($this->database);
+
+        if (Tools::getValue('userId') !== false) {
+            $userId = Id::fromString(Tools::getValue('userId'));
+            $this->loggedInUser = $this->userService->getLogedInUserByUserId($userId);
+        }
 
         $this->setDefaultViewConfig();
     }
@@ -46,11 +63,18 @@ class DefaultController
         /**
          * Events
          */
-        $eventService = new EventService($this->database);
-        $events = $eventService->getUpcommingEvents();
-        $events = $eventService->sortEventByDateArray($events);
+        $this->eventService = new EventService($this->database);
+        $events = $this->eventService->getUpcommingEvents();
+        $events = $this->eventService->sortEventByDateArray($events);
 
         $this->viewRenderer->addViewConfig('events', $events);
+
+        /**
+         * Logged In User
+         */
+        if ($this->loggedInUser !== null) {
+            $this->viewRenderer->addViewConfig('loggedInUser', $this->loggedInUser);
+        }
     }
 
     public function notFoundAction(): void
