@@ -3,6 +3,7 @@
 namespace Project\Controller;
 
 use Project\Module\Event\EventService;
+use Project\Module\Galerie\GalerieService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
@@ -100,5 +101,22 @@ class IndexController extends DefaultController
     public function reservierungAction(): void
     {
         $this->showStandardPage('reservierung');
+    }
+
+    public function galerieAction(): void
+    {
+        try {
+            $galerieService = new GalerieService($this->database);
+            $galleries = $galerieService->getAllGaleriesWithImags();
+
+            $this->viewRenderer->addViewConfig('galleries', $galleries);
+
+            $this->viewRenderer->addViewConfig('page', 'gallery');
+
+            $this->viewRenderer->renderTemplate();
+
+        } catch (\InvalidArgumentException $error) {
+            $this->notFoundAction();
+        }
     }
 }
