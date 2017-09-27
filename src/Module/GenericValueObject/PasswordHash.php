@@ -19,7 +19,7 @@ class PasswordHash
         return new self(self::generatePasswordHash($clearPassword));
     }
 
-    public function fromString(string $passwordHash): self
+    public static function fromString(string $passwordHash): self
     {
         self::ensurePasswordHashIsValid($passwordHash);
 

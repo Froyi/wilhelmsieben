@@ -1,0 +1,18 @@
+<div class="gallery-container">
+    {% if galleries|length > 0 %}
+        {% for album in galleries %}
+            {% if album.getAmountOfImagesInAlbum > 0 %}
+                <div>
+                    <a data-fancybox="group-{{ album.getAlbumId }}"
+                       href="{{ album.getAlbumPreviewImage.getImageUrl }}">{{ album.getTitle }} {{ album.getAmountOfImagesInAlbum }}</a>
+
+                    {% for albumImage in album.getImageList %}
+                        <a class="" data-fancybox="group-{{ album.getAlbumId }}" href="{{ albumImage.getImageUrl }}"
+                           data-caption="{{ albumImage.getTitle }}"></a>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

@@ -13,14 +13,14 @@ class User
     /** @var  Id $userId */
     protected $userId;
 
-    /** @var  Email */
+    /** @var  Email $email */
     protected $email;
 
     /** @var  PasswordHash $passwordHash */
     protected $passwordHash;
 
     /** @var  bool $isLoggedIn */
-    protected $isLoggedIn = false;
+    protected $isLoggedIn;
 
     public function __construct(Id $userId, Email $email, PasswordHash $passwordHash)
     {
@@ -61,7 +61,7 @@ class User
 
     public function loginUserBySession(): bool
     {
-        if (isset($_SESSION['user'][$this->userId->getId()]['loggedIn']) && $_SESSION['user'][$this->userId->getId()]['loggedIn'] === true) {
+        if (isset($_SESSION['user'][$this->userId->toString()]['loggedIn']) && $_SESSION['user'][$this->userId->getId()]['loggedIn'] === true) {
             $this->loginSuccessUser();
 
             return true;
@@ -75,12 +75,15 @@ class User
     protected function loginSuccessUser(): void
     {
         $this->isLoggedIn = true;
-        $_SESSION['user'][$this->userId->getId()]['loggedIn'] = true;
+        $_SESSION['user'][$this->userId->toString()]['loggedIn'] = true;
     }
 
     protected function logoutUser(): void
     {
         $this->isLoggedIn = false;
-        unset($_SESSION['user'][$this->userId->getId()]['loggedIn']);
+
+        if (isset($_SESSION)) {
+            unset($_SESSION['user'][$this->userId->toString()]['loggedIn']);
+        }
     }
 }

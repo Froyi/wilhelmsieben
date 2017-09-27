@@ -1,5 +1,4 @@
-
-$(document).ready(function(){
+$(document).ready(function () {
     $(".rslides").responsiveSlides({
         auto: true,             // Boolean: Animate automatically, true or false
         speed: 500,            // Integer: Speed of the transition, in milliseconds
@@ -15,8 +14,10 @@ $(document).ready(function(){
         navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
         manualControls: "",     // Selector: Declare custom pager navigation
         namespace: "rslides",   // String: Change the default namespace used
-        before: function(){},   // Function: Before callback
-        after: function(){}     // Function: After callback
+        before: function () {
+        },   // Function: Before callback
+        after: function () {
+        }     // Function: After callback
     });
 });
 
@@ -44,3 +45,20 @@ function initMap() {
         infoWindow.open(map, marker);
     });
 }
+
+/*
+$(document).on('click', ".js-fancy-box", function () {
+    var images = [];
+
+    $('.js-album-image').each(function () {
+        console.log($(this).data('albumImage'));
+        var image = {
+            href: $(this).data('albumImage'),
+            title: $(this).data('albumImageTitle')
+        };
+
+        images.push(image);
+    });
+
+    return false;
+});*/

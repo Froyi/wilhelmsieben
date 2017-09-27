@@ -60,6 +60,18 @@ return [
         'reservierung-add' => [
             'controller' => 'BackendController',
             'action' => 'reservierungAddAction'
+        ],
+        'login-redirect' => [
+            'controller' => 'BackendController',
+            'action' => 'loginRedirectAction'
+        ],
+        'login' => [
+            'controller' => 'BackendController',
+            'action' => 'loginAction'
+        ],
+        'galerie' => [
+            'controller' => 'IndexController',
+            'action' => 'galerieAction'
         ]
     ],
     'slider' => [
