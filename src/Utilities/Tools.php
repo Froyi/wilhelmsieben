@@ -32,12 +32,18 @@ class Tools
      * @param string $route
      * @return string
      */
-    public static function getRouteUrl(string $route = ''): string
+    public static function getRouteUrl(string $route = '', array $parameter = []): string
     {
         if (empty($route)) {
             return self::STANDARD_URL;
         }
 
-        return self::STANDARD_URL . '?route=' . $route;
+        $url = self::STANDARD_URL . '?route=' . $route;
+
+        foreach ($parameter as $key => $value) {
+            $url .= '&' . $key . '=' . $value;
+        }
+
+        return $url;
     }
 }

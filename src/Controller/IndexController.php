@@ -141,17 +141,21 @@ class IndexController extends DefaultController
         }
 
         if ($this->loggedInUser !== null) {
-            $this->viewRenderer->addViewConfig('loggedInUser', $this->loggedInUser);
-            $this->showStandardPage('loggedin');
+            $this->redirectToLoggedInPage();
         }
     }
 
     public function loginAction(): void
     {
         if ($this->loggedInUser !== null) {
-            $this->showStandardPage('loggedIn');
+            $this->redirectToLoggedInPage();
         } else {
             $this->showStandardPage('login');
         }
+    }
+
+    protected function redirectToLoggedInPage(): void
+    {
+        header('Location: ' . Tools::getRouteUrl('loggedin'));
     }
 }

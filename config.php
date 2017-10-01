@@ -81,6 +81,14 @@ return [
             'controller' => 'BackendController',
             'action' => 'logoutAction'
         ],
+        'news-edit' => [
+            'controller' => 'BackendController',
+            'action' => 'newsEditAction'
+        ],
+        'news-edit-save' => [
+            'controller' => 'BackendController',
+            'action' => 'newsEditSaveAction'
+        ],
     ],
     'slider' => [
         '/img/slider/teaser.jpg',

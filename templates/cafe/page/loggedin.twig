@@ -2,17 +2,21 @@
     <div class="loggedin-banderole banderole"><h1>Seitenverwaltung</h1></div>
 
     <div class="news-edit-container">
-        <a href="{{ 'news-edit' | route }}">News erstellen</a>
+        <a href="{{ route('news-edit') }}">News erstellen</a>
         <h2>News bearbeiten</h2>
 
-        <div>
-            <div>{{ news.getTitle }}</div>
-            <div>{{ news.getNewsDate }}</div>
-            <div>{{ news.isEvent }}</div>
-        </div>
-    </div>
+        {% if news|length > 0 %}
+            {% for singleNews in news %}
+                {% set newsId = {'newsId': singleNews.getNewsId} %}
 
-    <div class="galerie-edit-container">
-        
+                <div><a href="{{ route('news-edit', newsId) }}">{{ singleNews.getTitle }}</a></div>
+                <div>{{ singleNews.getDate }}</div>
+
+            {% endfor %}
+        {% endif %}
     </div>
+</div>
+
+<div class="galerie-edit-container">
+
 </div>

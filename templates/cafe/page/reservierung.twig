@@ -17,7 +17,7 @@
         {% endif %}
     {% endif %}
     <div class="reservierung-form">
-        <form action="index.php?route=reservierung-add" method="POST" name="reservierung-form">
+        <form action="{{ route('reservierung-add') }}" method="POST" name="reservierung-form">
             <div>
                 <label for="name">
                     Ihr Name<br>

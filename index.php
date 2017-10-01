@@ -17,7 +17,6 @@ if (Tools::getValue('route') !== false) {
     $route = Tools::getValue('route') ;
 }
 
-
 $routing = new Routing(new Configuration());
 try {
     $routing->startRoute($route);

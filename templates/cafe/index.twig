@@ -7,8 +7,8 @@
 <header>
     <div class="header-content">
         {% if loggedInUser is defined %}
-            <p class="header-login"><a href="{{ 'loggedin' | route }}">Seitenverwaltung</a></p>
-            <p class="header-logout"><a href="{{ 'logout' | route }}">Logout</a></p>
+            <p class="header-login"><a href="{{ route('loggedin') }}">Seitenverwaltung</a></p>
+            <p class="header-logout"><a href="{{ route('logout') }}">Logout</a></p>
         {% endif %}
         <p class="header-adress">Wilhelmstraße 7 <span>06406 Bernburg</span></p>
         <p class="header-open">Do-Di 10-19Uhr</p>
@@ -17,12 +17,12 @@
 </header>
 
 <div class="navigation">
-    <p><a href="index.php" class="{% if page == 'home' %}active{% endif %}">Zu Hause</a></p>
-    <p><a href="index.php?route=philosophie" class="{% if page == 'philosophie' %}active{% endif %}">Philosophie</a></p>
+    <p><a href="{{ route('index') }}" class="{% if page == 'home' %}active{% endif %}">Zu Hause</a></p>
+    <p><a href="{{ route('philosophie') }}" class="{% if page == 'philosophie' %}active{% endif %}">Philosophie</a></p>
     <p><a href="{{ templateDir }}/document/speisekarte.pdf" target="_blank">Speisekarte</a></p>
-    <p><a href="#">Impressionen</a></p>
-    <p><a href="index.php?route=anfahrt" class="{% if page == 'anfahrt' %}active{% endif %}">Anfahrt</a></p>
-    <p><a href="index.php?route=impressum" class="{% if page == 'impressum' %}active{% endif %}">Kontakt & Impressum</a>
+    <p><a href="{{ route('galerie') }}">Impressionen</a></p>
+    <p><a href="{{ route('anfahrt') }}" class="{% if page == 'anfahrt' %}active{% endif %}">Anfahrt</a></p>
+    <p><a href="{{ route('impressum') }}" class="{% if page == 'impressum' %}active{% endif %}">Kontakt & Impressum</a>
     </p>
 </div>
 

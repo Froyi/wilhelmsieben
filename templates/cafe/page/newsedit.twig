@@ -1,0 +1,28 @@
+<div class="newsedit-container page-container">
+    <div class="loggedin-banderole banderole"><h1>News editieren</h1></div>
+    
+    <div><a href="{{ route('loggedin') }}">Zurück</a></div>
+
+
+    <div class="newsedit-form-container">
+        <form action="{{ route('news-edit-save') }}" method="POST" name="newsedit">
+            <div>
+                <label for="title">
+                    Titel<br>
+                    <input name="title" required {% if news is defined %} value="{{ news.getTitle }}"{% endif %}/>
+                </label>
+            </div>
+
+            <div>
+                <label for="facebook-link">
+                    Facebook Link<br>
+                    <input name="facebook-link" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
+                </label>
+            </div>
+
+            <div>
+                <input type="submit" name="submit" value="senden">
+            </div>
+        </form>
+    </div>
+</div>

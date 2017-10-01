@@ -73,11 +73,11 @@ class ViewRenderer
 
         $this->viewRenderer->addFilter($weekDayShortFilter);
 
-        $routeFilter = new \Twig_SimpleFilter('route', function ($route) {
-            return Tools::getRouteUrl($route);
+        $routeFilter = new \Twig_SimpleFunction('route', function (string $route = '', $parameter = []) {
+            return Tools::getRouteUrl($route, $parameter);
         });
 
-        $this->viewRenderer->addFilter($routeFilter);
+        $this->viewRenderer->addFunction($routeFilter);
     }
 
     /**
