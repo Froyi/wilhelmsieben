@@ -89,6 +89,13 @@ class NewsService
         return (count($this->getNewsWithMinNewsShownAndMaxAgeOfNews($minNewsShown, $maxAgeOfNews)) < count($this->getAllNewsOrderByDate()));
     }
 
+    public function getNewsByParams(array $parameter): ?News
+    {
+        $objectParameter = (object) $parameter;
+
+        return $this->getNewsWithAllAttributes($objectParameter);
+    }
+
     protected function getNewsWithAllAttributes($newsResult): News
     {
         if (isset($newsResult->eventId) && !empty($newsResult->eventId)) {

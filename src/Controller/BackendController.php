@@ -74,5 +74,6 @@ class BackendController extends DefaultController
 
     public function newsEditSaveAction(): void
     {
+
     }
 }
