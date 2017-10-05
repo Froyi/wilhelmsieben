@@ -5,7 +5,7 @@ namespace Project\Module\Database;
 /**
  * Class Query
  *
- * TYPE | TABLE |
+ * TYPE | TABLE | WHERE | ORDER | LIMIT
  *
  * @package Project\Module\Database
  */
@@ -14,18 +14,36 @@ class Query
     const SELECT = 'SELECT ';
     const UPDATE = 'UPDATE ';
     const DELETE = 'DELETE ';
+    const WHERE = 'WHERE ';
+    const AND = 'AND ';
+    const OR = 'OR ';
+    const LIMIT = 'LIMIT ';
+    const ORDERBY = 'ORDER BY ';
+    const ASC = 'ASC';
+    const DESC = 'DESC';
 
     /** @var  string $queryString */
     protected $queryString;
 
-    /** @var string $table */
-    protected $table;
+    /** @var array $tableArray */
+    protected $tableArray = [];
 
     /** @var  string $type */
     protected $type;
+
+    /** @var array $entityArray */
+    protected $entityArray = [];
+
+    /** @var  string $where */
+    protected $where;
+
+    /**
+     * Query constructor.
+     * @param string $table
+     */
     public function __construct(string $table)
     {
-        $this->table = $table;
+        $this->addTable($table);
     }
 
     public function addType(string $type): void
@@ -33,68 +51,51 @@ class Query
         $this->type = $type;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function fetchAll(string $table): array
+    public function addEntityToType(string $entity): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table);
-
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
+        $this->entityArray[] = $entity;
     }
 
-    public function fetchAllOrderBy(string $table, string $orderBy, string $orderKind = 'ASC'): array
+    public function addTable(string $table): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind);
-
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
+        $this->tableArray[] = $table;
     }
 
-    public function fetchLimitedOrderBy(string $table, string $orderBy, string $orderKind = 'ASC', int $limit = 1): array
+    public function where(string $entity, string $operator, $value): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
+        if (is_string($value) === true) {
+            $value = '`' . $value . '`';
+        }
 
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
+        $this->where .= self::WHERE . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
-    public function fetchByDateParameterFuture(string $table, string $dateName, string $dateValue, string $orderBy, string $orderKind = 'ASC', int $limit = 1)
+    public function andWhere(string $entity, string $operator, $value): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $dateName . ' > "' . $dateValue . '" ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
+        if (is_string($value) === true) {
+            $value = '`' . $value . '`';
+        }
 
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
+        $this->where .= self:: AND . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
-
-    public function fetchById(string $table, string $idName, string $idValue)
+    public function orWhere(string $entity, string $operator, $value): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $idName . ' = "' . $idValue . '"');
+        if (is_string($value) === true) {
+            $value = '`' . $value . '`';
+        }
 
-        return $sql->fetch(\PDO::FETCH_OBJ);
+        $this->where .= self:: OR . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
-    public function fetchByStringParameter(string $table, $parameter, $value)
+    public function limit(int $limit): void
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $parameter. ' = "' . $value . '"');
-
-        $result = $sql->fetchAll(\PDO::FETCH_OBJ);
-
-        return $result;
+        $this->limit = $limit;
     }
+
+    public function orderBy(string $entity, string $order): void
+    {
+        $this->orderBy = self::ORDERBY . ' ' . $entity . ' ' . $order;
+    }
+
 }
