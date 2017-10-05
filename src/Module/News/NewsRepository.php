@@ -14,6 +14,8 @@ class NewsRepository
 
     const ORDERKIND = 'DESC';
 
+    const IDENTIFIER = 'newsId';
+
     /** @var  Database $database */
     protected $database;
 
@@ -26,16 +28,29 @@ class NewsRepository
         $this->database = $database;
     }
 
+
     /**
      * @return array
      */
     public function getAllNews(): array
     {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
         return $this->database->fetchAllOrderBy(self::TABLE, self::ORDERBY, self::ORDERKIND);
     }
 
     public function getNewsByNewsId(Id $newsId)
     {
         return $this->database->fetchById(self::TABLE, 'newsId', $newsId->toString());
+    }
+
+    public function saveNews(News $news)
+    {
+
+        $parameter = $news->extract();
+        if (!empty($this->getNewsByNewsId($news->getNewsId()))) {
+            $identifier = [self::IDENTIFIER => $news->getNewsId()];
+
+            $this->database->update(self::TABLE, $identifier, $parameter);
+        }
     }
 }

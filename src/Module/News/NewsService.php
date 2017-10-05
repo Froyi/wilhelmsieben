@@ -46,6 +46,7 @@ class NewsService
     {
         $newsResult = $this->newsRepository->getNewsByNewsId($newsId);
 
+        if ()
         return $this->getNewsWithAllAttributes($newsResult);
     }
 
@@ -93,7 +94,23 @@ class NewsService
     {
         $objectParameter = (object) $parameter;
 
+        if (!isset($parameter->newsId) || (isset($parameter->newsId) && empty($parameter->newsId)))
+        {
+            $parameter->newsId = Id::generateId();
+        }
+
         return $this->getNewsWithAllAttributes($objectParameter);
+    }
+
+    public function saveNews(News $news): bool
+    {
+        if ($news->hasEvent() === true) {
+            $this->eventService->saveEvent($news->getEvent());
+        }
+
+        $this->newsRepository->saveNews($news);
+
+        return true;
     }
 
     protected function getNewsWithAllAttributes($newsResult): News

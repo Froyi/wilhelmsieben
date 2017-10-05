@@ -13,6 +13,9 @@ use Project\Module\GenericValueObject\Title;
 
 class News
 {
+
+    const ROWS = ['newsId', 'title', 'image', 'text', 'facebookLink', 'newsDate', 'eventId'];
+
     /** @var Id $newsId */
     protected $newsId;
 
@@ -128,5 +131,13 @@ class News
     public function hasEvent(): bool
     {
         return ($this->event !== null);
+    }
+
+    public function extract(): array
+    {
+        $newsExtract = [];
+
+
+        return $newsExtract;
     }
 }

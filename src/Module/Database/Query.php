@@ -2,54 +2,35 @@
 
 namespace Project\Module\Database;
 
-use Project\Configuration;
-
-class Database
+/**
+ * Class Query
+ *
+ * TYPE | TABLE |
+ *
+ * @package Project\Module\Database
+ */
+class Query
 {
-    /** @var  string $host */
-    protected $host;
+    const SELECT = 'SELECT ';
+    const UPDATE = 'UPDATE ';
+    const DELETE = 'DELETE ';
 
-    /** @var  string $user */
-    protected $user;
+    /** @var  string $queryString */
+    protected $queryString;
 
-    /** @var  string $password */
-    protected $password;
+    /** @var string $table */
+    protected $table;
 
-    /** @var  string $database */
-    protected $database;
-
-    /** @var  array $query */
-    protected $query;
-
-    /**
-     * @var \PDO $connection
-     */
-    protected $connection;
-
-    public function __construct(Configuration $configuration)
+    /** @var  string $type */
+    protected $type;
+    public function __construct(string $table)
     {
-        $databaseConfiguration = $configuration->getEntryByName('database');
-
-        $this->host = $databaseConfiguration['host'];
-        $this->user = $databaseConfiguration['user'];
-        $this->password = $databaseConfiguration['password'];
-        $this->database = $databaseConfiguration['database'];
-
-        $this->connect();
+        $this->table = $table;
     }
 
-    public function connect(): void
+    public function addType(string $type): void
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database /*. ';charset=UTF-8'*/;
-        $this->connection = new \PDO($dsn, $this->user, $this->password);
-    }
-
-    public function getNewSelectQuery(string $table)
-    {
-        $query = new Query($table);
-        $query->addType(Query::SELECT);
-
-        return $query;
+        $this->type = $type;
     }
 
 

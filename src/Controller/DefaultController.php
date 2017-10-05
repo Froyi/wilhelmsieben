@@ -42,7 +42,7 @@ class DefaultController
     {
         $this->configuration = new Configuration();
         $this->viewRenderer = new ViewRenderer($this->configuration);
-        $this->database = Database::getInstance();
+        $this->database = new Database($this->configuration);
         $this->userService = new UserService($this->database);
 
         if (Tools::getValue('userId') !== false) {
