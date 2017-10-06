@@ -91,11 +91,10 @@ class NewsService
 
     public function getNewsByParams(array $parameter): ?News
     {
-        $objectParameter = (object) $parameter;
+        $objectParameter = (object)$parameter;
 
-        if (!isset($parameter->newsId) || (isset($parameter->newsId) && empty($parameter->newsId)))
-        {
-            $parameter->newsId = Id::generateId();
+        if (!isset($objectParameter->newsId) || (isset($objectParameter->newsId) && empty($objectParameter->newsId))) {
+            $objectParameter->newsId = Id::generateId()->toString();
         }
 
         return $this->getNewsWithAllAttributes($objectParameter);
@@ -103,13 +102,11 @@ class NewsService
 
     public function saveNews(News $news): bool
     {
-        /*if ($news->hasEvent() === true) {
-            $this->eventService->saveEvent($news->getEvent());
-        }*/
+        /* if ($news->hasEvent() === true) {
+             // $this->eventService->saveEvent($news->getEvent());
+         }*/
 
-        $this->newsRepository->saveNews($news);
-
-        return true;
+        return $this->newsRepository->saveNews($news);
     }
 
     protected function getNewsWithAllAttributes($newsResult): News

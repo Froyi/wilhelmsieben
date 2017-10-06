@@ -74,6 +74,9 @@ class BackendController extends DefaultController
 
     public function newsEditSaveAction(): void
     {
-
+        $newsService = new NewsService($this->database, $this->eventService);
+        $news = $newsService->getNewsByParams($_POST);
+        $saved = $newsService->saveNews($news);
+        var_dump($saved);
     }
 }

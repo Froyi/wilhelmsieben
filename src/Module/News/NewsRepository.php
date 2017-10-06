@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\News;
 
@@ -48,14 +48,62 @@ class NewsRepository
         return $this->database->fetch($query);
     }
 
-    public function saveNews(News $news)
+    public function saveNews(News $news): bool
     {
-
-        /*$parameter = $news->extract();
         if (!empty($this->getNewsByNewsId($news->getNewsId()))) {
-            $identifier = [self::IDENTIFIER => $news->getNewsId()];
+            $query = $this->database->getNewUpdateQuery(self::TABLE);
+            $query->set('newsId', $news->getNewsId()->toString());
+            $query->set('title', $news->getTitle()->getTitle());
+            $query->set('text', $news->getText()->getText());
+            $query->set('newsDate', $news->getDate()->toString());
 
-            // $this->database->update(self::TABLE, $identifier, $parameter);
-        }*/
+            if ($news->hasEvent() === true) {
+                $query->set('eventId', $news->getEvent()->getEventId()->toString());
+            } else {
+                $query->set('eventId', '');
+            }
+
+            if ($news->getImage() !== null) {
+                $query->set('image', $news->getImage()->toString());
+            } else {
+                $query->set('image', '');
+            }
+
+            if ($news->getFacebookLink() !== null) {
+                $query->set('facebookLink', $news->getFacebookLink()->toString());
+            } else {
+                $query->set('facebookLink', '');
+            }
+
+            $query->where('newsId', '=', $news->getNewsId()->toString());
+
+            return $this->database->execute($query);
+        }
+
+        $query = $this->database->getNewInsertQuery(self::TABLE);
+        $query->insert('newsId', $news->getNewsId()->toString());
+        $query->insert('title', $news->getTitle()->getTitle());
+        $query->insert('text', $news->getText()->getText());
+        $query->insert('newsDate', $news->getDate()->toString());
+
+        if ($news->hasEvent() === true) {
+            $query->insert('eventId', $news->getEvent()->getEventId()->toString());
+        } else {
+            $query->insert('eventId', '');
+        }
+
+        if ($news->getImage() !== null) {
+            $query->insert('image', $news->getImage()->toString());
+        } else {
+            $query->insert('image', '');
+        }
+
+        if ($news->getFacebookLink() !== null) {
+            $query->insert('facebookLink', $news->getFacebookLink()->toString());
+        } else {
+            $query->insert('facebookLink', '');
+        }
+
+        return $this->database->execute($query);
     }
 }

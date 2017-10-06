@@ -13,6 +13,7 @@ class Query
 {
     const SELECT = 'SELECT ';
     const UPDATE = 'UPDATE ';
+    const INSERT = 'INSERT INTO ';
     const DELETE = 'DELETE ';
     const FROM = 'FROM ';
     const WHERE = 'WHERE ';
@@ -22,6 +23,8 @@ class Query
     const ORDERBY = 'ORDER BY ';
     const ASC = 'ASC';
     const DESC = 'DESC';
+    const SET = 'SET ';
+    const VALUES = 'VALUES';
 
     /** @var array $tableArray */
     protected $tableArray = [];
@@ -40,6 +43,12 @@ class Query
 
     /** @var  string $limit */
     protected $limit;
+
+    /** @var  string $set */
+    protected $set;
+
+    /** @var array $insert */
+    protected $insert = [];
 
     /**
      * Query constructor.
@@ -77,7 +86,7 @@ class Query
     public function andWhere(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
-            $value = '`' . $value . '`';
+            $value = '\'' . $value . '\'';
         }
 
         $this->where .= self:: AND . $entity . ' ' . $operator . ' ' . $value . ' ';
@@ -86,10 +95,33 @@ class Query
     public function orWhere(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
-            $value = '`' . $value . '`';
+            $value = '\'' . $value . '\'';
         }
 
         $this->where .= self:: OR . $entity . ' ' . $operator . ' ' . $value . ' ';
+    }
+
+    public function set(string $entity, $value): void
+    {
+        if (is_string($value) === true) {
+            $value = '\'' . $value . '\'';
+        }
+        if (!empty($this->set)) {
+            $this->set .= ', ';
+        }
+        if ($value === null) {
+            $this->set .= $entity . ' = NULL ';
+        } else {
+
+            $this->set .= $entity . ' = ' . $value . ' ';
+        }
+    }
+
+    public function insert(string $entity, $value): void
+    {
+        if (!isset($this->insert[$entity])) {
+            $this->insert[$entity] = $value;
+        }
     }
 
     public function limit(int $limit): void
@@ -113,6 +145,16 @@ class Query
                 $queryString .= $this->where;
                 $queryString .= $this->orderBy;
                 $queryString .= $this->limit;
+                break;
+            case self::UPDATE:
+                $queryString .= self::UPDATE . $this->getTables();
+                $queryString .= self::SET . $this->set;
+                $queryString .= $this->where;
+                break;
+            case self::INSERT:
+                $queryString .= self::INSERT . $this->getTables();
+                $queryString .= $this->getInserts();
+                break;
         }
 
         return $queryString;
@@ -136,5 +178,28 @@ class Query
         }
 
         return implode(',', $this->tableArray) . ' ';
+    }
+
+    protected function getInserts(): string
+    {
+        $entities = '';
+        $values = '';
+        foreach ($this->insert as $entity => $value) {
+            if (!empty($entities)) {
+                $entities .= ', ';
+                $values .= ', ';
+            }
+
+            $entities .= $entity;
+
+            if (is_string($value) === true) {
+                $value = '\'' . $value . '\'';
+            }
+            $values .= $value;
+        }
+
+        $insertString = "(" . $entities . ") " . self::VALUES . "(" . $values . ")";
+
+        return $insertString;
     }
 }

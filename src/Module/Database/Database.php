@@ -62,6 +62,31 @@ class Database
     }
 
     /**
+     * @param string $table
+     * @return Query
+     */
+    public function getNewUpdateQuery(string $table): Query
+    {
+        $query = new Query($table);
+        $query->addType(Query::UPDATE);
+
+        return $query;
+    }
+
+    /**
+     * @param string $table
+     * @return Query
+     */
+    public function getNewInsertQuery(string $table): Query
+    {
+        $query = new Query($table);
+        $query->addType(Query::INSERT);
+
+        return $query;
+    }
+
+
+    /**
      * @param Query $query
      * @return array
      */
@@ -83,63 +108,14 @@ class Database
         return $sql->fetch(\PDO::FETCH_OBJ);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function fetchAllOrderBy(string $table, string $orderBy, string $orderKind = 'ASC'): array
+    /**
+     * @param Query $query
+     * @return bool
+     */
+    public function execute(Query $query): bool
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind);
+        $sql = $this->connection->prepare($query->getQuery());
 
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
-    }
-
-    public function fetchLimitedOrderBy(string $table, string $orderBy, string $orderKind = 'ASC', int $limit = 1): array
-    {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
-
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
-    }
-
-    public function fetchByDateParameterFuture(string $table, string $dateName, string $dateValue, string $orderBy, string $orderKind = 'ASC', int $limit = 1)
-    {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $dateName . ' > "' . $dateValue . '" ORDER BY ' . $orderBy . ' ' . $orderKind . ' LIMIT ' . $limit);
-
-        return $sql->fetchAll(\PDO::FETCH_OBJ);
-    }
-
-
-    public function fetchById(string $table, string $idName, string $idValue)
-    {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $idName . ' = "' . $idValue . '"');
-
-        return $sql->fetch(\PDO::FETCH_OBJ);
-    }
-
-    public function fetchByStringParameter(string $table, $parameter, $value)
-    {
-        $sql = $this->connection->query('SELECT * FROM ' . $table . ' WHERE ' . $parameter. ' = "' . $value . '"');
-
-        $result = $sql->fetchAll(\PDO::FETCH_OBJ);
-
-        return $result;
+        return $sql->execute();
     }
 }

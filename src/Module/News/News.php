@@ -112,7 +112,7 @@ class News
     /**
      * @return Event
      */
-    public function getEvent(): Event
+    public function getEvent(): ?Event
     {
         return $this->event;
     }

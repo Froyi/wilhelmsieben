@@ -45,4 +45,13 @@ class NewsFactory
 
         return $news;
     }
+
+    protected function isObjectValid($object): bool
+    {
+        if (!isset($object->newsId) || empty($object->newsId)) {
+            return false;
+        }
+
+        return true;
+    }
 }

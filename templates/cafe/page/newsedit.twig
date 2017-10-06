@@ -1,6 +1,6 @@
 <div class="newsedit-container page-container">
     <div class="loggedin-banderole banderole"><h1>News editieren</h1></div>
-    
+
     <div><a href="{{ route('loggedin') }}">Zurück</a></div>
 
 
@@ -14,12 +14,28 @@
             </div>
 
             <div>
-                <label for="facebook-link">
+                <label for="facebookLink">
                     Facebook Link<br>
-                    <input name="facebook-link" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
+                    <input name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
                 </label>
             </div>
 
+            <div>
+                <label for="text">
+                    Facebook Link<br>
+                    <textarea name="text" cols="30"
+                              rows="10">{% if news is defined %}{{ news.getText }}{% endif %}</textarea>
+                </label>
+            </div>
+
+            <div>
+                <input type="hidden" name="newsDate" value="{{ "now"|date("Y-m-d") }}">
+                {% if news is defined %}
+                    <input type="hidden" name="newsId" value="{{ news.getNewsId }}">
+                    <input type="hidden" name="image" value="{{ news.getImage }}">
+                    <input type="hidden" name="eventId" value="{{ news.getEvent.getEventId }}">
+                {% endif %}
+            </div>
             <div>
                 <input type="submit" name="submit" value="senden">
             </div>
