@@ -29,11 +29,17 @@ class UserRepository
 
     public function getUserByEmail(Email $email)
     {
-        return $this->database->fetchByStringParameter(self::TABLE, 'email', $email->getEmail());
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('email', '=', $email->getEmail());
+
+        return $this->database->fetch($query);
     }
 
     public function getUserByUserId(Id $userId)
     {
-        return $this->database->fetchById(self::TABLE, self::ORDERBY, $userId->toString());
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('userId', '=', $userId->toString());
+
+        return $this->database->fetch($query);
     }
 }

@@ -27,11 +27,11 @@ class UserService
     {
         $userResult = $this->userRepository->getUserByEmail($email);
 
-        if (count($userResult) !== 1) {
+        if (empty($userResult)) {
             return null;
         }
 
-        return $this->userFactory->getLoggedInUserByPassword($userResult[0], $password);
+        return $this->userFactory->getLoggedInUserByPassword($userResult, $password);
     }
 
     public function getLogedInUserByUserId(Id $userId): ?User

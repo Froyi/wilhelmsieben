@@ -14,6 +14,7 @@ class Query
     const SELECT = 'SELECT ';
     const UPDATE = 'UPDATE ';
     const DELETE = 'DELETE ';
+    const FROM = 'FROM ';
     const WHERE = 'WHERE ';
     const AND = 'AND ';
     const OR = 'OR ';
@@ -21,9 +22,6 @@ class Query
     const ORDERBY = 'ORDER BY ';
     const ASC = 'ASC';
     const DESC = 'DESC';
-
-    /** @var  string $queryString */
-    protected $queryString;
 
     /** @var array $tableArray */
     protected $tableArray = [];
@@ -36,6 +34,12 @@ class Query
 
     /** @var  string $where */
     protected $where;
+
+    /** @var  string $orderBy */
+    protected $orderBy;
+
+    /** @var  string $limit */
+    protected $limit;
 
     /**
      * Query constructor.
@@ -64,7 +68,7 @@ class Query
     public function where(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
-            $value = '`' . $value . '`';
+            $value = '\'' . $value . '\'';
         }
 
         $this->where .= self::WHERE . $entity . ' ' . $operator . ' ' . $value . ' ';
@@ -90,12 +94,47 @@ class Query
 
     public function limit(int $limit): void
     {
-        $this->limit = $limit;
+        $this->limit = self::LIMIT . $limit;
     }
 
     public function orderBy(string $entity, string $order): void
     {
-        $this->orderBy = self::ORDERBY . ' ' . $entity . ' ' . $order;
+        $this->orderBy = self::ORDERBY . ' ' . $entity . ' ' . $order . ' ';
     }
 
+    public function getQuery(): string
+    {
+        $queryString = '';
+
+        switch ($this->type) {
+            case self::SELECT:
+                $queryString .= self::SELECT . $this->getEntities();
+                $queryString .= self::FROM . $this->getTables();
+                $queryString .= $this->where;
+                $queryString .= $this->orderBy;
+                $queryString .= $this->limit;
+        }
+
+        return $queryString;
+    }
+
+    protected function getEntities(): string
+    {
+        $entities = '* ';
+
+        if (empty($this->entityArray)) {
+            return $entities;
+        }
+
+        return implode(',', $this->entityArray) . ' ';
+    }
+
+    protected function getTables(): string
+    {
+        if (empty($this->tableArray)) {
+            throw new \RuntimeException('Es wurde keine Tabelle angegeben!');
+        }
+
+        return implode(',', $this->tableArray) . ' ';
+    }
 }

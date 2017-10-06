@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Project\Module\SoupCalendar;
 
@@ -31,7 +31,10 @@ class SoupCalendarRepository
      */
     public function getAllSoupCalendarEntries(): array
     {
-        return $this->database->fetchAllOrderBy(self::TABLE, self::ORDERBY, self::ORDERKIND);
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->orderBy(self::ORDERBY, self::ORDERKIND);
+
+        return $this->database->fetchAll($query);
     }
 
     /**
@@ -39,6 +42,9 @@ class SoupCalendarRepository
      */
     public function getDailySoup(): array
     {
-        return $this->database->fetchByStringParameter(self::TABLE, 'soupDate', Date::fromValue('now')->toString());
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('soupDate', '=', Date::fromValue('now')->toString());
+
+        return $this->database->fetchAll($query);
     }
 }

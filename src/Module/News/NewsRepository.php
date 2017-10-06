@@ -35,22 +35,27 @@ class NewsRepository
     public function getAllNews(): array
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
-        return $this->database->fetchAllOrderBy(self::TABLE, self::ORDERBY, self::ORDERKIND);
+        $query->orderBy(self::ORDERBY, self::ORDERKIND);
+
+        return $this->database->fetchAll($query);
     }
 
     public function getNewsByNewsId(Id $newsId)
     {
-        return $this->database->fetchById(self::TABLE, 'newsId', $newsId->toString());
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('newsId', '=', $newsId->toString());
+
+        return $this->database->fetch($query);
     }
 
     public function saveNews(News $news)
     {
 
-        $parameter = $news->extract();
+        /*$parameter = $news->extract();
         if (!empty($this->getNewsByNewsId($news->getNewsId()))) {
             $identifier = [self::IDENTIFIER => $news->getNewsId()];
 
-            $this->database->update(self::TABLE, $identifier, $parameter);
-        }
+            // $this->database->update(self::TABLE, $identifier, $parameter);
+        }*/
     }
 }

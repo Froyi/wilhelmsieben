@@ -46,7 +46,6 @@ class NewsService
     {
         $newsResult = $this->newsRepository->getNewsByNewsId($newsId);
 
-        if ()
         return $this->getNewsWithAllAttributes($newsResult);
     }
 
@@ -104,9 +103,9 @@ class NewsService
 
     public function saveNews(News $news): bool
     {
-        if ($news->hasEvent() === true) {
+        /*if ($news->hasEvent() === true) {
             $this->eventService->saveEvent($news->getEvent());
-        }
+        }*/
 
         $this->newsRepository->saveNews($news);
 

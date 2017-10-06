@@ -31,11 +31,22 @@ class EventRepository
     {
         $now = Datetime::fromValue('now');
 
-        return $this->database->fetchByDateParameterFuture(self::TABLE, self::EVENT_DATE_NAME, $now->toString(), self::ORDERBY, self::ORDERKIND, $limit);
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where(self::EVENT_DATE_NAME, '>', $now->toString());
+        $query->orderBy(self::ORDERBY, self::ORDERKIND);
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $this->database->fetchAll($query);
     }
 
     public function getEventByEventId(Id $eventId)
     {
-        return $this->database->fetchById(self::TABLE, self::EVENT_ID_NAME, $eventId->toString());
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where(self::EVENT_ID_NAME, '=', $eventId->toString());
+
+        return $this->database->fetch($query);
     }
 }

@@ -16,6 +16,8 @@ class GalerieRepository
 
     const IMAGE_ORDERBY = 'imageId';
 
+    const ALBUM_ID = 'albumId';
+
     const ALBUM_ORDERKIND = 'DESC';
 
     const IMAGE_ORDERKIND = 'ASC';
@@ -30,11 +32,18 @@ class GalerieRepository
 
     public function getAllGaleries(): array
     {
-        return $this->database->fetchAllOrderBy(self::ALBUM_TABLE, self::ALBUM_ORDERBY, self::ALBUM_ORDERKIND);
+        $query = $this->database->getNewSelectQuery(self::ALBUM_TABLE);
+        $query->orderBy(self::ALBUM_ORDERBY, self::ALBUM_ORDERKIND);
+
+        return $this->database->fetchAll($query);
     }
 
     public function getImagesForAlbum(Id $albumId): array
     {
-        return $this->database->fetchByStringParameter(self::IMAGE_TABLE, 'albumId', $albumId->toString());
+        $query = $this->database->getNewSelectQuery(self::IMAGE_TABLE);
+        $query->where(self::ALBUM_ID, '=', $albumId->toString());
+        $query->orderBy(self::IMAGE_ORDERBY, self::IMAGE_ORDERKIND);
+
+        return $this->database->fetchAll($query);
     }
 }

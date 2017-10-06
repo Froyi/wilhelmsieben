@@ -21,11 +21,13 @@ class Database
     /** @var  array $query */
     protected $query;
 
-    /**
-     * @var \PDO $connection
-     */
+    /** @var \PDO $connection */
     protected $connection;
 
+    /**
+     * Database constructor.
+     * @param Configuration $configuration
+     */
     public function __construct(Configuration $configuration)
     {
         $databaseConfiguration = $configuration->getEntryByName('database');
@@ -38,13 +40,20 @@ class Database
         $this->connect();
     }
 
+    /**
+     *
+     */
     public function connect(): void
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database /*. ';charset=UTF-8'*/;
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database;
         $this->connection = new \PDO($dsn, $this->user, $this->password);
     }
 
-    public function getNewSelectQuery(string $table)
+    /**
+     * @param string $table
+     * @return Query
+     */
+    public function getNewSelectQuery(string $table): Query
     {
         $query = new Query($table);
         $query->addType(Query::SELECT);
@@ -52,32 +61,49 @@ class Database
         return $query;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function fetchAll(string $table): array
+    /**
+     * @param Query $query
+     * @return array
+     */
+    public function fetchAll(Query $query): array
     {
-        $sql = $this->connection->query('SELECT * FROM ' . $table);
+        $sql = $this->connection->query($query->getQuery());
 
         return $sql->fetchAll(\PDO::FETCH_OBJ);
     }
+
+    /**
+     * @param Query $query
+     * @return array
+     */
+    public function fetch(Query $query)
+    {
+        $sql = $this->connection->query($query->getQuery());
+
+        return $sql->fetch(\PDO::FETCH_OBJ);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function fetchAllOrderBy(string $table, string $orderBy, string $orderKind = 'ASC'): array
     {
