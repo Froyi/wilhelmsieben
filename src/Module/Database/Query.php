@@ -171,6 +171,9 @@ class Query
         return implode(',', $this->entityArray) . ' ';
     }
 
+    /**
+     * @return string
+     */
     protected function getTables(): string
     {
         if (empty($this->tableArray)) {
@@ -180,6 +183,9 @@ class Query
         return implode(',', $this->tableArray) . ' ';
     }
 
+    /**
+     * @return string
+     */
     protected function getInserts(): string
     {
         $entities = '';
@@ -198,8 +204,6 @@ class Query
             $values .= $value;
         }
 
-        $insertString = "(" . $entities . ") " . self::VALUES . "(" . $values . ")";
-
-        return $insertString;
+        return "(" . $entities . ") " . self::VALUES . "(" . $values . ")";
     }
 }

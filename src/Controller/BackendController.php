@@ -76,7 +76,9 @@ class BackendController extends DefaultController
     {
         $newsService = new NewsService($this->database, $this->eventService);
         $news = $newsService->getNewsByParams($_POST);
-        $saved = $newsService->saveNews($news);
-        var_dump($saved);
+        if ($newsService->saveNews($news) === true) {
+            $parameter = ['notificationCode' => 'newsEditSuccess', 'notificationStatus' => 'success'];
+            header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+        }
     }
 }

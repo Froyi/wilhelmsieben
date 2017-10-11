@@ -5,6 +5,7 @@ namespace Project\Module\News;
 
 use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\Date;
+use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\GenericValueObject\Link;
@@ -18,7 +19,7 @@ class NewsFactory
         $newsId = Id::fromString($object->newsId);
         $title = Title::fromString($object->title);
         $text = Text::fromString($object->text);
-        $newsDate = Date::fromValue($object->newsDate);
+        $newsDate = Datetime::fromValue($object->newsDate);
 
         $news = new News($newsId, $title, $text, $newsDate);
 

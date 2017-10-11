@@ -29,7 +29,7 @@
             </div>
 
             <div>
-                <input type="hidden" name="newsDate" value="{{ "now"|date("Y-m-d") }}">
+                <input type="hidden" name="newsDate" value="{{ "now"|date("Y-m-d H:i:s") }}">
                 {% if news is defined %}
                     <input type="hidden" name="newsId" value="{{ news.getNewsId }}">
                     <input type="hidden" name="image" value="{{ news.getImage }}">

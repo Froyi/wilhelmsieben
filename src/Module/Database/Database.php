@@ -99,7 +99,7 @@ class Database
 
     /**
      * @param Query $query
-     * @return array
+     * @return mixed
      */
     public function fetch(Query $query)
     {

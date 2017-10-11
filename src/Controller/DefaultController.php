@@ -8,6 +8,7 @@ use Project\Module\Event\EventService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\User\User;
 use Project\Module\User\UserService;
+use Project\Utilities\Notification;
 use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
 
@@ -35,6 +36,9 @@ class DefaultController
     /** @var  EventService $eventService */
     protected $eventService;
 
+    /** @var  array $notifications */
+    protected $notifications;
+
     /**
      * DefaultController constructor.
      */
@@ -44,11 +48,14 @@ class DefaultController
         $this->viewRenderer = new ViewRenderer($this->configuration);
         $this->database = new Database($this->configuration);
         $this->userService = new UserService($this->database);
+        $this->notification = new Notification($this->configuration);
 
         if (Tools::getValue('userId') !== false) {
             $userId = Id::fromString(Tools::getValue('userId'));
             $this->loggedInUser = $this->userService->getLogedInUserByUserId($userId);
         }
+
+        $this->setNotifications();
 
         $this->setDefaultViewConfig();
     }
@@ -97,6 +104,13 @@ class DefaultController
             $this->viewRenderer->renderTemplate();
         } catch (\InvalidArgumentException $error) {
             $this->notFoundAction();
+        }
+    }
+
+    protected function setNotifications(): void
+    {
+        if (Tools::getValue('notificationType') !== false && Tools::getValue('notificationCode') !== false) {
+            $this->notifications[Tools::getValue('notificationType')] = Tools::getValue('notificationCode');
         }
     }
 }

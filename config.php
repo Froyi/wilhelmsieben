@@ -97,6 +97,12 @@ return [
     ],
     'news' => [
         'minNewsShown' => 2,
-        'maxAgeOfNewsInDays' => 5
+        'maxAgeOfNewsInDays' => 5,
+    ],
+    'notification' => [
+        'newsInsertSuccess' => 'Die News wurde erfolgreich gespeichert.',
+        'newsInsertError' => 'Bei der Erstellung der News gab es einen Fehler',
+        'newsEditSuccess' => 'Die News wurde erfolgreich bearbeitet.',
+        'newsEditError' => 'Bei der Bearbeitung der News gab es einen Fehler.',
     ]
 ];

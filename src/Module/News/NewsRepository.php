@@ -40,6 +40,10 @@ class NewsRepository
         return $this->database->fetchAll($query);
     }
 
+    /**
+     * @param Id $newsId
+     * @return mixed
+     */
     public function getNewsByNewsId(Id $newsId)
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
@@ -48,6 +52,10 @@ class NewsRepository
         return $this->database->fetch($query);
     }
 
+    /**
+     * @param News $news
+     * @return bool
+     */
     public function saveNews(News $news): bool
     {
         if (!empty($this->getNewsByNewsId($news->getNewsId()))) {
