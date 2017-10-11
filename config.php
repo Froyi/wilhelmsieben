@@ -89,6 +89,10 @@ return [
             'controller' => 'BackendController',
             'action' => 'newsEditSaveAction'
         ],
+        'news-delete' => [
+            'controller' => 'BackendController',
+            'action' => 'newsDeleteAction'
+        ],
     ],
     'slider' => [
         '/img/slider/teaser.jpg',
@@ -104,5 +108,7 @@ return [
         'newsInsertError' => 'Bei der Erstellung der News gab es einen Fehler',
         'newsEditSuccess' => 'Die News wurde erfolgreich bearbeitet.',
         'newsEditError' => 'Bei der Bearbeitung der News gab es einen Fehler.',
+        'newsDeleteSuccess' => 'Die News wurde erfolgreich gelöscht.',
+        'newsDeleteError' => 'Die News konnte nicht erfolgreich gelöscht werden.',
     ]
 ];

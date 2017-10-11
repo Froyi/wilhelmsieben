@@ -114,4 +114,13 @@ class NewsRepository
 
         return $this->database->execute($query);
     }
+
+    public function deleteNews(News $news): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::TABLE);
+        $query->where('newsId', '=', $news->getNewsId()->toString());
+
+        return $this->database->execute($query);
+
+    }
 }

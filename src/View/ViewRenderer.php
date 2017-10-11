@@ -78,6 +78,12 @@ class ViewRenderer
         });
 
         $this->viewRenderer->addFunction($routeFilter);
+
+        $shortenFilter = new \Twig_SimpleFunction('shortener', function (string $text = '', int $amount = 50, bool $points = true) {
+            return Tools::shortener($text, $amount, $points);
+        });
+
+        $this->viewRenderer->addFunction($shortenFilter);
     }
 
     /**

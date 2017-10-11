@@ -109,6 +109,11 @@ class NewsService
         return $this->newsRepository->saveNews($news);
     }
 
+    public function deleteNews(News $news): bool
+    {
+        return $this->newsRepository->deleteNews($news);
+    }
+
     protected function getNewsWithAllAttributes($newsResult): News
     {
         if (isset($newsResult->eventId) && !empty($newsResult->eventId)) {

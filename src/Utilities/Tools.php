@@ -46,4 +46,19 @@ class Tools
 
         return $url;
     }
+
+    public static function shortener(string $text, int $amount = 50, bool $points = true): string
+    {
+        if (strlen($text) <= $amount) {
+            return $text;
+        }
+
+        $newText = substr($text, 0, $amount);
+
+        if ($points === true) {
+            $newText .= ' ...';
+        }
+
+        return $newText;
+    }
 }

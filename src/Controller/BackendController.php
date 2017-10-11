@@ -42,6 +42,11 @@ class BackendController extends DefaultController
 
         $this->viewRenderer->addViewConfig('page', 'loggedin');
 
+        if ($this->notification->getNotificationMessage() !== null) {
+            $this->viewRenderer->addViewConfig('notificationStatus', $this->notification->getNotificationStatus());
+            $this->viewRenderer->addViewConfig('notificationMessage', $this->notification->getNotificationMessage());
+        }
+
         $this->viewRenderer->renderTemplate();
     }
 
@@ -76,9 +81,33 @@ class BackendController extends DefaultController
     {
         $newsService = new NewsService($this->database, $this->eventService);
         $news = $newsService->getNewsByParams($_POST);
+
+        $parameter = ['notificationCode' => 'newsEditError', 'notificationStatus' => 'error'];
         if ($newsService->saveNews($news) === true) {
             $parameter = ['notificationCode' => 'newsEditSuccess', 'notificationStatus' => 'success'];
-            header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+
         }
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+    }
+
+    public function newsDeleteAction(): void
+    {
+        $parameter = ['notificationCode' => 'newsDeleteError', 'notificationStatus' => 'error'];
+        if (Tools::getValue('newsId') !== false) {
+            $newsService = new NewsService($this->database, $this->eventService);
+
+            $newsId = Id::fromString(Tools::getValue('newsId'));
+
+            $news = $newsService->getNewsByNewsId($newsId);
+            if ($news !== null) {
+
+                if ($newsService->deleteNews($news) === true) {
+                    $parameter = ['notificationCode' => 'newsDeleteSuccess', 'notificationStatus' => 'success'];
+                }
+            }
+        }
+
+
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 }

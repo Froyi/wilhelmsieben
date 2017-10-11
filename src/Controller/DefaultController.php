@@ -36,8 +36,8 @@ class DefaultController
     /** @var  EventService $eventService */
     protected $eventService;
 
-    /** @var  array $notifications */
-    protected $notifications;
+    /** @var  Notification $notification */
+    protected $notification;
 
     /**
      * DefaultController constructor.
@@ -109,8 +109,9 @@ class DefaultController
 
     protected function setNotifications(): void
     {
-        if (Tools::getValue('notificationType') !== false && Tools::getValue('notificationCode') !== false) {
-            $this->notifications[Tools::getValue('notificationType')] = Tools::getValue('notificationCode');
+        if (Tools::getValue('notificationStatus') !== false && Tools::getValue('notificationCode') !== false) {
+            $this->notification->setNotificationCode(Tools::getValue('notificationCode'));
+            $this->notification->setNotificationStatus(Tools::getValue('notificationStatus'));
         }
     }
 }

@@ -1,19 +1,46 @@
-<div class="login-container page-container">
+<div class="loggedin-container page-container">
     <div class="loggedin-banderole banderole"><h1>Seitenverwaltung</h1></div>
 
+    {% if notificationMessage is defined %}
+        {% include ('module/notification.twig') %}
+    {% endif %}
+
     <div class="news-edit-container">
-        <a href="{{ route('news-edit') }}">News erstellen</a>
+        <div class="news-new">
+            <a href="{{ route('news-edit') }}" class="backend-button">News erstellen</a>
+        </div>
+
         <h2>News bearbeiten</h2>
 
-        {% if news|length > 0 %}
-            {% for singleNews in news %}
-                {% set newsId = {'newsId': singleNews.getNewsId} %}
+        <div class="news-edit">
+            {% if news|length > 0 %}
+                {% for singleNews in news %}
+                    <div class="single-news">
+                        {% set newsId = {'newsId': singleNews.getNewsId} %}
 
-                <div><a href="{{ route('news-edit', newsId) }}">{{ singleNews.getTitle }}</a></div>
-                <div>{{ singleNews.getDate }}</div>
+                        <a href="{{ route('news-edit', newsId) }}"></a>
 
-            {% endfor %}
-        {% endif %}
+                        <div class="news-image">
+                            <img src="{{ singleNews.getImage }}" alt="">
+                        </div>
+
+                        <div class="news-title">
+                            <h3>{{ singleNews.getTitle }}</h3>
+                        </div>
+
+                        <div class="news-text">
+                            <p>{{ shortener(singleNews.getText) }}</p>
+                        </div>
+
+                        <div class="news-date">{{ singleNews.getDate.getDateString }}</div>
+
+                        <div class="news-delete">
+                            <a href="{{ route('news-delete', newsId) }}" class="js-news-delete">News löschen</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 </div>
 

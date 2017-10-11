@@ -1,0 +1,92 @@
+.backend-button {
+    background-color: @color-1;
+    color: @color-4;
+    padding: 10px;
+    display: inline-block;
+}
+
+.loggedin-container {
+    h2 {
+        font-family: @font-family-2;
+        font-size: 1.5em;
+        border-bottom: 1px dashed @color-2;
+        font-weight: normal;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+}
+
+.news-edit-container {
+    margin-top: 20px;
+
+    .news-new {
+        text-align: right;
+    }
+
+    .news-edit {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .single-news {
+            width: 30%;
+            min-width: 30%;
+            border: 1px solid @color-2;
+            position: relative;
+            min-height: 250px;
+            overflow: hidden;
+            margin-bottom: 20px;
+
+            a {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+
+            .news-delete {
+                position: absolute;
+                height: 25px;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                bottom: 0;
+                background-color: @color-5;
+                text-align: center;
+
+                a {
+                    position: static;
+                    line-height: 25px;
+                    color: @color-4;
+                    width: 100%;
+                    display: inline-block;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            > div:not(.news-image) {
+                padding: 0 5px;
+            }
+
+            .news-image img {
+                width: 100%;
+            }
+
+            h3 {
+                font-size: 1em;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .news-date {
+                font-size: 14px;
+            }
+
+            .news-text {
+                margin-bottom: 10px;
+            }
+        }
+
+    }
+}
