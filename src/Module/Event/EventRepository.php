@@ -42,6 +42,13 @@ class EventRepository
         return $this->database->fetchAll($query);
     }
 
+    public function getAllEvents()
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+
+        return $this->database->fetchAll($query);
+    }
+
     public function getEventByEventId(Id $eventId)
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);

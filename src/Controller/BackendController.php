@@ -40,6 +40,13 @@ class BackendController extends DefaultController
 
         $this->viewRenderer->addViewConfig('galleries', $galleries);
 
+        /**
+         * Events holen
+         */
+        $allEvents = $this->eventService->getAllEvents();
+
+        $this->viewRenderer->addViewConfig('events', $allEvents);
+
         $this->viewRenderer->addViewConfig('page', 'loggedin');
 
         if ($this->notification->getNotificationMessage() !== null) {
@@ -106,7 +113,6 @@ class BackendController extends DefaultController
                 }
             }
         }
-
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }

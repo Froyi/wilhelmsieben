@@ -123,7 +123,7 @@ class Database
     public function execute(Query $query): bool
     {
         $sql = $this->connection->prepare($query->getQuery());
-        echo $query->getQuery();
+
         return $sql->execute();
     }
 }

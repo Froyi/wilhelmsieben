@@ -57,4 +57,17 @@ class EventService
 
         return $eventArray;
     }
+
+    public function getAllEvents(): array
+    {
+        $events = [];
+
+        $allEvents = $this->eventRepository->getAllEvents();
+
+        foreach ($allEvents as $event) {
+            $events[] = $this->eventFactory->getEventFromObject($event);
+        }
+
+        return $events;
+    }
 }

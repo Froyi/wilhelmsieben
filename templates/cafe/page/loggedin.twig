@@ -34,6 +34,12 @@
 
                         <div class="news-date">{{ singleNews.getDate.getDateString }}</div>
 
+                        {#{% if singleNews.hasEvent %}
+                            <div>Event: <br/>
+                                {{ singleNews.getEvent.getName }}
+                            </div>
+                        {% endif %}#}
+
                         <div class="news-delete">
                             <a href="{{ route('news-delete', newsId) }}" class="js-news-delete">News löschen</a>
                         </div>
