@@ -149,7 +149,7 @@ class BackendController extends DefaultController
     {
         $parameter = ['notificationCode' => 'eventDeleteError', 'notificationStatus' => 'error'];
         if (Tools::getValue('eventId') !== false) {
-            $eventId = Id::fromString(Tools::getValue('newsId'));
+            $eventId = Id::fromString(Tools::getValue('eventId'));
 
             $event = $this->eventService->getEventByEventId($eventId);
             if ($event !== null) {
