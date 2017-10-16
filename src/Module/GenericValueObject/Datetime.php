@@ -8,6 +8,8 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
 {
     const DATETIME_FORMAT = 'Y-m-d H:i';
 
+    const FORM_FORMAT = 'Y-m-d\TH:i:s';
+
     const DATE_FORMAT = 'Y-m-d';
 
     const DATETIME_OUTPUT_FORMAT = 'd.m.Y H:i';
@@ -17,6 +19,15 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
     const TIME_FORMAT = 'H:i';
 
     const WEEKDAY_FORMAT = 'w';
+
+    /**
+     * @param $datetime
+     * @return AbstractDatetime|DatetimeInterface
+     */
+    public static function fromValue($datetime)
+    {
+        return parent::fromValue($datetime);
+    }
 
     /**
      * @return string
@@ -35,20 +46,19 @@ class Datetime extends AbstractDatetime implements DatetimeInterface
     }
 
     /**
+     * @return string
+     */
+    public function getFormFormat(): string
+    {
+        return (string)date(self::FORM_FORMAT, $this->datetime);
+    }
+
+    /**
      * @return int
      */
     public function getWeekday(): int
     {
         return (int)date(self::WEEKDAY_FORMAT, $this->datetime);
-    }
-
-    /**
-     * @param $datetime
-     * @return AbstractDatetime|DatetimeInterface
-     */
-    public static function fromValue($datetime)
-    {
-        return parent::fromValue($datetime);
     }
 
     public function getDate(): string

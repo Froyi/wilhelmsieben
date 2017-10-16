@@ -93,6 +93,18 @@ return [
             'controller' => 'BackendController',
             'action' => 'newsDeleteAction'
         ],
+        'event-edit' => [
+            'controller' => 'BackendController',
+            'action' => 'eventEditAction'
+        ],
+        'event-edit-save' => [
+            'controller' => 'BackendController',
+            'action' => 'eventEditSaveAction'
+        ],
+        'event-delete' => [
+            'controller' => 'BackendController',
+            'action' => 'eventDeleteAction'
+        ],
     ],
     'slider' => [
         '/img/slider/teaser.jpg',
@@ -110,5 +122,11 @@ return [
         'newsEditError' => 'Bei der Bearbeitung der News gab es einen Fehler.',
         'newsDeleteSuccess' => 'Die News wurde erfolgreich gelöscht.',
         'newsDeleteError' => 'Die News konnte nicht erfolgreich gelöscht werden.',
+        'eventInsertSuccess' => 'Das Event wurde erfolgreich gespeichert.',
+        'eventInsertError' => 'Bei der Erstellung des Event gab es einen Fehler',
+        'eventEditSuccess' => 'Das Event wurde erfolgreich bearbeitet.',
+        'eventEditError' => 'Bei der Bearbeitung des Event gab es einen Fehler.',
+        'eventDeleteSuccess' => 'Das Event wurde erfolgreich gelöscht.',
+        'eventDeleteError' => 'Das Event konnte nicht erfolgreich gelöscht werden.',
     ]
 ];

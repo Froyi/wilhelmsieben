@@ -102,9 +102,11 @@ class NewsService
 
     public function saveNews(News $news): bool
     {
-        /* if ($news->hasEvent() === true) {
-             // $this->eventService->saveEvent($news->getEvent());
-         }*/
+        if ($news->hasEvent() === true) {
+            $this->eventService->updateNewsInEvent($news->getEvent(), $news->getNewsId());
+        } else {
+            $this->eventService->updateNewsInEvent($news->getEvent());
+        }
 
         return $this->newsRepository->saveNews($news);
     }

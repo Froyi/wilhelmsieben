@@ -45,7 +45,7 @@ class BackendController extends DefaultController
          */
         $allEvents = $this->eventService->getAllEvents();
 
-        $this->viewRenderer->addViewConfig('events', $allEvents);
+        $this->viewRenderer->addViewConfig('allEvents', $allEvents);
 
         $this->viewRenderer->addViewConfig('page', 'loggedin');
 
@@ -110,6 +110,51 @@ class BackendController extends DefaultController
 
                 if ($newsService->deleteNews($news) === true) {
                     $parameter = ['notificationCode' => 'newsDeleteSuccess', 'notificationStatus' => 'success'];
+                }
+            }
+        }
+
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+    }
+
+    public function eventEditAction(): void
+    {
+        if (Tools::getValue('eventId') !== false) {
+            $eventId = Id::fromString(Tools::getValue('eventId'));
+
+            $event = $this->eventService->getEventByEventId($eventId);
+
+            if ($event !== null) {
+                $this->viewRenderer->addViewConfig('event', $event);
+            }
+        }
+
+        $this->viewRenderer->addViewConfig('page', 'eventedit');
+        $this->viewRenderer->renderTemplate();
+    }
+
+    public function eventEditSaveAction(): void
+    {
+        $event = $this->eventService->getEventByParams($_POST);
+
+        $parameter = ['notificationCode' => 'eventEditError', 'notificationStatus' => 'error'];
+        if ($this->eventService->saveEvent($event) === true) {
+            $parameter = ['notificationCode' => 'eventEditSuccess', 'notificationStatus' => 'success'];
+
+        }
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+    }
+
+    public function eventDeleteAction(): void
+    {
+        $parameter = ['notificationCode' => 'eventDeleteError', 'notificationStatus' => 'error'];
+        if (Tools::getValue('eventId') !== false) {
+            $eventId = Id::fromString(Tools::getValue('newsId'));
+
+            $event = $this->eventService->getEventByEventId($eventId);
+            if ($event !== null) {
+                if ($this->eventService->deleteEvent($event) === true) {
+                    $parameter = ['notificationCode' => 'eventDeleteSuccess', 'notificationStatus' => 'success'];
                 }
             }
         }

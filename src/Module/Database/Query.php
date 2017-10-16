@@ -101,7 +101,7 @@ class Query
         $this->where .= self:: OR . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
-    public function set(string $entity, $value): void
+    public function set(string $entity, $value = null): void
     {
         if (is_string($value) === true) {
             $value = '\'' . $value . '\'';

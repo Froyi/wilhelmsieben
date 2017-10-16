@@ -34,19 +34,51 @@
 
                         <div class="news-date">{{ singleNews.getDate.getDateString }}</div>
 
-                        {#{% if singleNews.hasEvent %}
+                        {% if singleNews.hasEvent %}
                             <div>Event: <br/>
                                 {{ singleNews.getEvent.getName }}
                             </div>
-                        {% endif %}#}
+                        {% endif %}
 
                         <div class="news-delete">
                             <a href="{{ route('news-delete', newsId) }}" class="js-news-delete">News löschen</a>
                         </div>
                     </div>
                 {% endfor %}
+            {% else %}
+                <div>Es gibt keine News.</div>
             {% endif %}
         </div>
+    </div>
+
+    <div class="event-edit-container">
+        <div class="event-new">
+            <a href="{{ route('event-edit') }}" class="backend-button">Event erstellen</a>
+        </div>
+
+        <h2>Events bearbeiten</h2>
+
+        <div class="event-edit">
+            {% if allEvents|length > 0 %}
+                {% for singleEvent in allEvents %}
+                    <div class="single-event">
+                        {% set eventId = {'eventId': singleEvent.getEventId} %}
+
+                        <a href="{{ route('event-edit', eventId) }}">
+                            {{ singleEvent.getName }} | {{ singleEvent.getDate.getDateString }}
+                        </a>
+
+                        <div class="event-delete">
+                            <a href="{{ route('event-delete', eventId) }}" class="js-event-delete">Event löschen</a>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>Es gibt keine Events.</div>
+            {% endif %}
+        </div>
+
     </div>
 </div>
 

@@ -1,0 +1,42 @@
+<div class="eventedit-container page-container">
+    <div class="loggedin-banderole banderole"><h1>Event editieren</h1></div>
+
+    <div><a href="{{ route('loggedin') }}">Zurück</a></div>
+
+
+    <div class="eventedit-form-container">
+        <form action="{{ route('event-edit-save') }}" method="POST" name="eventedit">
+            <div>
+                <label for="name">
+                    Name<br>
+                    <input name="name" required {% if event is defined %} value="{{ event.getName }}"{% endif %}/>
+                </label>
+            </div>
+
+            <div>
+                <label for="facebookLink">
+                    Facebook Link<br>
+                    <input name="facebookLink" {% if event is defined %} value="{{ event.getFacebookLink }}"{% endif %}/>
+                </label>
+            </div>
+
+            <div>
+                <label for="eventDate">
+                    Datum<br>
+                    <input name="eventDate"
+                           type="datetime-local" {% if event is defined %} value="{{ event.getDate.getFormFormat }}"{% endif %}
+                           placeholder="1999-12-24T06:39:57"/>
+                </label>
+            </div>
+
+            <div>
+                {% if event is defined %}
+                    <input type="hidden" name="eventId" value="{{ event.getEventId }}">
+                {% endif %}
+            </div>
+            <div>
+                <input type="submit" name="submit" value="senden">
+            </div>
+        </form>
+    </div>
+</div>

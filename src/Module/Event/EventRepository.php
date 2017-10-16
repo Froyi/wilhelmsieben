@@ -56,4 +56,70 @@ class EventRepository
 
         return $this->database->fetch($query);
     }
+
+    public function saveEvent(Event $event): bool
+    {
+        if (!empty($this->getEventByEventId($event->getEventId()))) {
+            $query = $this->database->getNewUpdateQuery(self::TABLE);
+            $query->set('eventId', $event->getEventId()->toString());
+            $query->set('name', $event->getName()->getName());
+            $query->set('eventDate', $event->getDate()->toString());
+
+
+            if ($event->getFacebookLink() !== null) {
+                $query->set('facebookLink', $event->getFacebookLink()->toString());
+            } else {
+                $query->set('facebookLink');
+            }
+
+            if ($event->getNewsId() !== null) {
+                $query->set('newsId', $event->getNewsId()->toString());
+            } else {
+                $query->set('newsId');
+            }
+
+            $query->where('eventId', '=', $event->getEventId()->toString());
+
+            return $this->database->execute($query);
+        }
+
+        $query = $this->database->getNewInsertQuery(self::TABLE);
+        $query->insert('eventId', $event->getEventId()->toString());
+        $query->insert('name', $event->getName()->getName());
+        $query->insert('eventDate', $event->getDate()->toString());
+
+
+        if ($event->getFacebookLink() !== null) {
+            $query->insert('facebookLink', $event->getFacebookLink()->toString());
+        }
+
+        if ($event->getNewsId() !== null) {
+            $query->insert('newsId', $event->getNewsId()->toString());
+        }
+
+        return $this->database->execute($query);
+    }
+
+    public function deleteEvent(Event $event): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::TABLE);
+        $query->where('eventId', '=', $event->getEventId()->toString());
+
+        return $this->database->execute($query);
+    }
+
+    public function setNewsInEvent(Event $event, Id $newsId = null): bool
+    {
+        $query = $this->database->getNewUpdateQuery(self::TABLE);
+
+        if ($newsId === null) {
+            $query->set('newsId');
+        } else {
+            $query->set('newsId', $newsId->toString());
+        }
+
+        $query->where('eventId', '=', $event->getEventId()->toString());
+
+        return $this->database->execute($query);
+    }
 }

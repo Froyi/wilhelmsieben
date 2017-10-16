@@ -70,4 +70,30 @@ class EventService
 
         return $events;
     }
+
+    public function getEventByParams(array $parameter): ?Event
+    {
+        $objectParameter = (object)$parameter;
+
+        if (!isset($objectParameter->eventId) || (isset($objectParameter->eventId) && empty($objectParameter->eventId))) {
+            $objectParameter->eventId = Id::generateId()->toString();
+        }
+
+        return $this->eventFactory->getEventFromObject($objectParameter);
+    }
+
+    public function saveEvent(Event $event): bool
+    {
+        return $this->eventRepository->saveEvent($event);
+    }
+
+    public function updateNewsInEvent(Event $event, Id $newsId = null): bool
+    {
+        return $this->eventRepository->setNewsInEvent($event, $newsId);
+    }
+
+    public function deleteEvent(Event $event): bool
+    {
+        return $this->eventRepository->deleteEvent($event);
+    }
 }
