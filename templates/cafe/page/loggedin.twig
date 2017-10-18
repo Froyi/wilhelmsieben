@@ -28,10 +28,6 @@
                             <h3>{{ singleNews.getTitle }}</h3>
                         </div>
 
-                        <div class="news-text">
-                            <p>{{ shortener(singleNews.getText) }}</p>
-                        </div>
-
                         <div class="news-date">{{ singleNews.getDate.getDateString }}</div>
 
                         {% if singleNews.hasEvent %}

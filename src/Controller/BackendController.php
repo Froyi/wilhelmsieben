@@ -80,6 +80,9 @@ class BackendController extends DefaultController
             }
         }
 
+        $allEvents = $this->eventService->getAllEvents();
+        $this->viewRenderer->addViewConfig('allEvents', $allEvents);
+
         $this->viewRenderer->addViewConfig('page', 'newsedit');
         $this->viewRenderer->renderTemplate();
     }
@@ -92,8 +95,8 @@ class BackendController extends DefaultController
         $parameter = ['notificationCode' => 'newsEditError', 'notificationStatus' => 'error'];
         if ($newsService->saveNews($news) === true) {
             $parameter = ['notificationCode' => 'newsEditSuccess', 'notificationStatus' => 'success'];
-
         }
+
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
@@ -138,23 +141,30 @@ class BackendController extends DefaultController
         $event = $this->eventService->getEventByParams($_POST);
 
         $parameter = ['notificationCode' => 'eventEditError', 'notificationStatus' => 'error'];
+
         if ($this->eventService->saveEvent($event) === true) {
             $parameter = ['notificationCode' => 'eventEditSuccess', 'notificationStatus' => 'success'];
-
         }
+
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
     public function eventDeleteAction(): void
     {
         $parameter = ['notificationCode' => 'eventDeleteError', 'notificationStatus' => 'error'];
+
         if (Tools::getValue('eventId') !== false) {
             $eventId = Id::fromString(Tools::getValue('eventId'));
 
             $event = $this->eventService->getEventByEventId($eventId);
+
             if ($event !== null) {
                 if ($this->eventService->deleteEvent($event) === true) {
-                    $parameter = ['notificationCode' => 'eventDeleteSuccess', 'notificationStatus' => 'success'];
+                    $newsService = new NewsService($this->database, $this->eventService);
+
+                    if ($newsService->deleteDeletedEventInNews($event) === true) {
+                        $parameter = ['notificationCode' => 'eventDeleteSuccess', 'notificationStatus' => 'success'];
+                    }
                 }
             }
         }

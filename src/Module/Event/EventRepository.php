@@ -72,12 +72,6 @@ class EventRepository
                 $query->set('facebookLink');
             }
 
-            if ($event->getNewsId() !== null) {
-                $query->set('newsId', $event->getNewsId()->toString());
-            } else {
-                $query->set('newsId');
-            }
-
             $query->where('eventId', '=', $event->getEventId()->toString());
 
             return $this->database->execute($query);
@@ -93,31 +87,12 @@ class EventRepository
             $query->insert('facebookLink', $event->getFacebookLink()->toString());
         }
 
-        if ($event->getNewsId() !== null) {
-            $query->insert('newsId', $event->getNewsId()->toString());
-        }
-
         return $this->database->execute($query);
     }
 
     public function deleteEvent(Event $event): bool
     {
         $query = $this->database->getNewDeleteQuery(self::TABLE);
-        $query->where('eventId', '=', $event->getEventId()->toString());
-
-        return $this->database->execute($query);
-    }
-
-    public function setNewsInEvent(Event $event, Id $newsId = null): bool
-    {
-        $query = $this->database->getNewUpdateQuery(self::TABLE);
-
-        if ($newsId === null) {
-            $query->set('newsId');
-        } else {
-            $query->set('newsId', $newsId->toString());
-        }
-
         $query->where('eventId', '=', $event->getEventId()->toString());
 
         return $this->database->execute($query);

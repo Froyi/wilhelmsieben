@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Project\Module\News;
 
 use Project\Module\Database\Database;
+use Project\Module\Event\Event;
 use Project\Module\GenericValueObject\Id;
 
 class NewsRepository
@@ -52,6 +53,14 @@ class NewsRepository
         return $this->database->fetch($query);
     }
 
+    public function getNewsByEvent(Event $event): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('eventId', '=', $event->getEventId()->toString());
+
+        return $this->database->fetchAll($query);
+    }
+
     /**
      * @param News $news
      * @return bool
@@ -68,19 +77,19 @@ class NewsRepository
             if ($news->hasEvent() === true) {
                 $query->set('eventId', $news->getEvent()->getEventId()->toString());
             } else {
-                $query->set('eventId', '');
+                $query->set('eventId');
             }
 
             if ($news->getImage() !== null) {
                 $query->set('image', $news->getImage()->toString());
             } else {
-                $query->set('image', '');
+                $query->set('image');
             }
 
             if ($news->getFacebookLink() !== null) {
                 $query->set('facebookLink', $news->getFacebookLink()->toString());
             } else {
-                $query->set('facebookLink', '');
+                $query->set('facebookLink');
             }
 
             $query->where('newsId', '=', $news->getNewsId()->toString());
@@ -97,19 +106,19 @@ class NewsRepository
         if ($news->hasEvent() === true) {
             $query->insert('eventId', $news->getEvent()->getEventId()->toString());
         } else {
-            $query->insert('eventId', '');
+            $query->insert('eventId');
         }
 
         if ($news->getImage() !== null) {
             $query->insert('image', $news->getImage()->toString());
         } else {
-            $query->insert('image', '');
+            $query->insert('image');
         }
 
         if ($news->getFacebookLink() !== null) {
             $query->insert('facebookLink', $news->getFacebookLink()->toString());
         } else {
-            $query->insert('facebookLink', '');
+            $query->insert('facebookLink');
         }
 
         return $this->database->execute($query);

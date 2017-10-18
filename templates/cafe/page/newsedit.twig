@@ -21,9 +21,21 @@
             </div>
 
             <div>
+                <label for="eventId">
+                    <select name="eventId">
+                        <option value="">kein Event</option>
+                        {% for event in allEvents %}
+                            <option value="{{ event.getEventId }}" {% if news.getEvent.getEventId == event.getEventId %} selected {% endif %}>{{ event.getName }}
+                                | {{ event.getDate }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+
+            <div>
                 <label for="text">
                     Facebook Link<br>
-                    <textarea name="text" cols="30"
+                    <textarea name="text"
                               rows="10">{% if news is defined %}{{ news.getText }}{% endif %}</textarea>
                 </label>
             </div>
@@ -33,7 +45,7 @@
                 {% if news is defined %}
                     <input type="hidden" name="newsId" value="{{ news.getNewsId }}">
                     <input type="hidden" name="image" value="{{ news.getImage }}">
-                    <input type="hidden" name="eventId" value="{{ news.getEvent.getEventId }}">
+                    <input type="hidden" name="oldEventId" value="{{ news.getEvent.getEventId }}">
                 {% endif %}
             </div>
             <div>

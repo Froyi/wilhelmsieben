@@ -46,6 +46,13 @@ function initMap() {
     });
 }
 
+$(function() {
+    $("textarea").sceditor({
+        plugins: "xhtml",
+        style: "minified/jquery.sceditor.default.min.css"
+    });
+});
+
 /*
 $(document).on('click', ".js-fancy-box", function () {
     var images = [];

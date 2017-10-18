@@ -110,14 +110,13 @@ class Query
             $this->set .= ', ';
         }
         if ($value === null) {
-            $this->set .= $entity . ' = NULL ';
+            $this->set .= $entity . ' = null ';
         } else {
-
             $this->set .= $entity . ' = ' . $value . ' ';
         }
     }
 
-    public function insert(string $entity, $value): void
+    public function insert(string $entity, $value = null): void
     {
         if (!isset($this->insert[$entity])) {
             $this->insert[$entity] = $value;
@@ -203,6 +202,10 @@ class Query
 
             if (is_string($value) === true) {
                 $value = '\'' . $value . '\'';
+            }
+
+            if ($value === null) {
+                $value = 'null';
             }
             $values .= $value;
         }

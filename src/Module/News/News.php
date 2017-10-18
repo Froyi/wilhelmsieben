@@ -120,7 +120,7 @@ class News
     /**
      * @param Event $event
      */
-    public function setEvent(Event $event)
+    public function setEvent(Event $event = null)
     {
         $this->event = $event;
     }
@@ -131,13 +131,5 @@ class News
     public function hasEvent(): bool
     {
         return ($this->event !== null);
-    }
-
-    public function extract(): array
-    {
-        $newsExtract = [];
-
-
-        return $newsExtract;
     }
 }

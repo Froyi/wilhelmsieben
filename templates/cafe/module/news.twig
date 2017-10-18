@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="news-text">
-                    <p>{{ singleNews.getText }}</p>
+                    <p>{{ singleNews.getText|raw }}</p>
                 </div>
 
                 {% if singleNews.facebookLink|length > 0 %}

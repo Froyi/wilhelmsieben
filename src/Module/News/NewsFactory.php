@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Project\Module\News;
 
 use Project\Module\Event\Event;
-use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
@@ -38,6 +37,11 @@ class NewsFactory
         return $news;
     }
 
+    /**
+     * @param $object
+     * @param Event $event
+     * @return News
+     */
     public function getNewsWithEventFromObject($object, Event $event): News
     {
         $news = $this->getNewsFromObject($object);
@@ -47,6 +51,10 @@ class NewsFactory
         return $news;
     }
 
+    /**
+     * @param $object
+     * @return bool
+     */
     protected function isObjectValid($object): bool
     {
         if (!isset($object->newsId) || empty($object->newsId)) {

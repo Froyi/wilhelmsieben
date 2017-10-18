@@ -22,9 +22,6 @@ class Event
     /** @var  DatetimeInterface */
     protected $date;
 
-    /** @var  Id $newsId */
-    protected $newsId;
-
     /**
      * Event constructor.
      * @param Id                $eventId
@@ -68,22 +65,6 @@ class Event
     public function setFacebookLink(Link $facebookLink)
     {
         $this->facebookLink = $facebookLink;
-    }
-
-    /**
-     * @return Id
-     */
-    public function getNewsId(): ?Id
-    {
-        return $this->newsId;
-    }
-
-    /**
-     * @param Id $newsId
-     */
-    public function setNewsId(Id $newsId)
-    {
-        $this->newsId = $newsId;
     }
 
     /**

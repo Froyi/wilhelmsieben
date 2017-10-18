@@ -35,13 +35,17 @@ class EventService
         return $events;
     }
 
-    public function getEventByEventId($eventId): Event
+    public function getEventByEventId($eventId): ?Event
     {
         if ($eventId instanceof Id === false) {
             $eventId = Id::fromString($eventId);
         }
 
         $event = $this->eventRepository->getEventByEventId($eventId);
+
+        if (empty($event)) {
+            return null;
+        }
 
         return $this->eventFactory->getEventFromObject($event);
     }
@@ -85,11 +89,6 @@ class EventService
     public function saveEvent(Event $event): bool
     {
         return $this->eventRepository->saveEvent($event);
-    }
-
-    public function updateNewsInEvent(Event $event, Id $newsId = null): bool
-    {
-        return $this->eventRepository->setNewsInEvent($event, $newsId);
     }
 
     public function deleteEvent(Event $event): bool

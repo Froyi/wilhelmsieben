@@ -28,12 +28,6 @@ class EventFactory
             $event->setFacebookLink($facebookLink);
         }
 
-        if (isset($object->newsId) && !empty($object->newsId)) {
-            $newsId = Id::fromString($object->newsId);
-
-            $event->setNewsId($newsId);
-        }
-
         return $event;
     }
 }

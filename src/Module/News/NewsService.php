@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Project\Module\News;
 
 use Project\Module\Database\Database;
+use Project\Module\Event\Event;
 use Project\Module\Event\EventService;
 use Project\Module\GenericValueObject\Id;
 
@@ -102,12 +103,6 @@ class NewsService
 
     public function saveNews(News $news): bool
     {
-        if ($news->hasEvent() === true) {
-            $this->eventService->updateNewsInEvent($news->getEvent(), $news->getNewsId());
-        } else {
-            $this->eventService->updateNewsInEvent($news->getEvent());
-        }
-
         return $this->newsRepository->saveNews($news);
     }
 
@@ -116,12 +111,37 @@ class NewsService
         return $this->newsRepository->deleteNews($news);
     }
 
-    protected function getNewsWithAllAttributes($newsResult): News
+    public function deleteDeletedEventInNews(Event $event): bool
+    {
+        $news = $this->getNewsByEvent($event);
+
+        if (count($news) === 0) {
+            return true;
+        }
+
+        foreach ($news as $singleNews) {
+            $buildNews = $this->getNewsWithAllAttributes($singleNews);
+            $buildNews->setEvent();
+
+            $this->saveNews($buildNews);
+        }
+
+        return true;
+    }
+
+    private function getNewsByEvent(Event $event): array
+    {
+        return $this->newsRepository->getNewsByEvent($event);
+    }
+
+    private function getNewsWithAllAttributes($newsResult): News
     {
         if (isset($newsResult->eventId) && !empty($newsResult->eventId)) {
             $event = $this->eventService->getEventByEventId($newsResult->eventId);
 
-            return $this->newsFactory->getNewsWithEventFromObject($newsResult, $event);
+            if ($event !== null) {
+                return $this->newsFactory->getNewsWithEventFromObject($newsResult, $event);
+            }
         }
 
         return $this->newsFactory->getNewsFromObject($newsResult);
