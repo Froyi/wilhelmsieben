@@ -9,18 +9,18 @@ return [
         'dir' =>  '/cafe',
         'cacheDir' => '/cache'
     ],
-    /*'database' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'web28634274',
         'password' => 'q3qKQMpf',
         'database' => 'usr_web28634274_1'
-    ],*/
-    'database' => [
+    ],
+    /*'database' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'cafe'
-    ],
+    ],*/
     'controller' => [
         'namespace' => 'Controller'
     ],
