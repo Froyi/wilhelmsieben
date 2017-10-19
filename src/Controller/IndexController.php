@@ -142,6 +142,9 @@ class IndexController extends DefaultController
 
         if ($this->loggedInUser !== null) {
             $this->redirectToLoggedInPage();
+        } else {
+            $parameter = ['notificationCode' => 'loginError', 'notificationStatus' => 'error'];
+            header('Location: ' . Tools::getRouteUrl('login', $parameter));
         }
     }
 
