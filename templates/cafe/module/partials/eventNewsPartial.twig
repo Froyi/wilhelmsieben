@@ -1,0 +1,26 @@
+<div class="single-news">
+    <div class="news-image">
+        <img src="{{ singleNews.getImage }}" alt="">
+    </div>
+
+    <div class="news-banderole banderole">
+        <div class="news-banderole-content">
+            <h2>{{ singleNews.getTitle }}</h2>EVENT
+
+            <span class="news-date">{{ singleNews.getDate.getWeekday | weekday }}
+                | {{ singleNews.getDate }}</span>
+        </div>
+    </div>
+
+    <div class="news-text">
+        <p>{{ singleNews.getText|raw }}</p>
+    </div>
+
+    {% if singleNews.facebookLink|length > 0 %}
+        <div class="facebook-link">
+            <a href="{{ singleNews.facebookLink }}" target="new">
+                <img src="{{ templateDir }}/img/fb.png" alt="Teaserbild vom Café">
+            </a>
+        </div>
+    {% endif %}
+</div>

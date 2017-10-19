@@ -1,6 +1,6 @@
 <div class="events-container">
     <h2>Veranstaltungen</h2>
-
+    {% if events | length > 0 %}
     {% for eventday in events %}
         <span class="event-date">{{ eventday | first.getDate.getWeekday | weekdayShort }}
             | {{ eventday | first.getDate.getDateString }}</span>
@@ -25,5 +25,12 @@
             </div>
         {% endfor %}
     {% endfor %}
+    {% else %}
+        <div class="event-container">
+            <div class="event-information">
+                Es gibt derzeit keine geplanten Veranstaltung. Bitte schaut auf unsere Facebook Seite, um über neue Veranstaltungen informiert zu werden.
+            </div>
+        </div>
+    {% endif %}
 
 </div>
