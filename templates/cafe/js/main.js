@@ -47,13 +47,14 @@ function initMap() {
 }
 
 $(function() {
-    $("textarea").sceditor({
+    $(".sceditor").sceditor({
         plugins: "xhtml",
-        style: "minified/jquery.sceditor.default.min.css"
+        style: "templates/cafe/js/editor/minified/jquery.sceditor.default.min.css",
+        toolbar: "bold,italic,underline, strike|left,center,right,justify|size,color|email,link,unlink|source",
+        emoticonsEnabled: false
     });
 });
 
-/*
 $(document).on('click', ".js-fancy-box", function () {
     var images = [];
 
@@ -68,7 +69,7 @@ $(document).on('click', ".js-fancy-box", function () {
     });
 
     return false;
-});*/
+});
 
 $(document).on('click', ".js-news-delete, .js-event-delete", function (event) {
     var confirm = window.confirm('Wirklich löschen?');
