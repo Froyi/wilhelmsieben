@@ -3,16 +3,16 @@
 
     {% if sentReservierung is defined %}
         {% if sentReservierung == true %}
-            <div class="reservierung-success">
-                <p>Vielen Dank für Ihre Reservierung</p>
+            <div class="notification success">
+                Vielen Dank für Ihre Reservierung
             </div>
         {% endif %}
 
         {% if sentReservierung == false %}
-            <div class="reservierung-error">
-                <p>Es ist etwas beim Versand der Reservierung schief gegangen. Wir entschuldigen uns für die
-                    Unanehmlichkeiten. Bitte versuchen Sie es erneut. Sollte das Problem weiterhin bestehen, bitte
-                    kontaktieren Sie uns unter der 01525-5366682</p>
+            <div class="notification error">
+                Es ist etwas beim Versand der Reservierung schief gegangen. Wir entschuldigen uns für die
+                Unanehmlichkeiten. Bitte versuchen Sie es erneut. Sollte das Problem weiterhin bestehen, bitte
+                kontaktieren Sie uns unter der 01525-5366682
             </div>
         {% endif %}
     {% endif %}
