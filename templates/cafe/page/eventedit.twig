@@ -9,14 +9,14 @@
             <div>
                 <label for="name">
                     Name<br>
-                    <input name="name" required {% if event is defined %} value="{{ event.getName }}"{% endif %}/>
+                    <input type="text" name="name" required {% if event is defined %} value="{{ event.getName }}"{% endif %}/>
                 </label>
             </div>
 
             <div>
                 <label for="facebookLink">
                     Facebook Link<br>
-                    <input name="facebookLink" {% if event is defined %} value="{{ event.getFacebookLink }}"{% endif %}/>
+                    <input type="text" name="facebookLink" {% if event is defined %} value="{{ event.getFacebookLink }}"{% endif %}/>
                 </label>
             </div>
 

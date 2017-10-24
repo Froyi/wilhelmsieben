@@ -9,14 +9,14 @@
             <div>
                 <label for="title">
                     Titel<br>
-                    <input name="title" required {% if news is defined %} value="{{ news.getTitle }}"{% endif %}/>
+                    <input type="text" name="title" required {% if news is defined %} value="{{ news.getTitle }}"{% endif %}/>
                 </label>
             </div>
 
             <div>
                 <label for="facebookLink">
                     Facebook Link<br>
-                    <input name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
+                    <input type="text" name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
                 </label>
             </div>
 
