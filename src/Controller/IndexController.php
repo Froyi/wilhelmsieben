@@ -3,11 +3,15 @@
 namespace Project\Controller;
 
 use Project\Module\Galerie\GalerieService;
+use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Email;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Password;
 use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
 class IndexController extends DefaultController
 {
@@ -124,6 +128,23 @@ class IndexController extends DefaultController
     public function reservierungAddAction(): void
     {
         $sentReservierung = false;
+        if (empty(Tools::getValue('name')) === false && empty(Tools::getValue('datum')) === false && empty(Tools::getValue('plaetze')) === false) {
+            // $to = $this->configuration->getEntryByName('project')['email'];
+            $to = 'ms2002@onlinehome.de';
+            $from = Date::fromValue(Tools::getValue('name'));
+
+            // alfa3205.alfahosting-server.de
+            $mailMessage = new Swift_Message();
+            $mailMessage->addTo($to);
+            $mailMessage->addFrom($from);
+            $mailMessage->setBody('Hallo du Maik!');
+            $transport = new Swift_SmtpTransport();
+            $mailer = new Swift_Mailer($transport);
+
+            $mailer->send($mailMessage);
+            $sentReservierung = true;
+        }
+
 
         $this->viewRenderer->addViewConfig('sentReservierung', $sentReservierung);
 

@@ -2,6 +2,7 @@
 return [
     'project' => [
         'name' => 'Cafe Wilhelm Sieben',
+        'email' => 'kontakt@cafewilhelmsieben.de',
         'namespace' => 'Project'
     ],
     'template' => [
@@ -129,5 +130,5 @@ return [
         'eventDeleteSuccess' => 'Das Event wurde erfolgreich gelöscht.',
         'eventDeleteError' => 'Das Event konnte nicht erfolgreich gelöscht werden.',
         'loginError' => 'Die eingegebenen Daten sind falsch.',
-    ]
+    ],
 ];
