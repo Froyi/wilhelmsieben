@@ -4,6 +4,7 @@ namespace Project\Controller;
 
 use Project\Module\Galerie\GalerieService;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image;
 use Project\Module\News\NewsService;
 use Project\Module\User\User;
 use Project\Utilities\Tools;
@@ -87,8 +88,15 @@ class BackendController extends DefaultController
         $this->viewRenderer->renderTemplate();
     }
 
+    /**
+     * @todo adding Imagehandler - the image has to be added to the news
+     */
     public function newsEditSaveAction(): void
     {
+        if (Tools::getFile('image') !== false) {
+            $image = Image::fromUploadWithSave(Tools::getFile('image'), Image::PATH_NEWS);
+        }
+
         $newsService = new NewsService($this->database, $this->eventService);
         $news = $newsService->getNewsByParams($_POST);
 

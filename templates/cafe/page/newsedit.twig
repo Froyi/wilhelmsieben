@@ -5,7 +5,7 @@
 
 
     <div class="newsedit-form-container">
-        <form action="{{ route('news-edit-save') }}" method="POST" name="newsedit">
+        <form action="{{ route('news-edit-save') }}" method="POST" name="newsedit" enctype="multipart/form-data">
             <div>
                 <label for="title">
                     Titel<br>
@@ -17,6 +17,13 @@
                 <label for="facebookLink">
                     Facebook Link<br>
                     <input type="text" name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
+                </label>
+            </div>
+
+            <div>
+                <label for="image">
+                    Facebook Link<br>
+                    <input type="file" name="image"/>
                 </label>
             </div>
 

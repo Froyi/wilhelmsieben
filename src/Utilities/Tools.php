@@ -29,6 +29,19 @@ class Tools
     }
 
     /**
+     * @param string $name
+     * @return bool|array
+     */
+    public static function getFile(string $name)
+    {
+        if (isset($_FILES[$name]) && empty($_FILES[$name]) === false) {
+            return $_FILES[$name];
+        }
+
+        return false;
+    }
+
+    /**
      * @param string $route
      * @return string
      */
