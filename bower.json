@@ -1,0 +1,23 @@
+{
+  "name": "wilhelmsieben",
+  "homepage": "https://github.com/Froyi/wilhelmsieben",
+  "authors": [
+    "Maik <froyi1986>"
+  ],
+  "description": "Cafe Wilhelm7ieben in Bernburg",
+  "main": "",
+  "keywords": [
+    "Cafe"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
