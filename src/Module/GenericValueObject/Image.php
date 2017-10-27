@@ -10,6 +10,9 @@ class Image
     const PATH_NEWS = 'data/img/news/';
     const PATH_GALERY = 'data/img/galerie/';
 
+    const SAVE_QUALITY = 50;
+    const MAX_LENGTH = 1200;
+
     /** @var SimpleImage $image */
     protected $image;
 
@@ -27,7 +30,15 @@ class Image
     {
         $this->image = new SimpleImage($path);
         $this->imagePath = $path;
+        $this->image->autoOrient();
 
+        if ($this->image->getAspectRatio() >= 1) {
+            $this->image->fitToWidth(self::MAX_LENGTH);
+        } else {
+            $this->image->fitToHeight(self::MAX_LENGTH);
+        }
+
+        $this->image->sharpen();
     }
 
     /**
@@ -40,7 +51,7 @@ class Image
     }
 
     /**
-     * @param array  $uploadedFile
+     * @param array $uploadedFile
      * @param string $path
      * @return null|Image
      */
@@ -95,7 +106,7 @@ class Image
     public function saveToPath(string $path): bool
     {
         try {
-            $this->image->toFile($path);
+            $this->image->toFile($path, null, self::SAVE_QUALITY);
         } catch (\Error $error) {
             return false;
         }

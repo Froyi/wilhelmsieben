@@ -5,8 +5,10 @@ namespace Project\Controller;
 use Project\Module\Galerie\GalerieService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
+use Project\Module\News\News;
 use Project\Module\News\NewsService;
 use Project\Module\User\User;
+use Project\Routing;
 use Project\Utilities\Tools;
 
 class BackendController extends DefaultController
@@ -19,10 +21,13 @@ class BackendController extends DefaultController
         parent::__construct();
 
         if ($this->loggedInUser === null) {
-            $this->showStandardPage('notfound');
+            $this->showStandardPage(Routing::ERROR_ROUTE);
         }
     }
 
+    /**
+     * backend main site action
+     */
     public function loggedinAction(): void
     {
         /**
@@ -58,6 +63,9 @@ class BackendController extends DefaultController
         $this->viewRenderer->renderTemplate();
     }
 
+    /**
+     * logout user
+     */
     public function logoutAction(): void
     {
         if ($this->userService->logoutUser($this->loggedInUser)) {
@@ -70,6 +78,7 @@ class BackendController extends DefaultController
 
     public function newsEditAction(): void
     {
+        /** add news to template if one should be edit */
         if (Tools::getValue('newsId') !== false) {
             $newsService = new NewsService($this->database, $this->eventService);
 
@@ -81,6 +90,7 @@ class BackendController extends DefaultController
             }
         }
 
+        /** @var array $allEvents */
         $allEvents = $this->eventService->getAllEvents();
         $this->viewRenderer->addViewConfig('allEvents', $allEvents);
 
@@ -89,17 +99,25 @@ class BackendController extends DefaultController
     }
 
     /**
-     * @todo adding Imagehandler - the image has to be added to the news
+     * news save action
      */
     public function newsEditSaveAction(): void
     {
+        /** @var null|Image $image */
+        $image = null;
         if (Tools::getFile('image') !== false) {
             $image = Image::fromUploadWithSave(Tools::getFile('image'), Image::PATH_NEWS);
+        } else if (Tools::getValue('imagePath') !== false && Tools::getValue('deleteImage') === false) {
+            $image = Image::fromFile(Tools::getValue('imagePath'));
         }
 
+        /** @var NewsService $newsService */
         $newsService = new NewsService($this->database, $this->eventService);
-        $news = $newsService->getNewsByParams($_POST);
 
+        /** @var News $news */
+        $news = $newsService->getNewsByParams($_POST, $image);
+
+        /** @var array $parameter */
         $parameter = ['notificationCode' => 'newsEditError', 'notificationStatus' => 'error'];
         if ($newsService->saveNews($news) === true) {
             $parameter = ['notificationCode' => 'newsEditSuccess', 'notificationStatus' => 'success'];
@@ -108,6 +126,9 @@ class BackendController extends DefaultController
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
+    /**
+     * news delete action
+     */
     public function newsDeleteAction(): void
     {
         $parameter = ['notificationCode' => 'newsDeleteError', 'notificationStatus' => 'error'];
@@ -128,6 +149,9 @@ class BackendController extends DefaultController
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
+    /**
+     * event edit action
+     */
     public function eventEditAction(): void
     {
         if (Tools::getValue('eventId') !== false) {
@@ -144,6 +168,9 @@ class BackendController extends DefaultController
         $this->viewRenderer->renderTemplate();
     }
 
+    /**
+     * event save action
+     */
     public function eventEditSaveAction(): void
     {
         $event = $this->eventService->getEventByParams($_POST);
@@ -157,6 +184,9 @@ class BackendController extends DefaultController
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
+    /**
+     * event delete action
+     */
     public function eventDeleteAction(): void
     {
         $parameter = ['notificationCode' => 'eventDeleteError', 'notificationStatus' => 'error'];

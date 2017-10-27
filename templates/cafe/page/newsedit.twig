@@ -9,22 +9,34 @@
             <div>
                 <label for="title">
                     Titel<br>
-                    <input type="text" name="title" required {% if news is defined %} value="{{ news.getTitle }}"{% endif %}/>
+                    <input type="text" name="title"
+                           required {% if news is defined %} value="{{ news.getTitle }}"{% endif %}/>
                 </label>
             </div>
 
             <div>
                 <label for="facebookLink">
                     Facebook Link<br>
-                    <input type="text" name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
+                    <input type="text"
+                           name="facebookLink" {% if news is defined %} value="{{ news.getFacebookLink }}"{% endif %}/>
                 </label>
             </div>
 
-            <div>
-                <label for="image">
-                    Facebook Link<br>
-                    <input type="file" name="image"/>
-                </label>
+            <div class="flex">
+                <div>
+                    <label for="image">
+                        Bild hochladen<br>
+                        <input type="file" name="image"/>
+                    </label>
+                </div>
+                {% if news is defined and news.getImage is not null %}
+                    <div>
+                        <img src="{{ news.getImage }}" class="image-edit" alt="">
+                        <label for="deleteImage">
+                        <input type="checkbox" name="deleteImage"> Bild löschen?</label>
+                        <input type="hidden" name="imagePath" value="{{ news.getImage }}">
+                    </div>
+                {% endif %}
             </div>
 
             <div>

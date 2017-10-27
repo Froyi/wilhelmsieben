@@ -34,7 +34,7 @@ class Tools
      */
     public static function getFile(string $name)
     {
-        if (isset($_FILES[$name]) && empty($_FILES[$name]) === false) {
+        if (isset($_FILES[$name]) && empty($_FILES[$name]) === false && $_FILES[$name]['error'] === 0) {
             return $_FILES[$name];
         }
 

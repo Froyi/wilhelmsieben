@@ -7,6 +7,7 @@ use Project\Module\Database\Database;
 use Project\Module\Event\Event;
 use Project\Module\Event\EventService;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image;
 
 class NewsService
 {
@@ -78,7 +79,7 @@ class NewsService
             if ($singleNews->getDate()->isOlderThanDays($maxAgeOfNews) === false || $newsCount < $minNewsShown) {
                 $newsCount++;
             } else {
-                $newsArray[] = $singleNews;;
+                $newsArray[] = $singleNews;
             }
         }
 
@@ -87,10 +88,11 @@ class NewsService
 
     public function isArchiveLinkNeeded(int $minNewsShown, int $maxAgeOfNews): bool
     {
-        return (count($this->getNewsWithMinNewsShownAndMaxAgeOfNews($minNewsShown, $maxAgeOfNews)) < count($this->getAllNewsOrderByDate()));
+        return (count($this->getNewsWithMinNewsShownAndMaxAgeOfNews($minNewsShown,
+                $maxAgeOfNews)) < count($this->getAllNewsOrderByDate()));
     }
 
-    public function getNewsByParams(array $parameter): ?News
+    public function getNewsByParams(array $parameter, ?Image $image = null): ?News
     {
         $objectParameter = (object)$parameter;
 
@@ -98,7 +100,10 @@ class NewsService
             $objectParameter->newsId = Id::generateId()->toString();
         }
 
-        return $this->getNewsWithAllAttributes($objectParameter);
+        $news = $this->getNewsWithAllAttributes($objectParameter);
+        $news->setImage($image);
+
+        return $news;
     }
 
     public function saveNews(News $news): bool
