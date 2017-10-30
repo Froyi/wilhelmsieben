@@ -60,6 +60,18 @@ class DefaultController
         $this->setDefaultViewConfig();
     }
 
+    public function notFoundAction(): void
+    {
+        $this->viewRenderer->addViewConfig('page', 'notfound');
+
+        $this->viewRenderer->renderTemplate();
+    }
+
+    public function errorPageAction(): void
+    {
+        $this->showStandardPage('error');
+    }
+
     /**
      * Sets default view parameter for sidebar etc.
      */
@@ -84,34 +96,30 @@ class DefaultController
         }
     }
 
-    public function notFoundAction(): void
-    {
-        $this->viewRenderer->addViewConfig('page', 'notfound');
-
-        $this->viewRenderer->renderTemplate();
-    }
-
-    public function errorPageAction(): void
-    {
-        $this->showStandardPage('error');
-    }
-
+    /**
+     * @param string $name
+     */
     protected function showStandardPage(string $name): void
     {
         try {
             $this->viewRenderer->addViewConfig('page', $name);
-
             $this->viewRenderer->renderTemplate();
         } catch (\InvalidArgumentException $error) {
             $this->notFoundAction();
         }
     }
 
+    /**
+     *  adding notifications to the template
+     */
     protected function setNotifications(): void
     {
         if (Tools::getValue('notificationStatus') !== false && Tools::getValue('notificationCode') !== false) {
             $this->notification->setNotificationCode(Tools::getValue('notificationCode'));
             $this->notification->setNotificationStatus(Tools::getValue('notificationStatus'));
+
+            $this->viewRenderer->addViewConfig('notificationStatus', $this->notification->getNotificationStatus());
+            $this->viewRenderer->addViewConfig('notificationMessage', $this->notification->getNotificationMessage());
         }
     }
 }

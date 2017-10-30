@@ -54,12 +54,6 @@ class BackendController extends DefaultController
         $this->viewRenderer->addViewConfig('allEvents', $allEvents);
 
         $this->viewRenderer->addViewConfig('page', 'loggedin');
-
-        if ($this->notification->getNotificationMessage() !== null) {
-            $this->viewRenderer->addViewConfig('notificationStatus', $this->notification->getNotificationStatus());
-            $this->viewRenderer->addViewConfig('notificationMessage', $this->notification->getNotificationMessage());
-        }
-
         $this->viewRenderer->renderTemplate();
     }
 
@@ -107,8 +101,10 @@ class BackendController extends DefaultController
         $image = null;
         if (Tools::getFile('image') !== false) {
             $image = Image::fromUploadWithSave(Tools::getFile('image'), Image::PATH_NEWS);
-        } else if (Tools::getValue('imagePath') !== false && Tools::getValue('deleteImage') === false) {
-            $image = Image::fromFile(Tools::getValue('imagePath'));
+        } else {
+            if (Tools::getValue('imagePath') !== false && Tools::getValue('deleteImage') === false) {
+                $image = Image::fromFile(Tools::getValue('imagePath'));
+            }
         }
 
         /** @var NewsService $newsService */
