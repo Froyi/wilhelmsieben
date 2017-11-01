@@ -3,12 +3,12 @@
         <img src="{{ singleNews.getImage }}" alt="">
     </div>
 
-    <div class="news-banderole banderole">
+    <div class="news-banderole banderole event-news">
         <div class="news-banderole-content">
-            <h2>{{ singleNews.getTitle }}</h2>EVENT
+            <h2>{{ singleNews.getTitle }}</h2>
 
-            <span class="news-date">{{ singleNews.getDate.getWeekday | weekday }}
-                | {{ singleNews.getDate }}</span>
+            <span class="news-date">{{ singleNews.getEvent.getDate.getWeekday | weekday }}
+                | {{ singleNews.getEvent.getDate.getDateString }} | {{ singleNews.getEvent.getDate.getTimeString }}Uhr</span>
         </div>
     </div>
 
