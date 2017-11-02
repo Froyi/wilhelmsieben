@@ -5,6 +5,7 @@
         {% include ('module/notification.twig') %}
     {% endif %}
 
+    {# News editing #}
     <div class="news-edit-container">
         <div class="news-new">
             <a href="{{ route('news-edit') }}" class="backend-button">News erstellen</a>
@@ -37,7 +38,7 @@
                         {% endif %}
 
                         <div class="news-delete">
-                            <a href="{{ route('news-delete', newsId) }}" class="js-news-delete">News löschen</a>
+                            <a href="{{ route('news-delete', newsId) }}" class="js-delete">News löschen</a>
                         </div>
                     </div>
                 {% endfor %}
@@ -47,6 +48,7 @@
         </div>
     </div>
 
+    {# Event editing #}
     <div class="event-edit-container">
         <div class="event-new">
             <a href="{{ route('event-edit') }}" class="backend-button">Event erstellen</a>
@@ -65,19 +67,43 @@
                         </a>
 
                         <div class="event-delete">
-                            <a href="{{ route('event-delete', eventId) }}" class="js-event-delete">Event löschen</a>
+                            <a href="{{ route('event-delete', eventId) }}" class="js-delete">Event löschen</a>
                         </div>
 
                     </div>
                 {% endfor %}
             {% else %}
-                <div>Es gibt keine Events.</div>
+                <div class="no-result">Es gibt keine Events.</div>
             {% endif %}
         </div>
-
     </div>
-</div>
 
-<div class="galerie-edit-container">
+    {# Album editing #}
+    <div class="album-edit-container">
+        <div class="album-new">
+            <a href="{{ route('album-edit') }}" class="backend-button">Album erstellen</a>
+        </div>
 
+        <h2>Album bearbeiten</h2>
+
+        <div class="album-edit">
+            {% if albums|length > 0 %}
+                {% for singleAlbum in albums %}
+                    <div class="single-album">
+                        {% set albumId = {'albumId': singleAlbum.getAlbumId} %}
+
+                        <a href="{{ route('album-edit', albumId) }}">
+                            {{ singleAlbum.getTitle }} | {{ singleAlbum.getAlbumDate }} | {{ singleAlbum.getAmountOfImagesInAlbum }}
+                        </a>
+
+                        <div class="album-delete">
+                            <a href="{{ route('album-delete', albumId) }}" class="js-delete">Album löschen</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-result">Es gibt noch kein Album.</div>
+            {% endif %}
+        </div>
+    </div>
 </div>

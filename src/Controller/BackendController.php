@@ -2,7 +2,7 @@
 
 namespace Project\Controller;
 
-use Project\Module\Galerie\GalerieService;
+use Project\Module\Album\AlbumService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\News\News;
@@ -39,12 +39,12 @@ class BackendController extends DefaultController
         $this->viewRenderer->addViewConfig('news', $allNews);
 
         /**
-         * Galerie holen
+         * Album holen
          */
-        $galerieService = new GalerieService($this->database);
-        $galleries = $galerieService->getAllGaleriesWithImags();
+        $albumService = new AlbumService($this->database);
+        $albums = $albumService->getAllAlbumsWithImags();
 
-        $this->viewRenderer->addViewConfig('galleries', $galleries);
+        $this->viewRenderer->addViewConfig('albums', $albums);
 
         /**
          * Events holen
@@ -204,5 +204,21 @@ class BackendController extends DefaultController
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+    }
+
+    public function albumEditAction(): void
+    {
+        if (Tools::getValue('albumId') !== false) {
+            $albumId = Id::fromString(Tools::getValue('albumId'));
+
+            $album = $this->albumService->getAlbumByAlbumId($albumId);
+
+            if ($album !== null) {
+                $this->viewRenderer->addViewConfig('album', $album);
+            }
+        }
+
+        $this->viewRenderer->addViewConfig('page', 'albumedit');
+        $this->viewRenderer->renderTemplate();
     }
 }

@@ -71,7 +71,7 @@ $(document).on('click', ".js-fancy-box", function () {
     return false;
 });
 
-$(document).on('click', ".js-news-delete, .js-event-delete", function (event) {
+$(document).on('click', ".js-delete", function (event) {
     var confirm = window.confirm('Wirklich löschen?');
 
     if (confirm !== true) {

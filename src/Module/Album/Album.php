@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Project\Module\Galerie;
+namespace Project\Module\Album;
 
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;

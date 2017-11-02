@@ -2,7 +2,7 @@
 
 namespace Project\Controller;
 
-use Project\Module\Galerie\GalerieService;
+use Project\Module\Album\AlbumService;
 use Project\Module\GenericValueObject\Email;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Password;
@@ -101,15 +101,15 @@ class IndexController extends DefaultController
         $this->showStandardPage('reservierung');
     }
 
-    public function galerieAction(): void
+    public function albumAction(): void
     {
         try {
-            $galerieService = new GalerieService($this->database);
-            $galleries = $galerieService->getAllGaleriesWithImags();
+            $albumService = new AlbumService($this->database);
+            $albums = $albumService->getAllAlbumsWithImags();
 
-            $this->viewRenderer->addViewConfig('galleries', $galleries);
+            $this->viewRenderer->addViewConfig('albums', $albums);
 
-            $this->viewRenderer->addViewConfig('page', 'gallery');
+            $this->viewRenderer->addViewConfig('page', 'album');
 
             $this->viewRenderer->renderTemplate();
 

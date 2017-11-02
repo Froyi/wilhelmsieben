@@ -70,9 +70,9 @@ return [
             'controller' => 'IndexController',
             'action' => 'loginAction'
         ],
-        'galerie' => [
+        'album' => [
             'controller' => 'IndexController',
-            'action' => 'galerieAction'
+            'action' => 'albumAction'
         ],
         'loggedin' => [
             'controller' => 'BackendController',
@@ -106,6 +106,18 @@ return [
             'controller' => 'BackendController',
             'action' => 'eventDeleteAction'
         ],
+        'album-edit' => [
+            'controller' => 'BackendController',
+            'action' => 'albumEditAction'
+        ],
+        'album-edit-save' => [
+            'controller' => 'BackendController',
+            'action' => 'albumEditSaveAction'
+        ],
+        'album-delete' => [
+            'controller' => 'BackendController',
+            'action' => 'albumDeleteAction'
+        ]
     ],
     'slider' => [
         '/img/slider/teaser.jpg',

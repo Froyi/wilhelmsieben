@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Project\Module\Galerie;
+namespace Project\Module\Album;
 
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
 
-class GalerieRepository
+class AlbumRepository
 {
     const ALBUM_TABLE = 'album';
 
@@ -30,7 +30,7 @@ class GalerieRepository
         $this->database = $database;
     }
 
-    public function getAllGaleries(): array
+    public function getAllAlbums(): array
     {
         $query = $this->database->getNewSelectQuery(self::ALBUM_TABLE);
         $query->orderBy(self::ALBUM_ORDERBY, self::ALBUM_ORDERKIND);

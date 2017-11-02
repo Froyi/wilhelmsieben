@@ -3,6 +3,7 @@
 namespace Project\Controller;
 
 use Project\Configuration;
+use Project\Module\Album\AlbumService;
 use Project\Module\Database\Database;
 use Project\Module\Event\EventService;
 use Project\Module\GenericValueObject\Id;
@@ -48,6 +49,7 @@ class DefaultController
         $this->viewRenderer = new ViewRenderer($this->configuration);
         $this->database = new Database($this->configuration);
         $this->userService = new UserService($this->database);
+        $this->albumService = new AlbumService($this->database);
         $this->notification = new Notification($this->configuration);
 
         if (Tools::getValue('userId') !== false) {

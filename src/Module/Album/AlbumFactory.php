@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Project\Module\Galerie;
+namespace Project\Module\Album;
 
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
@@ -9,7 +9,7 @@ use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Title;
 use Project\Module\GenericValueObject\Image as ImageSource;
 
-class GalerieFactory
+class AlbumFactory
 {
     public function getAlbumFromObject($object): Album
     {

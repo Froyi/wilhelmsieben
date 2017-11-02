@@ -8,7 +8,7 @@ use claviska\SimpleImage;
 class Image
 {
     const PATH_NEWS = 'data/img/news/';
-    const PATH_GALERY = 'data/img/galerie/';
+    const PATH_ALBUM = 'data/img/galerie/';
 
     const SAVE_QUALITY = 50;
     const MAX_LENGTH = 1200;

@@ -1,0 +1,21 @@
+<div class="album-container page-container">
+    <div class="album-banderole banderole"><h1>Impressionen</h1></div>
+    {% if albums|length > 0 %}
+        <div class="album-album-container">
+            {% for album in albums %}
+                {% if album.getAmountOfImagesInAlbum > 0 %}
+                    <div class="album-container">
+                        <a data-fancybox="group-{{ album.getAlbumId }}"
+                           href="{{ album.getAlbumPreviewImage.getImageUrl }}">{{ album.getTitle }} {{ album.getAmountOfImagesInAlbum }}</a>
+
+                        {% for albumImage in album.getImageList %}
+                            <a class="" data-fancybox="group-{{ album.getAlbumId }}" href="{{ albumImage.getImageUrl }}"
+                               data-caption="{{ albumImage.getTitle }}"></a>
+                        {% endfor %}
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
