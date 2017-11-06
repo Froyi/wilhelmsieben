@@ -1,15 +1,48 @@
 .album-container {
-    .album-banderole {
-        margin-bottom: 20px;
-    }
+  .album-banderole {
+    margin-bottom: 20px;
+  }
 
-    .album-album-container {
-        display: flex;
-        justify-content: space-between;
+  .album-album-container {
+    display: flex;
+    justify-content: space-between;
 
-        .album-container {
-            width: 50%;
+    .album-container {
+      width: 46%;
+      position: relative;
+      padding: 0 2%;
+      margin-bottom: 40px;
+
+      .round-image-container {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 2px solid @color-2;
+        overflow: hidden;
+        margin: 0 auto;
+
+        img {
+          width: 100%;
         }
-    }
+      }
 
+      h3 {
+        font-family: @font-family-2;
+        color: @color-2;
+        margin-top: 15px;
+        text-align: center;
+        width: 100%;
+        font-size: 1.2em;
+      }
+
+      .flex {
+        width: 200px;
+        margin: 0 auto;
+      }
+
+      p {
+        font-size: 0.875em;
+      }
+    }
+  }
 }

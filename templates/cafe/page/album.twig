@@ -5,8 +5,19 @@
             {% for album in albums %}
                 {% if album.getAmountOfImagesInAlbum > 0 %}
                     <div class="album-container">
-                        <a data-fancybox="group-{{ album.getAlbumId }}"
-                           href="{{ album.getAlbumPreviewImage.getImageUrl }}">{{ album.getTitle }} {{ album.getAmountOfImagesInAlbum }}</a>
+                        <a data-fancybox="group-{{ album.getAlbumId }}" class="area-link"
+                           href="{{ album.getAlbumPreviewImage.getImageUrl }}"></a>
+
+                        <div class="round-image-container">
+                            <img src="{{ album.getAlbumPreviewImage.getImageUrl }}" alt="">
+                        </div>
+
+                        <h3>{{ album.getTitle }}</h3>
+
+                        <div class="flex">
+                            <p>{{ album.getAmountOfImagesInAlbum }} Bilder</p>
+                            <p>{{ album.getAlbumDate }}</p>
+                        </div>
 
                         {% for albumImage in album.getImageList %}
                             <a class="" data-fancybox="group-{{ album.getAlbumId }}" href="{{ albumImage.getImageUrl }}"
