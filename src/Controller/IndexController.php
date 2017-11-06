@@ -1,4 +1,5 @@
 <?php
+declare (strict_types=1);
 
 namespace Project\Controller;
 
@@ -9,6 +10,10 @@ use Project\Module\GenericValueObject\Password;
 use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
 
+/**
+ * Class IndexController
+ * @package Project\Controller
+ */
 class IndexController extends DefaultController
 {
     /**
@@ -21,11 +26,13 @@ class IndexController extends DefaultController
 
             /** News */
             $newsConfiguration = $this->configuration->getEntryByName('news');
-            $showNews = $newsService->getNewsWithMinNewsShownAndMaxAgeOfNews($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
+            $showNews = $newsService->getNewsWithMinNewsShownAndMaxAgeOfNews($newsConfiguration['minNewsShown'],
+                $newsConfiguration['maxAgeOfNewsInDays']);
 
             $this->viewRenderer->addViewConfig('news', $showNews);
 
-            $showArchiveLink = $newsService->isArchiveLinkNeeded($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
+            $showArchiveLink = $newsService->isArchiveLinkNeeded($newsConfiguration['minNewsShown'],
+                $newsConfiguration['maxAgeOfNewsInDays']);
 
             $this->viewRenderer->addViewConfig('showArchiveLink', $showArchiveLink);
 
@@ -43,6 +50,9 @@ class IndexController extends DefaultController
         }
     }
 
+    /**
+     *
+     */
     public function newsPageAction(): void
     {
         try {
@@ -62,21 +72,33 @@ class IndexController extends DefaultController
         }
     }
 
+    /**
+     *
+     */
     public function anfahrtAction(): void
     {
         $this->showStandardPage('anfahrt');
     }
 
+    /**
+     *
+     */
     public function impressumAction(): void
     {
         $this->showStandardPage('impressum');
     }
 
+    /**
+     *
+     */
     public function philosophieAction(): void
     {
         $this->showStandardPage('philosophie');
     }
 
+    /**
+     *
+     */
     public function archiveAction(): void
     {
         try {
@@ -84,7 +106,8 @@ class IndexController extends DefaultController
 
             /** News */
             $newsConfiguration = $this->configuration->getEntryByName('news');
-            $allNews = $newsService->getArchivedNews($newsConfiguration['minNewsShown'], $newsConfiguration['maxAgeOfNewsInDays']);
+            $allNews = $newsService->getArchivedNews($newsConfiguration['minNewsShown'],
+                $newsConfiguration['maxAgeOfNewsInDays']);
 
             $this->viewRenderer->addViewConfig('news', $allNews);
 
@@ -96,16 +119,22 @@ class IndexController extends DefaultController
         }
     }
 
+    /**
+     *
+     */
     public function reservierungAction(): void
     {
         $this->showStandardPage('reservierung');
     }
 
+    /**
+     *
+     */
     public function albumAction(): void
     {
         try {
             $albumService = new AlbumService($this->database);
-            $albums = $albumService->getAllAlbumsWithImags();
+            $albums = $albumService->getAllAlbumsWithImages();
 
             $this->viewRenderer->addViewConfig('albums', $albums);
 

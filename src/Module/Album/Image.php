@@ -8,6 +8,10 @@ use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Image as ImageSource;
 use Project\Module\GenericValueObject\Title;
 
+/**
+ * Class Image
+ * @package Project\Module\Album
+ */
 class Image
 {
     /** @var Id $imageId */
@@ -25,6 +29,13 @@ class Image
     /** @var  Id $albumId */
     protected $albumId;
 
+    /**
+     * Image constructor.
+     * @param Id $imageId
+     * @param Link $imageUrl
+     * @param ImageSource $image
+     * @param Id $albumId
+     */
     public function __construct(Id $imageId, Link $imageUrl, ImageSource $image, Id $albumId)
     {
         $this->imageId = $imageId;
@@ -88,6 +99,4 @@ class Image
     {
         return $this->image;
     }
-
-
 }

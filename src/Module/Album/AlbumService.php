@@ -6,6 +6,10 @@ namespace Project\Module\Album;
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
 
+/**
+ * Class AlbumService
+ * @package Project\Module\Album
+ */
 class AlbumService
 {
     /** @var  AlbumFactory $albumFactory */
@@ -14,13 +18,20 @@ class AlbumService
     /** @var  AlbumRepository $albumRepository */
     protected $albumRepository;
 
+    /**
+     * AlbumService constructor.
+     * @param Database $database
+     */
     public function __construct(Database $database)
     {
         $this->albumFactory = new AlbumFactory();
         $this->albumRepository = new AlbumRepository($database);
     }
 
-    public function getAllAlbumsWithImags(): array
+    /**
+     * @return array
+     */
+    public function getAllAlbumsWithImages(): array
     {
         $albums = [];
 
@@ -36,14 +47,7 @@ class AlbumService
 
             $albumImages = $this->albumRepository->getImagesForAlbum($album->getAlbumId());
 
-            if (count($albumImages) > 0) {
-                foreach ($albumImages as $albumImage) {
-                    /** @var Image $image */
-                    $image = $this->albumFactory->getImageFromObject($albumImage);
-
-                    $album->addImageToImageList($image);
-                }
-            }
+            $album = $this->addAlbumImagesToAlbum($album, $albumImages);
 
             $albums[$album->getAlbumId()->toString()] = $album;
         }
@@ -51,9 +55,63 @@ class AlbumService
         return $albums;
     }
 
-    public function getAlbumByAlbumId(Id $albumId): ?Album
+    /**
+     * @param $albumId
+     * @return null|Album
+     */
+    public function getAlbumWithImagesByAlbumId($albumId): ?Album
     {
-        return null;
+        if ($albumId instanceof Id === false) {
+            $albumId = Id::fromString($albumId);
+        }
+
+        $album = $this->albumRepository->getAlbumByAlbumId($albumId);
+
+        if (empty($album)) {
+            return null;
+        }
+
+        $album = $this->albumFactory->getAlbumFromObject($album);
+
+        $albumImages = $this->albumRepository->getImagesForAlbum($album->getAlbumId());
+
+        $album = $this->addAlbumImagesToAlbum($album, $albumImages);
+
+        return $album;
     }
 
+    public function getAlbumByParams(array $parameter): Album
+    {
+        $objectParameter = (object)$parameter;
+
+        if (!isset($objectParameter->albumId) || (isset($objectParameter->albumId) && empty($objectParameter->albumId))) {
+            $objectParameter->albumId = Id::generateId()->toString();
+        }
+
+        return $this->albumFactory->getAlbumFromObject($objectParameter);
+    }
+
+    public function saveAlbum(Album $album): bool
+    {
+        return $this->albumRepository->saveAlbum($album);
+    }
+
+    /**
+     * @param Album $album
+     * @param $albumImages
+     * @return Album
+     */
+    protected function addAlbumImagesToAlbum(Album $album, array $albumImages): Album
+    {
+        if (count($albumImages) > 0) {
+            foreach ($albumImages as $albumImage) {
+                /** @var Image $image */
+                $image = $this->albumFactory->getImageFromObject($albumImage);
+
+                $album->addImageToImageList($image);
+            }
+        }
+
+        return $album;
+    }
 }

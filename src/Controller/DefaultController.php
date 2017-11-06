@@ -1,4 +1,5 @@
 <?php
+declare (strict_types=1);
 
 namespace Project\Controller;
 
@@ -62,6 +63,9 @@ class DefaultController
         $this->setDefaultViewConfig();
     }
 
+    /**
+     * not found action
+     */
     public function notFoundAction(): void
     {
         $this->viewRenderer->addViewConfig('page', 'notfound');
@@ -69,6 +73,9 @@ class DefaultController
         $this->viewRenderer->renderTemplate();
     }
 
+    /**
+     * error action
+     */
     public function errorPageAction(): void
     {
         $this->showStandardPage('error');

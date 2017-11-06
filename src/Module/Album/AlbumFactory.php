@@ -9,8 +9,16 @@ use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Title;
 use Project\Module\GenericValueObject\Image as ImageSource;
 
+/**
+ * Class AlbumFactory
+ * @package Project\Module\Album
+ */
 class AlbumFactory
 {
+    /**
+     * @param $object
+     * @return Album
+     */
     public function getAlbumFromObject($object): Album
     {
         $albumId = Id::fromString($object->albumId);
@@ -23,6 +31,10 @@ class AlbumFactory
 
     }
 
+    /**
+     * @param $object
+     * @return Image
+     */
     public function getImageFromObject($object): Image
     {
         $imageId = Id::fromString($object->imageId);

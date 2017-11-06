@@ -1,4 +1,5 @@
 <?php
+declare (strict_types=1);
 
 namespace Project\Controller;
 
@@ -7,15 +8,18 @@ use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\News\News;
 use Project\Module\News\NewsService;
-use Project\Module\User\User;
 use Project\Routing;
 use Project\Utilities\Tools;
 
+/**
+ * Class BackendController
+ * @package Project\Controller
+ */
 class BackendController extends DefaultController
 {
-    /** @var  User */
-    protected $loggedInUser;
-
+    /**
+     * BackendController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -42,7 +46,7 @@ class BackendController extends DefaultController
          * Album holen
          */
         $albumService = new AlbumService($this->database);
-        $albums = $albumService->getAllAlbumsWithImags();
+        $albums = $albumService->getAllAlbumsWithImages();
 
         $this->viewRenderer->addViewConfig('albums', $albums);
 
@@ -64,7 +68,7 @@ class BackendController extends DefaultController
     {
         if ($this->userService->logoutUser($this->loggedInUser)) {
             $this->viewRenderer->removeViewConfig('loggedInUser');
-        };
+        }
 
         /** redirect because of logout action */
         header('Location: ' . Tools::getRouteUrl('index'));
@@ -134,11 +138,8 @@ class BackendController extends DefaultController
             $newsId = Id::fromString(Tools::getValue('newsId'));
 
             $news = $newsService->getNewsByNewsId($newsId);
-            if ($news !== null) {
-
-                if ($newsService->deleteNews($news) === true) {
-                    $parameter = ['notificationCode' => 'newsDeleteSuccess', 'notificationStatus' => 'success'];
-                }
+            if ($news !== null && $newsService->deleteNews($news) === true) {
+                $parameter = ['notificationCode' => 'newsDeleteSuccess', 'notificationStatus' => 'success'];
             }
         }
 
@@ -192,13 +193,11 @@ class BackendController extends DefaultController
 
             $event = $this->eventService->getEventByEventId($eventId);
 
-            if ($event !== null) {
-                if ($this->eventService->deleteEvent($event) === true) {
-                    $newsService = new NewsService($this->database, $this->eventService);
+            if ($event !== null && $this->eventService->deleteEvent($event) === true) {
+                $newsService = new NewsService($this->database, $this->eventService);
 
-                    if ($newsService->deleteDeletedEventInNews($event) === true) {
-                        $parameter = ['notificationCode' => 'eventDeleteSuccess', 'notificationStatus' => 'success'];
-                    }
+                if ($newsService->deleteDeletedEventInNews($event) === true) {
+                    $parameter = ['notificationCode' => 'eventDeleteSuccess', 'notificationStatus' => 'success'];
                 }
             }
         }
@@ -211,7 +210,7 @@ class BackendController extends DefaultController
         if (Tools::getValue('albumId') !== false) {
             $albumId = Id::fromString(Tools::getValue('albumId'));
 
-            $album = $this->albumService->getAlbumByAlbumId($albumId);
+            $album = $this->albumService->getAlbumWithImagesByAlbumId($albumId);
 
             if ($album !== null) {
                 $this->viewRenderer->addViewConfig('album', $album);
@@ -220,5 +219,21 @@ class BackendController extends DefaultController
 
         $this->viewRenderer->addViewConfig('page', 'albumedit');
         $this->viewRenderer->renderTemplate();
+    }
+
+    public function albumEditSaveAction(): void
+    {
+        $album = $this->albumService->getAlbumByParams($_POST);
+
+        $parameter = ['notificationCode' => 'albumEditError', 'notificationStatus' => 'error'];
+
+        if ($this->albumService->saveAlbum($album) === true) {
+            $parameter = ['notificationCode' => 'albumEditSuccess', 'notificationStatus' => 'success'];
+        }
+
+        $parameter['albumId'] = $album->getAlbumId()->toString();
+
+        header('Location: ' . Tools::getRouteUrl('album-edit', $parameter));
+
     }
 }

@@ -129,4 +129,31 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .image-edit-container {
+        margin-top: 20px;
+
+        .image-edit-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .image-edit {
+                width: 40%;
+                max-height: 200px;
+
+                .image-in-list {
+                    width: 100%;
+                    overflow: hidden;
+                    height: auto;
+                    max-height: 100px;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
 }

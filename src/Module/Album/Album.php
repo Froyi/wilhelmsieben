@@ -7,6 +7,10 @@ use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Title;
 
+/**
+ * Class Album
+ * @package Project\Module\Album
+ */
 class Album
 {
     /** @var Id $albumId */
@@ -22,6 +26,12 @@ class Album
     protected $imageList = [];
 
 
+    /**
+     * Album constructor.
+     * @param Id $albumId
+     * @param Title $title
+     * @param Date $albumDate
+     */
     public function __construct(Id $albumId, Title $title, Date $albumDate)
     {
         $this->albumId = $albumId;
@@ -69,11 +79,18 @@ class Album
         $this->albumDate = $albumDate;
     }
 
+    /**
+     * @param Image $image
+     */
     public function addImageToImageList(Image $image): void
     {
         $this->imageList[$image->getImageId()->toString()] = $image;
     }
 
+    /**
+     * @param Id $imageId
+     * @return bool
+     */
     public function removeImageFromImageList(Id $imageId): bool
     {
         if (isset($this->imageList[$imageId->toString()])) {
@@ -93,16 +110,26 @@ class Album
         return $this->imageList;
     }
 
+    /**
+     *
+     */
     public function removeAllImagesFromList(): void
     {
         $this->imageList = [];
     }
 
+    /**
+     * @return int
+     */
     public function getAmountOfImagesInAlbum(): int
     {
         return count($this->imageList);
     }
 
+    /**
+     * @param Id $imageId
+     * @return null|Image
+     */
     public function getImageFromImageListById(Id $imageId): ?Image
     {
         if (isset($this->imageList[$imageId->toString()])) {
@@ -112,6 +139,9 @@ class Album
         return null;
     }
 
+    /**
+     * @return Image
+     */
     public function getAlbumPreviewImage(): Image
     {
         $randomImage = array_rand($this->imageList);
