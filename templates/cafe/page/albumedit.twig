@@ -16,15 +16,15 @@
             <div class="image-edit-container">
                 <div class="insert-new-image">
                     <div>
-                        <label for="insertImage">
+                        <label for="imageNew['imageUrl']">
                             Neues Bild hochladen
-                            <input type="file" name="insertImage">
+                            <input type="file" name="imageNew[imageUrl]">
                         </label>
                     </div>
                     <div>
-                        <label for="insertImageTitle">
+                        <label for="title">
                             Titel
-                            <input type="text" name="insertImageTitle">
+                            <input type="text" name="imageNew[title]">
                         </label>
                     </div>
                 </div>
@@ -40,6 +40,17 @@
                                 <div class="image-in-list">
                                     <img src="{{ image.getImageUrl }}" alt="">
                                 </div>
+                                <div>
+                                    <label for="image[{{ image.getImageId }}][title]">
+                                        Titel
+                                        <input type="text" name="image[{{ image.getImageId }}][title]"
+                                               value="{{ image.getTitle }}">
+                                    </label>
+                                </div>
+                                <input type="hidden" name="image[{{ image.getImageId }}][imageId]"
+                                       value="{{ image.getImageId }}">
+                                <input type="hidden" name="image[{{ image.getImageId }}][imageUrl]"
+                                       value="{{ image.getImageUrl }}">
                             </div>
                         {% endfor %}
                     </div>
