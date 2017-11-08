@@ -38,7 +38,7 @@
                         {% endif %}
 
                         <div class="news-delete">
-                            <a href="{{ route('news-delete', newsId) }}" class="js-delete">News löschen</a>
+                            <a href="{{ route('news-delete', newsId) }}" class="js-delete">löschen</a>
                         </div>
                     </div>
                 {% endfor %}
@@ -67,7 +67,7 @@
                         </a>
 
                         <div class="event-delete">
-                            <a href="{{ route('event-delete', eventId) }}" class="js-delete">Event löschen</a>
+                            <a href="{{ route('event-delete', eventId) }}" class="js-delete delete-button">löschen</a>
                         </div>
 
                     </div>
@@ -93,11 +93,11 @@
                         {% set albumId = {'albumId': singleAlbum.getAlbumId} %}
 
                         <a href="{{ route('album-edit', albumId) }}">
-                            {{ singleAlbum.getTitle }} | {{ singleAlbum.getAlbumDate }} | {{ singleAlbum.getAmountOfImagesInAlbum }}
+                            {{ singleAlbum.getTitle }} | {{ singleAlbum.getAlbumDate }} | Bilder {{ singleAlbum.getAmountOfImagesInAlbum }}
                         </a>
 
                         <div class="album-delete">
-                            <a href="{{ route('album-delete', albumId) }}" class="js-delete">Album löschen</a>
+                            <a href="{{ route('album-delete', albumId) }}" class="js-delete delete-button">löschen</a>
                         </div>
                     </div>
                 {% endfor %}

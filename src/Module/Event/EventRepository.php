@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Project\Module\Event;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
 use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
 
@@ -14,6 +15,8 @@ class EventRepository
     const ORDERBY = 'eventDate';
 
     const ORDERKIND = 'ASC';
+
+    const ORDERKIND_NEWEST = 'DESC';
 
     const EVENT_ID_NAME = 'eventId';
 
@@ -45,6 +48,7 @@ class EventRepository
     public function getAllEvents()
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->orderBy(self::ORDERBY, Query::DESC);
 
         return $this->database->fetchAll($query);
     }
