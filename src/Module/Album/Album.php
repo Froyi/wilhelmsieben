@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Module\Album;
 
@@ -24,7 +24,6 @@ class Album
 
     /** @var array $imageList */
     protected $imageList = [];
-
 
     /**
      * Album constructor.
@@ -111,7 +110,7 @@ class Album
     }
 
     /**
-     *
+     * delete image list
      */
     public function removeAllImagesFromList(): void
     {

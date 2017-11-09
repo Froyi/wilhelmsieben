@@ -80,6 +80,10 @@ class AlbumService
         return $album;
     }
 
+    /**
+     * @param array $parameter
+     * @return Album
+     */
     public function getAlbumByParams(array $parameter): Album
     {
         $objectParameter = (object)$parameter;
@@ -91,6 +95,10 @@ class AlbumService
         return $this->albumFactory->getAlbumFromObject($objectParameter);
     }
 
+    /**
+     * @param Album $album
+     * @return bool
+     */
     public function saveAlbum(Album $album): bool
     {
         return $this->albumRepository->saveAlbum($album);

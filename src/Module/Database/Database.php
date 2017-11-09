@@ -4,6 +4,10 @@ namespace Project\Module\Database;
 
 use Project\Configuration;
 
+/**
+ * Class Database
+ * @package Project\Module\Database
+ */
 class Database
 {
     /** @var  string $host */
@@ -41,7 +45,7 @@ class Database
     }
 
     /**
-     *
+     * connect to database
      */
     public function connect(): void
     {
@@ -85,6 +89,10 @@ class Database
         return $query;
     }
 
+    /**
+     * @param string $table
+     * @return Query
+     */
     public function getNewDeleteQuery(string $table): Query
     {
         $query = new Query($table);

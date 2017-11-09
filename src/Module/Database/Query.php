@@ -13,7 +13,7 @@ class Query
 {
     const SELECT = 'SELECT ';
     const UPDATE = 'UPDATE ';
-    const INSERT = 'INSERT INTO ';
+    const INSERT = 'INSERT INTO' . ' ';
     const DELETE = 'DELETE ';
     const FROM = 'FROM ';
     const WHERE = 'WHERE ';
@@ -59,21 +59,35 @@ class Query
         $this->addTable($table);
     }
 
+    /**
+     * @param string $type
+     */
     public function addType(string $type): void
     {
         $this->type = $type;
     }
 
+    /**
+     * @param string $entity
+     */
     public function addEntityToType(string $entity): void
     {
         $this->entityArray[] = $entity;
     }
 
+    /**
+     * @param string $table
+     */
     public function addTable(string $table): void
     {
         $this->tableArray[] = $table;
     }
 
+    /**
+     * @param string $entity
+     * @param string $operator
+     * @param $value
+     */
     public function where(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
@@ -83,6 +97,11 @@ class Query
         $this->where .= self::WHERE . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
+    /**
+     * @param string $entity
+     * @param string $operator
+     * @param $value
+     */
     public function andWhere(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
@@ -92,6 +111,11 @@ class Query
         $this->where .= self:: AND . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
+    /**
+     * @param string $entity
+     * @param string $operator
+     * @param $value
+     */
     public function orWhere(string $entity, string $operator, $value): void
     {
         if (is_string($value) === true) {
@@ -101,6 +125,10 @@ class Query
         $this->where .= self:: OR . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
+    /**
+     * @param string $entity
+     * @param null $value
+     */
     public function set(string $entity, $value = null): void
     {
         if (is_string($value) === true) {
@@ -116,6 +144,10 @@ class Query
         }
     }
 
+    /**
+     * @param string $entity
+     * @param null $value
+     */
     public function insert(string $entity, $value = null): void
     {
         if (!isset($this->insert[$entity])) {
@@ -123,16 +155,26 @@ class Query
         }
     }
 
+    /**
+     * @param int $limit
+     */
     public function limit(int $limit): void
     {
         $this->limit = self::LIMIT . $limit;
     }
 
+    /**
+     * @param string $entity
+     * @param string $order
+     */
     public function orderBy(string $entity, string $order): void
     {
         $this->orderBy = self::ORDERBY . ' ' . $entity . ' ' . $order . ' ';
     }
 
+    /**
+     * @return string
+     */
     public function getQuery(): string
     {
         $queryString = '';
@@ -162,6 +204,9 @@ class Query
         return $queryString;
     }
 
+    /**
+     * @return string
+     */
     protected function getEntities(): string
     {
         $entities = '* ';
@@ -210,6 +255,6 @@ class Query
             $values .= $value;
         }
 
-        return "(" . $entities . ") " . self::VALUES . "(" . $values . ")";
+        return '(' . $entities . ') ' . self::VALUES . '(' . $values . ')';
     }
 }
