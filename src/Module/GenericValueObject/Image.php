@@ -1,10 +1,14 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Module\GenericValueObject;
 
 use claviska\SimpleImage;
 
+/**
+ * Class Image
+ * @package Project\Module\GenericValueObject
+ */
 class Image
 {
     const PATH_NEWS = 'data/img/news/';
@@ -107,7 +111,7 @@ class Image
     {
         try {
             $this->image->toFile($path, null, self::SAVE_QUALITY);
-        } catch (\Error $error) {
+        } catch (\InvalidArgumentException $error) {
             return false;
         }
 

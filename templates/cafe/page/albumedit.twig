@@ -1,8 +1,7 @@
 <div class="album-edit-container page-container">
     <div class="loggedin-banderole banderole"><h1>Album editieren</h1></div>
 
-    <div><a href="{{ route('loggedin') }}">Zurück</a></div>
-
+    <div class="back-link"><a href="{{ route('loggedin') }}">Zurück</a></div>
 
     <div class="album-edit-form-container">
         <form action="{{ route('album-edit-save') }}" method="POST" name="albumedit" enctype="multipart/form-data">
@@ -16,22 +15,22 @@
             <div class="image-edit-container">
                 <div class="insert-new-image">
                     <div>
-                        <label for="imageNew['imageUrl']">
+                        <label for="imageNew">
                             Neues Bild hochladen
-                            <input type="file" name="imageNew[imageUrl]">
+                            <input type="file" name="imageNew">
                         </label>
                     </div>
                     <div>
-                        <label for="title">
+                        <label for="imageNewTitle">
                             Titel
-                            <input type="text" name="imageNew[title]">
+                            <input type="text" name="imageNewTitle">
                         </label>
                     </div>
                 </div>
+
                 {% if album.getImageList|length <= 0 %}
                     <div class="no-images">
                         <div class="no-result">Es gibt noch keine Bilder zu diesem Album.</div>
-
                     </div>
                 {% else %}
                     <div class="image-edit-list">
@@ -51,18 +50,21 @@
                                        value="{{ image.getImageId }}">
                                 <input type="hidden" name="image[{{ image.getImageId }}][imageUrl]"
                                        value="{{ image.getImageUrl }}">
+                                <input type="hidden" name="image[{{ image.getImageId }}][albumId]"
+                                       value="{{ image.getAlbumId }}">
                             </div>
                         {% endfor %}
                     </div>
                 {% endif %}
-
             </div>
+
             <div>
                 <input type="hidden" name="albumDate" value="{{ "now"|date("Y-m-d H:i:s") }}">
                 {% if album is defined %}
                     <input type="hidden" name="albumId" value="{{ album.getAlbumId }}">
                 {% endif %}
             </div>
+
             <div>
                 <input type="submit" name="submit" value="senden">
             </div>

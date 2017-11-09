@@ -74,6 +74,9 @@ class BackendController extends DefaultController
         header('Location: ' . Tools::getRouteUrl('index'));
     }
 
+    /**
+     *
+     */
     public function newsEditAction(): void
     {
         /** add news to template if one should be edit */
@@ -105,10 +108,8 @@ class BackendController extends DefaultController
         $image = null;
         if (Tools::getFile('image') !== false) {
             $image = Image::fromUploadWithSave(Tools::getFile('image'), Image::PATH_NEWS);
-        } else {
-            if (Tools::getValue('imagePath') !== false && Tools::getValue('deleteImage') === false) {
-                $image = Image::fromFile(Tools::getValue('imagePath'));
-            }
+        } elseif (Tools::getValue('imagePath') !== false && Tools::getValue('deleteImage') === false) {
+            $image = Image::fromFile(Tools::getValue('imagePath'));
         }
 
         /** @var NewsService $newsService */
@@ -205,6 +206,9 @@ class BackendController extends DefaultController
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
+    /**
+     *
+     */
     public function albumEditAction(): void
     {
         if (Tools::getValue('albumId') !== false) {
@@ -221,6 +225,9 @@ class BackendController extends DefaultController
         $this->viewRenderer->renderTemplate();
     }
 
+    /**
+     *
+     */
     public function albumEditSaveAction(): void
     {
         $album = $this->albumService->getAlbumByParams($_POST);
@@ -234,6 +241,25 @@ class BackendController extends DefaultController
         $parameter['albumId'] = $album->getAlbumId()->toString();
 
         header('Location: ' . Tools::getRouteUrl('album-edit', $parameter));
+    }
 
+    /**
+     *
+     */
+    public function albumDeleteAction(): void
+    {
+        $parameter = ['notificationCode' => 'albumDeleteError', 'notificationStatus' => 'error'];
+
+        if (Tools::getValue('albumId') !== false) {
+            $albumId = Id::fromString(Tools::getValue('albumId'));
+
+            $album = $this->albumService->getAlbumWithImagesByAlbumId($albumId);
+
+            if ($album !== null && $this->albumService->deleteAlbumWithImages($album) === true) {
+                $parameter = ['notificationCode' => 'albumDeleteSuccess', 'notificationStatus' => 'success'];
+            }
+        }
+
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 }

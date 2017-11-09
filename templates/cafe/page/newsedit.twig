@@ -1,8 +1,7 @@
 <div class="newsedit-container page-container">
     <div class="loggedin-banderole banderole"><h1>News editieren</h1></div>
 
-    <div><a href="{{ route('loggedin') }}">Zurück</a></div>
-
+    <div class="back-link"><a href="{{ route('loggedin') }}">Zurück</a></div>
 
     <div class="newsedit-form-container">
         <form action="{{ route('news-edit-save') }}" method="POST" name="newsedit" enctype="multipart/form-data">
@@ -29,6 +28,7 @@
                         <input type="file" name="image"/>
                     </label>
                 </div>
+
                 {% if news is defined and news.getImage is not null %}
                     <div>
                         <img src="{{ news.getImage }}" class="image-edit" alt="">
@@ -67,6 +67,7 @@
                     <input type="hidden" name="oldEventId" value="{{ news.getEvent.getEventId }}">
                 {% endif %}
             </div>
+
             <div>
                 <input type="submit" name="submit" value="senden">
             </div>

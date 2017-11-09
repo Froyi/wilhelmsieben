@@ -1,8 +1,12 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Utilities;
 
+/**
+ * Class Tools
+ * @package Project\Utilities
+ */
 class Tools
 {
     const STANDARD_URL = 'index.php';
@@ -60,6 +64,12 @@ class Tools
         return $url;
     }
 
+    /**
+     * @param string $text
+     * @param int    $amount
+     * @param bool   $points
+     * @return string
+     */
     public static function shortener(string $text, int $amount = 50, bool $points = true): string
     {
         if (strlen($text) <= $amount) {

@@ -1,10 +1,12 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Module\Album;
 
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image as ValueImage;
+use Project\Utilities\Tools;
 
 /**
  * Class AlbumService
@@ -92,7 +94,20 @@ class AlbumService
             $objectParameter->albumId = Id::generateId()->toString();
         }
 
-        return $this->albumFactory->getAlbumFromObject($objectParameter);
+        $album = $this->albumFactory->getAlbumFromObject($objectParameter);
+
+        if (!empty($objectParameter->image)) {
+            $album = $this->addAlbumImagesToAlbum($album, $objectParameter->image);
+        }
+
+        /** adding new image to album */
+        if (Tools::getFile('imageNew') !== false) {
+            $albumImage = $this->createAlbumImage(Tools::getFile('imageNew'), Tools::getValue('imageNewTitle'), $album->getAlbumId());
+
+            $album->addImageToImageList($albumImage);
+        }
+
+        return $album;
     }
 
     /**
@@ -101,18 +116,43 @@ class AlbumService
      */
     public function saveAlbum(Album $album): bool
     {
-        return $this->albumRepository->saveAlbum($album);
+        if ($this->albumRepository->saveAlbum($album) === true) {
+            foreach ($album->getImageList() as $image) {
+                $this->albumRepository->saveImage($image);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @param Album $album
-     * @param $albumImages
+     * @return bool
+     */
+    public function deleteAlbumWithImages(Album $album): bool
+    {
+        $imageList = $album->getImageList();
+
+        foreach ($imageList as $image) {
+            $this->albumRepository->deleteImage($image);
+        }
+
+        return $this->albumRepository->deleteAlbum($album);
+    }
+
+    /**
+     * @param Album $album
+     * @param       $albumImages
      * @return Album
      */
     protected function addAlbumImagesToAlbum(Album $album, array $albumImages): Album
     {
         if (count($albumImages) > 0) {
             foreach ($albumImages as $albumImage) {
+                $albumImage = (object)$albumImage;
+
                 /** @var Image $image */
                 $image = $this->albumFactory->getImageFromObject($albumImage);
 
@@ -121,5 +161,23 @@ class AlbumService
         }
 
         return $album;
+    }
+
+    /**
+     * @param array $file
+     * @param       $imageNewTitle
+     * @param Id    $albumId
+     * @return null|Image
+     */
+    protected function createAlbumImage(array $file, $imageNewTitle, Id $albumId): ?Image
+    {
+        $newImage = ValueImage::fromUploadWithSave($file, ValueImage::PATH_ALBUM);
+
+        $title = '';
+        if ($imageNewTitle !== false) {
+            $title = $imageNewTitle;
+        }
+
+        return $this->albumFactory->createNewImage($newImage, $title, $albumId);
     }
 }

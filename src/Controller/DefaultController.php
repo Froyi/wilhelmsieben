@@ -41,6 +41,9 @@ class DefaultController
     /** @var  Notification $notification */
     protected $notification;
 
+    /** @var AlbumService $albumService */
+    protected $albumService;
+
     /**
      * DefaultController constructor.
      */

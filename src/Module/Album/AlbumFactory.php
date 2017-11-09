@@ -1,13 +1,13 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Module\Album;
 
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image as ImageSource;
 use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Title;
-use Project\Module\GenericValueObject\Image as ImageSource;
 
 /**
  * Class AlbumFactory
@@ -28,7 +28,6 @@ class AlbumFactory
         $albumDate = Date::fromValue($object->albumDate);
 
         return new Album($albumId, $title, $albumDate);
-
     }
 
     /**
@@ -46,6 +45,28 @@ class AlbumFactory
 
         if (isset($object->title) && !empty($object->title)) {
             $title = Title::fromString($object->title);
+
+            $image->setTitle($title);
+        }
+
+        return $image;
+    }
+
+    /**
+     * @param ImageSource $imageSource
+     * @param null|string $title
+     * @param Id          $albumId
+     * @return null|Image
+     */
+    public function createNewImage(ImageSource $imageSource, ?string $title, Id $albumId): ?Image
+    {
+        $imageId = Id::generateId();
+        $imageUrl = Link::fromString($imageSource->toString());
+
+        $image = new Image($imageId, $imageUrl, $imageSource, $albumId);
+
+        if (!empty($title)) {
+            $title = Title::fromString($title);
 
             $image->setTitle($title);
         }

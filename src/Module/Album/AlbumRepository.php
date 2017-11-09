@@ -20,6 +20,8 @@ class AlbumRepository
 
     const IMAGE_ORDERBY = 'imageId';
 
+    const IMAGE_ID = 'imageId';
+
     const ALBUM_ID = 'albumId';
 
     const ALBUM_ORDERKIND = 'DESC';
@@ -63,6 +65,18 @@ class AlbumRepository
     }
 
     /**
+     * @param Id $imageId
+     * @return mixed
+     */
+    public function getImageByImageId(Id $imageId)
+    {
+        $query = $this->database->getNewSelectQuery(self::IMAGE_TABLE);
+        $query->where(self::IMAGE_ID, '=', $imageId->toString());
+
+        return $this->database->fetch($query);
+    }
+
+    /**
      * @param Id $albumId
      * @return mixed
      */
@@ -95,6 +109,57 @@ class AlbumRepository
         $query->insert('albumId', $album->getAlbumId()->toString());
         $query->insert('title', $album->getTitle()->getTitle());
         $query->insert('albumDate', $album->getAlbumDate()->toString());
+
+        return $this->database->execute($query);
+    }
+
+    /**
+     * @param Image $image
+     * @return bool
+     */
+    public function saveImage(Image $image): bool
+    {
+        if (!empty($this->getImageByImageId($image->getImageId()))) {
+            $query = $this->database->getNewUpdateQuery(self::IMAGE_TABLE);
+            $query->set('imageId', $image->getImageId()->toString());
+            $query->set('title', $image->getTitle()->getTitle());
+            $query->set('imageUrl', $image->getImageUrl()->toString());
+            $query->set('albumId', $image->getAlbumId()->toString());
+
+            $query->where('imageId', '=', $image->getImageId()->toString());
+
+            return $this->database->execute($query);
+        }
+
+        $query = $this->database->getNewInsertQuery(self::IMAGE_TABLE);
+        $query->insert('albumId', $image->getAlbumId()->toString());
+        $query->insert('title', $image->getTitle()->getTitle());
+        $query->insert('imageUrl', $image->getImageUrl()->toString());
+        $query->insert('imageId', $image->getImageId()->toString());
+
+        return $this->database->execute($query);
+    }
+
+    /**
+     * @param Image $image
+     * @return bool
+     */
+    public function deleteImage(Image $image): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::IMAGE_TABLE);
+        $query->where('imageId', '=', $image->getImageId()->toString());
+
+        return $this->database->execute($query);
+    }
+
+    /**
+     * @param Album $album
+     * @return bool
+     */
+    public function deleteAlbum(Album $album): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::ALBUM_TABLE);
+        $query->where('albumId', '=', $album->getAlbumId()->toString());
 
         return $this->database->execute($query);
     }

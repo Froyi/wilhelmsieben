@@ -1,8 +1,7 @@
 <div class="eventedit-container page-container">
     <div class="loggedin-banderole banderole"><h1>Event editieren</h1></div>
 
-    <div><a href="{{ route('loggedin') }}">Zurück</a></div>
-
+    <div class="back-link"><a href="{{ route('loggedin') }}">Zurück</a></div>
 
     <div class="eventedit-form-container">
         <form action="{{ route('event-edit-save') }}" method="POST" name="eventedit">
@@ -34,6 +33,7 @@
                     <input type="hidden" name="eventId" value="{{ event.getEventId }}">
                 {% endif %}
             </div>
+
             <div>
                 <input type="submit" name="submit" value="senden">
             </div>

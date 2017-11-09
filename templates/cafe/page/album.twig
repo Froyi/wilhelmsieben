@@ -1,15 +1,20 @@
 <div class="album-container page-container">
-    <div class="album-banderole banderole"><h1>Impressionen</h1></div>
+    <div class="album-banderole banderole">
+        <h1>Impressionen</h1>
+    </div>
+
     {% if albums|length > 0 %}
         <div class="album-album-container">
             {% for album in albums %}
                 {% if album.getAmountOfImagesInAlbum > 0 %}
+                    {% set previewImage = album.getAlbumPreviewImage %}
+
                     <div class="album-container">
                         <a data-fancybox="group-{{ album.getAlbumId }}" class="area-link"
-                           href="{{ album.getAlbumPreviewImage.getImageUrl }}"></a>
+                           href="{{ previewImage.getImageUrl }}"></a>
 
                         <div class="round-image-container">
-                            <img src="{{ album.getAlbumPreviewImage.getImageUrl }}" alt="">
+                            <img src="{{ previewImage.getImageUrl }}" alt="">
                         </div>
 
                         <h3>{{ album.getTitle }}</h3>
@@ -20,10 +25,12 @@
                         </div>
 
                         {% for albumImage in album.getImageList %}
-                            <a class="" data-fancybox="group-{{ album.getAlbumId }}" href="{{ albumImage.getImageUrl }}"
-                               data-caption="{{ albumImage.getTitle }}"></a>
+                            {% if previewImage.getImageId != albumImage.getImageId %}
+                                <a class="" data-fancybox="group-{{ album.getAlbumId }}"
+                                   href="{{ albumImage.getImageUrl }}"
+                                   data-caption="{{ albumImage.getTitle }}"></a>
+                            {% endif %}
                         {% endfor %}
-
                     </div>
                 {% endif %}
             {% endfor %}

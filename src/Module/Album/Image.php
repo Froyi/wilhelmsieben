@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
+declare (strict_types=1);
 
 namespace Project\Module\Album;
 
 use Project\Module\GenericValueObject\Id;
-use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Image as ImageSource;
+use Project\Module\GenericValueObject\Link;
 use Project\Module\GenericValueObject\Title;
 
 /**
