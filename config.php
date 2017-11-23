@@ -10,12 +10,12 @@ return [
         'dir' =>  '/cafe',
         'cacheDir' => '/cache'
     ],
-    /*'database' => [
+    'database_live' => [
         'host' => 'localhost',
         'user' => 'web28634274',
         'password' => 'q3qKQMpf',
         'database' => 'usr_web28634274_1'
-    ],*/
+    ],
     'database' => [
         'host' => 'localhost',
         'user' => 'root',

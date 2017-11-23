@@ -4,15 +4,16 @@ declare (strict_types=1);
 namespace Project\Controller;
 
 use Project\Module\Album\AlbumService;
-use Project\Module\GenericValueObject\Date;
+use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Email;
+use Project\Module\GenericValueObject\Extras;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Name;
 use Project\Module\GenericValueObject\Password;
+use Project\Module\GenericValueObject\Seats;
+use Project\Module\Mailer\MailerService;
 use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
 
 /**
  * Class IndexController
@@ -158,21 +159,24 @@ class IndexController extends DefaultController
     {
         $sentReservierung = false;
 
-        if (empty(Tools::getValue('name')) === false && empty(Tools::getValue('datum')) === false && empty(Tools::getValue('plaetze')) === false) {
-            // $to = $this->configuration->getEntryByName('project')['email'];
-            $to = 'ms2002@onlinehome.de';
-            $from = Date::fromValue(Tools::getValue('name'));
+        if (empty(Tools::getValue('name')) === false && empty(Tools::getValue('datum')) === false && empty(Tools::getValue('seats')) === false) {
+            $mailerService = new MailerService($this->configuration);
 
-            // alfa3205.alfahosting-server.de
-            $mailMessage = new Swift_Message();
-            $mailMessage->addTo($to);
-            $mailMessage->addFrom($from);
-            $mailMessage->setBody('Hallo du Maik!');
-            $transport = new Swift_SmtpTransport();
-            $mailer = new Swift_Mailer($transport);
+            $name = Name::fromString(Tools::getValue('name'));
+            $seats = Seats::fromValue((int)Tools::getValue('seats'));
+            $date = Datetime::fromValue(Tools::getValue('datum'));
 
-            $mailer->send($mailMessage);
-            $sentReservierung = true;
+            $extras = null;
+            if (Tools::getValue('extras') !== false && empty(Tools::getValue('extras')) === false) {
+                $extras = Extras::fromString(Tools::getValue('extras'));
+            }
+
+            $email = null;
+            if (Tools::getValue('email') !== false && empty(Tools::getValue('email')) === false) {
+                $email = Email::fromString(Tools::getValue('email'));
+            }
+
+            $sentReservierung = $mailerService->sendReserveMail($name, $seats, $date, $email, $extras);
         }
 
         $this->viewRenderer->addViewConfig('sentReservierung', $sentReservierung);

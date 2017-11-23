@@ -26,9 +26,9 @@
                     </label>
                 </div>
                 <div>
-                    <label for="plaetze">
+                    <label for="seats">
                         Wie viele Personen?<br>
-                        <input type="number" name="plaetze" min="1" max="20" required/>
+                        <input type="number" name="seats" min="1" max="20" required/>
                     </label>
                 </div>
                 <div>
@@ -40,10 +40,19 @@
             </div>
 
             <div>
-                <label for="sonderwuensche">
-                    Sonderwünsche? (Couchplatz gewünscht, ...)<br>
-                    <textarea name="sonderwuensche" cols="30" rows="10"></textarea>
-                </label>
+                <div>
+                    <label for="email">
+                        Emailadresse <br>
+                        <input type="email" name="email">
+                    </label>
+                </div>
+
+                <div class="extra-container">
+                    <label for="extras">
+                        Sonderwünsche? (Couchplatz gewünscht, ...)<br>
+                        <textarea name="extras" cols="30" rows="10"></textarea>
+                    </label>
+                </div>
             </div>
             <div>
                 <input type="submit" name="submit" value="absenden">
