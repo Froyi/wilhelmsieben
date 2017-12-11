@@ -5,6 +5,9 @@ namespace Project\Module\GenericValueObject;
 
 /**
  * Class Extras
+ *
+ * optional parameter for textareas (here booking extras)
+ *
  * @package Project\Module\GenericValueObject
  */
 class Extras

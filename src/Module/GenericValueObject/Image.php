@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace Project\Module\GenericValueObject;
 
 use claviska\SimpleImage;
+use League\Uri\File;
 
 /**
  * Class Image
@@ -61,11 +62,13 @@ class Image
      */
     public static function fromUploadWithSave(array $uploadedFile, string $path): ?self
     {
-        $image = self::fromFile($uploadedFile['tmp_name']);
-        $filePath = $path . $uploadedFile['name'];
+        if (isset(Filename::TYPE_IMAGE_MAPPING[$uploadedFile['type']])) {
+            $image = self::fromFile($uploadedFile['tmp_name']);
+            $filePath = $path . Filename::generateFilename(Filename::TYPE_IMAGE_MAPPING[$uploadedFile['type']]);
 
-        if ($image->saveToPath($filePath) === true) {
-            return $image;
+            if ($image->saveToPath($filePath) === true) {
+                return $image;
+            }
         }
 
         return null;
@@ -111,7 +114,7 @@ class Image
     {
         try {
             $this->image->toFile($path, null, self::SAVE_QUALITY);
-        } catch (\InvalidArgumentException $error) {
+        } catch (\Exception $error) {
             return false;
         }
 

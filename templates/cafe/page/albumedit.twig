@@ -46,6 +46,12 @@
                                                value="{{ image.getTitle }}">
                                     </label>
                                 </div>
+                                <div>
+                                    <label for="image-delete[{{ image.getImageId }}]">
+                                        Bild löschen?
+                                        <input type="checkbox" name="image-delete[{{ image.getImageId }}]">
+                                    </label>
+                                </div>
                                 <input type="hidden" name="image[{{ image.getImageId }}][imageId]"
                                        value="{{ image.getImageId }}">
                                 <input type="hidden" name="image[{{ image.getImageId }}][imageUrl]"

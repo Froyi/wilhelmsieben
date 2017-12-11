@@ -230,13 +230,15 @@ class BackendController extends DefaultController
      */
     public function albumEditSaveAction(): void
     {
-        $album = $this->albumService->getAlbumByParams($_POST);
+        $album = $this->albumService->getAlbumByParameter($_POST);
 
         $parameter = ['notificationCode' => 'albumEditError', 'notificationStatus' => 'error'];
 
         if ($this->albumService->saveAlbum($album) === true) {
             $parameter = ['notificationCode' => 'albumEditSuccess', 'notificationStatus' => 'success'];
         }
+
+        $this->albumService->deleteAlbumImagesByParameter($_POST);
 
         $parameter['albumId'] = $album->getAlbumId()->toString();
 

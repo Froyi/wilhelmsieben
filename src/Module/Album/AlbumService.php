@@ -86,7 +86,7 @@ class AlbumService
      * @param array $parameter
      * @return Album
      */
-    public function getAlbumByParams(array $parameter): Album
+    public function getAlbumByParameter(array $parameter): Album
     {
         $objectParameter = (object)$parameter;
 
@@ -140,6 +140,14 @@ class AlbumService
         }
 
         return $this->albumRepository->deleteAlbum($album);
+    }
+
+    public function deleteAlbumImagesByParameter(array $parameter): bool
+    {
+        if (!empty($parameter['image-delete'])) {
+            foreach ($parameter['image-delete'] as $imageId => $status) {
+            }
+        }
     }
 
     /**
