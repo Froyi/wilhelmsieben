@@ -5,7 +5,7 @@ namespace Project\Module\GenericValueObject;
 
 class Text
 {
-    const MIN_TEXT_LENGTH = 50;
+    const MIN_TEXT_LENGTH = 1;
 
     protected $text;
 
@@ -31,7 +31,7 @@ class Text
 
     protected static function convertText(string $text): string
     {
-        return trim($text);
+        return htmlspecialchars($text);
     }
 
     public function getText(): string
@@ -41,7 +41,7 @@ class Text
 
     public function __toString(): string
     {
-        return $this->text;
+        return nl2br($this->text);
     }
 }
 

@@ -58,6 +58,27 @@ class AlbumService
     }
 
     /**
+     * @param Album $album
+     * @param       $albumImages
+     * @return Album
+     */
+    protected function addAlbumImagesToAlbum(Album $album, array $albumImages): Album
+    {
+        if (count($albumImages) > 0) {
+            foreach ($albumImages as $albumImage) {
+                $albumImage = (object)$albumImage;
+
+                /** @var Image $image */
+                $image = $this->albumFactory->getImageFromObject($albumImage);
+
+                $album->addImageToImageList($image);
+            }
+        }
+
+        return $album;
+    }
+
+    /**
      * @param $albumId
      * @return null|Album
      */
@@ -111,6 +132,24 @@ class AlbumService
     }
 
     /**
+     * @param array $file
+     * @param       $imageNewTitle
+     * @param Id $albumId
+     * @return null|Image
+     */
+    protected function createAlbumImage(array $file, $imageNewTitle, Id $albumId): ?Image
+    {
+        $newImage = ValueImage::fromUploadWithSave($file, ValueImage::PATH_ALBUM);
+
+        $title = '';
+        if ($imageNewTitle !== false) {
+            $title = $imageNewTitle;
+        }
+
+        return $this->albumFactory->createNewImage($newImage, $title, $albumId);
+    }
+
+    /**
      * @param Album $album
      * @return bool
      */
@@ -142,50 +181,21 @@ class AlbumService
         return $this->albumRepository->deleteAlbum($album);
     }
 
-    public function deleteAlbumImagesByParameter(array $parameter): bool
+    /**
+     *
+     *
+     * @param array $parameter
+     * @param Album $album
+     */
+    public function deleteAlbumImagesByParameter(array $parameter, Album $album): void
     {
         if (!empty($parameter['image-delete'])) {
             foreach ($parameter['image-delete'] as $imageId => $status) {
+                $imageId = Id::fromString($imageId);
+                $image = $album->getImageFromImageListById($imageId);
+
+                $this->albumRepository->deleteImage($image);
             }
         }
-    }
-
-    /**
-     * @param Album $album
-     * @param       $albumImages
-     * @return Album
-     */
-    protected function addAlbumImagesToAlbum(Album $album, array $albumImages): Album
-    {
-        if (count($albumImages) > 0) {
-            foreach ($albumImages as $albumImage) {
-                $albumImage = (object)$albumImage;
-
-                /** @var Image $image */
-                $image = $this->albumFactory->getImageFromObject($albumImage);
-
-                $album->addImageToImageList($image);
-            }
-        }
-
-        return $album;
-    }
-
-    /**
-     * @param array $file
-     * @param       $imageNewTitle
-     * @param Id    $albumId
-     * @return null|Image
-     */
-    protected function createAlbumImage(array $file, $imageNewTitle, Id $albumId): ?Image
-    {
-        $newImage = ValueImage::fromUploadWithSave($file, ValueImage::PATH_ALBUM);
-
-        $title = '';
-        if ($imageNewTitle !== false) {
-            $title = $imageNewTitle;
-        }
-
-        return $this->albumFactory->createNewImage($newImage, $title, $albumId);
     }
 }

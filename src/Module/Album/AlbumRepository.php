@@ -5,6 +5,7 @@ namespace Project\Module\Album;
 
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Title;
 
 /**
  * Class AlbumRepository
@@ -122,9 +123,12 @@ class AlbumRepository
         if (!empty($this->getImageByImageId($image->getImageId()))) {
             $query = $this->database->getNewUpdateQuery(self::IMAGE_TABLE);
             $query->set('imageId', $image->getImageId()->toString());
-            $query->set('title', $image->getTitle()->getTitle());
             $query->set('imageUrl', $image->getImageUrl()->toString());
             $query->set('albumId', $image->getAlbumId()->toString());
+
+            if ($image->getTitle() instanceof Title) {
+                $query->set('title', $image->getTitle()->getTitle());
+            }
 
             $query->where('imageId', '=', $image->getImageId()->toString());
 
@@ -133,9 +137,12 @@ class AlbumRepository
 
         $query = $this->database->getNewInsertQuery(self::IMAGE_TABLE);
         $query->insert('albumId', $image->getAlbumId()->toString());
-        $query->insert('title', $image->getTitle()->getTitle());
         $query->insert('imageUrl', $image->getImageUrl()->toString());
         $query->insert('imageId', $image->getImageId()->toString());
+
+        if ($image->getTitle() instanceof Title) {
+            $query->insert('title', $image->getTitle()->getTitle());
+        }
 
         return $this->database->execute($query);
     }

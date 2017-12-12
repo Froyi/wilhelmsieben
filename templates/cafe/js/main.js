@@ -48,7 +48,7 @@ function initMap() {
 
 $(function() {
     $(".sceditor").sceditor({
-        plugins: "xhtml",
+        /*plugins: "xhtml",*/
         style: "templates/cafe/js/editor/minified/jquery.sceditor.default.min.css",
         toolbar: "bold,italic,underline, strike|left,center,right,justify|size,color|email,link,unlink|source",
         emoticonsEnabled: false

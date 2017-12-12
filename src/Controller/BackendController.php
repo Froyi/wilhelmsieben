@@ -238,7 +238,7 @@ class BackendController extends DefaultController
             $parameter = ['notificationCode' => 'albumEditSuccess', 'notificationStatus' => 'success'];
         }
 
-        $this->albumService->deleteAlbumImagesByParameter($_POST);
+        $this->albumService->deleteAlbumImagesByParameter($_POST, $album);
 
         $parameter['albumId'] = $album->getAlbumId()->toString();
 
