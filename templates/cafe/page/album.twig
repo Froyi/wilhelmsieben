@@ -9,7 +9,7 @@
                 {% if album.getAmountOfImagesInAlbum > 0 %}
                     {% set previewImage = album.getAlbumPreviewImage %}
 
-                    <div class="album-container">
+                    <div class="single-album-container">
                         <a data-fancybox="group-{{ album.getAlbumId }}" class="area-link"
                            href="{{ previewImage.getImageUrl }}"></a>
 

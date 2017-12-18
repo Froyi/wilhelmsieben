@@ -36,6 +36,7 @@ class MailerService
      * @param Name $name
      * @param Seats $seats
      * @param DatetimeInterface $datetime
+     * @param null|Email $email
      * @param null|Extras $extras
      * @return bool
      */

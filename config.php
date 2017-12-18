@@ -2,7 +2,8 @@
 return [
     'project' => [
         'name' => 'Cafe Wilhelm Sieben',
-        'email' => 'kontakt@cafewilhelmsieben.de',
+        'email' => 'Konrad.auer@hotmail.de',
+        'emailReply' => 'kontakt@cafewilhelmsieben.de',
         'namespace' => 'Project'
     ],
     'template' => [
@@ -10,13 +11,13 @@ return [
         'dir' =>  '/cafe',
         'cacheDir' => '/cache'
     ],
-    'database_live' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'web28634274',
         'password' => 'q3qKQMpf',
         'database' => 'usr_web28634274_1'
     ],
-    'database' => [
+    'database_local' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
