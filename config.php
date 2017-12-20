@@ -124,6 +124,8 @@ return [
         '/img/slider/teaser.jpg',
         '/img/slider/teaser2.jpg',
         '/img/slider/teaser3.jpg',
+        '/img/slider/teaser4.jpg',
+        '/img/slider/teaser5.jpg',
     ],
     'news' => [
         'minNewsShown' => 2,
