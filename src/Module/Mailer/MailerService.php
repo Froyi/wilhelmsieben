@@ -33,20 +33,15 @@ class MailerService
     }
 
     /**
-     * @param Name $name
-     * @param Seats $seats
+     * @param Name              $name
+     * @param Seats             $seats
      * @param DatetimeInterface $datetime
-     * @param null|Email $email
-     * @param null|Extras $extras
+     * @param null|Email        $email
+     * @param null|Extras       $extras
      * @return bool
      */
-    public function sendReserveMail(
-        Name $name,
-        Seats $seats,
-        DatetimeInterface $datetime,
-        ?Email $email,
-        ?Extras $extras = null
-    ): bool {
+    public function sendReserveMail(Name $name, Seats $seats, DatetimeInterface $datetime, ?Email $email, ?Extras $extras = null): bool
+    {
         $to = $this->configuration->getEntryByName('project')['email'];
 
         $subject = self::MAIN_SUBJECT;
@@ -81,6 +76,48 @@ class MailerService
         $header = 'MIME-Version: 1.0' . "\r\n";
         $header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
         $header .= 'From: ' . utf8_decode($name->getName()) . '<' . $contact . '>' . "\r\n";
+
+        $mailSent = mail($to, $subject, $message, $header);
+
+        // Mail an Nutzer
+        $this->sendMailToUser($email, $datetime, $seats);
+
+        return $mailSent;
+    }
+
+    /**
+     *
+     *
+     * @param null|Email        $email
+     * @param DatetimeInterface $datetime
+     * @param Seats             $seats
+     * @return bool
+     */
+    protected function sendMailToUser(?Email $email, DatetimeInterface $datetime, Seats $seats): bool
+    {
+        if ($email === null) {
+            return true;
+        }
+
+        $subject = self::MAIN_SUBJECT;
+
+        $to = $email->getEmail();
+
+        $message = '
+            <html>
+            <head>
+              <title>' . self::MAIN_SUBJECT . '</title>
+            </head>
+            <body>
+              <h2>Ihre Anfrage erhalten</h2>
+              
+              <p>Wir haben am ' . $datetime->getDateString() . ' um ' . $datetime->getTimeString() . ' Uhr ' . $seats->getSeats() . ' Plätze für Sie reserviert. Vielen Dank.</p>
+              </body></html>
+              ';
+
+        $header = 'MIME-Version: 1.0' . "\r\n";
+        $header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+        $header .= 'From: ' . self::DEFAULT_CONTACT . '<cafew7>' . "\r\n";
 
         return mail($to, $subject, $message, $header);
     }
