@@ -2,7 +2,7 @@
 return [
     'project' => [
         'name' => 'Cafe Wilhelm Sieben',
-        'email' => 'Konrad.auer@hotmail.de',
+        'email' => 'kauer.ka@gmail.com',
         'emailReply' => 'kontakt@cafewilhelmsieben.de',
         'namespace' => 'Project'
     ],
@@ -11,12 +11,12 @@ return [
         'dir' =>  '/cafe',
         'cacheDir' => '/cache'
     ],
-    'database_live' => [
+    /*'database' => [
         'host' => 'localhost',
         'user' => 'web28634274',
         'password' => 'q3qKQMpf',
         'database' => 'usr_web28634274_1'
-    ],
+    ],*/
     'database' => [
         'host' => 'localhost',
         'user' => 'root',
@@ -126,6 +126,13 @@ return [
         '/img/slider/teaser3.jpg',
         '/img/slider/teaser4.jpg',
         '/img/slider/teaser5.jpg',
+        '/img/slider/teaser6.jpg',
+        '/img/slider/teaser7.jpg',
+        '/img/slider/teaser8.jpg',
+        '/img/slider/teaser9.jpg',
+        '/img/slider/teaser10.jpg',
+        '/img/slider/teaser11.jpg',
+        '/img/slider/teaser12.jpg',
     ],
     'news' => [
         'minNewsShown' => 2,

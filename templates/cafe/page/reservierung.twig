@@ -17,12 +17,13 @@
         {% endif %}
     {% endif %}
     <div class="reservierung-form">
-        <form action="{{ route('reservierung-add') }}" method="POST" name="reservierung-form">
+        <form action="{{ route('reservierung-add') }}" method="POST" name="reservierung-form" class="js-reservierung-form">
             <div class="flex">
                 <div>
                     <label for="name">
                         Ihr Name<br>
-                        <input type="text" name="name" required/>
+                        <input type="text" name="name" class="js-proof-name" required/>
+                        <span class="js-error-form-name invisible">Der Name ist ungültig. Er muss aus mindestens zwei Buchstaben bestehen und darf nicht leer sein.</span>
                     </label>
                 </div>
                 <div>

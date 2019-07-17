@@ -37,13 +37,13 @@ class Image
         $this->imagePath = $path;
         $this->image->autoOrient();
 
-        if ($this->image->getAspectRatio() >= 1) {
+       /* if ($this->image->getAspectRatio() >= 1) {
             $this->image->fitToWidth(self::MAX_LENGTH);
         } else {
             $this->image->fitToHeight(self::MAX_LENGTH);
         }
 
-        $this->image->sharpen();
+        $this->image->sharpen();*/
     }
 
     /**

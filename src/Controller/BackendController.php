@@ -19,6 +19,7 @@ class BackendController extends DefaultController
 {
     /**
      * BackendController constructor.
+     * @throws \Twig_Error_Loader
      */
     public function __construct()
     {

@@ -1,0 +1,16 @@
+#googleMaps {
+  width: 100%;
+  height: 387px;
+}
+.maps-info-window {
+  min-height: 70px;
+}
+.maps-info-window h3 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.maps-info-window span {
+  display: block;
+  line-height: 1.3em;
+}

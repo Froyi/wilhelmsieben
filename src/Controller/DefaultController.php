@@ -68,6 +68,7 @@ class DefaultController
 
     /**
      * not found action
+     * @throws \Twig_Error_Loader
      */
     public function notFoundAction(): void
     {
@@ -78,6 +79,7 @@ class DefaultController
 
     /**
      * error action
+     * @throws \Twig_Error_Loader
      */
     public function errorPageAction(): void
     {
@@ -110,6 +112,8 @@ class DefaultController
 
     /**
      * @param string $name
+     *
+     * @throws \Twig_Error_Loader
      */
     protected function showStandardPage(string $name): void
     {

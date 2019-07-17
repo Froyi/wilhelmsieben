@@ -46,7 +46,7 @@ function initMap() {
     });
 }
 
-$(function() {
+$(function () {
     $(".sceditor").sceditor({
         /*plugins: "xhtml",*/
         style: "templates/cafe/js/editor/minified/jquery.sceditor.default.min.css",
@@ -72,9 +72,29 @@ $(document).on('click', ".js-fancy-box", function () {
 });
 
 $(document).on('click', ".js-delete", function (event) {
-    var confirm = window.confirm('Wirklich löschen?');
+    if (window.confirm('Wirklich löschen?') !== true) {
+        event.preventDefault();
+    }
+});
 
-    if (confirm !== true) {
+$(document).on('change', ".js-proof-name", function () {
+    proofName($(this));
+});
+
+function proofName($element) {
+    var proofErrorName = '.js-error-form-name';
+
+    $element.siblings(proofErrorName).hide();
+    if ($element.val().length < 2) {
+        $element.siblings(proofErrorName).show();
+        return false;
+    }
+
+    return true;
+}
+
+$(document).on('submit', ".js-reservierung-form", function () {
+    if (proofName($('.js-proof-name')) === false) {
         event.preventDefault();
     }
 });

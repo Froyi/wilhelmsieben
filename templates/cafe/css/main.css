@@ -401,6 +401,87 @@ template {
   padding: 0;
   height: 0;
 }
+.area-link {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  cursor: pointer;
+}
+.page-container {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+}
+.banderole {
+  width: 658px;
+  height: 50px;
+  margin-left: -31px;
+  margin-top: -10px;
+  background-color: #269988;
+  z-index: 2;
+  position: relative;
+}
+.banderole:before,
+.banderole:after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-style: solid;
+  border-color: #f07f4c transparent transparent transparent;
+  bottom: -1em;
+}
+.banderole:before {
+  left: 0;
+  border-width: 1em 0 0 1em;
+}
+.banderole:after {
+  right: 0;
+  border-width: 1em 1em 0 0;
+}
+.banderole h1 {
+  text-align: center;
+  color: #ffffff;
+  line-height: 50px;
+}
+.banderole-invert {
+  width: 658px;
+  height: 50px;
+  margin-left: -31px;
+  margin-top: -10px;
+  background-color: #f07f4c;
+  z-index: 2;
+  position: relative;
+}
+.banderole-invert:before,
+.banderole-invert:after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-style: solid;
+  border-color: #269988 transparent transparent transparent;
+  bottom: -1em;
+}
+.banderole-invert:before {
+  left: 0;
+  border-width: 1em 0 0 1em;
+}
+.banderole-invert:after {
+  right: 0;
+  border-width: 1em 1em 0 0;
+}
+.banderole-invert h1 {
+  text-align: center;
+  color: #ffffff;
+  line-height: 50px;
+}
+.invisible {
+  display: none;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
 @font-face {
   font-family: 'soria';
   src: url('../font/soria-font.ttf');
@@ -418,6 +499,61 @@ body {
 }
 a {
   text-decoration: none;
+}
+h2,
+h3 {
+  font-weight: normal;
+}
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+form textarea {
+  margin-top: 3px;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  height: 120px;
+  max-height: 200px;
+  background-color: rgba(38, 153, 136, 0.1);
+  border: 1px solid #1d1d1b;
+}
+form input {
+  margin-top: 3px;
+  height: 30px;
+}
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 180px;
+  border: 1px solid #1d1d1b;
+  padding: 0 8px;
+  font-size: 0.875em;
+  background-color: rgba(38, 153, 136, 0.1);
+}
+form input[type="number"] {
+  width: 50px;
+  border: 1px solid #1d1d1b;
+  padding: 0 8px;
+  font-size: 0.875em;
+  background-color: rgba(38, 153, 136, 0.1);
+}
+form input[type="datetime-local"] {
+  width: 175px;
+  border: 1px solid #1d1d1b;
+  padding: 0 8px;
+  font-size: 0.875em;
+  background-color: rgba(38, 153, 136, 0.1);
+}
+form input[type="submit"] {
+  width: 175px;
+  border: 1px solid #1d1d1b;
+  padding: 0 8px;
+  font-size: 1em;
+  background-color: rgba(240, 127, 76, 0.9);
+  cursor: pointer;
 }
 header {
   width: 100%;
@@ -440,6 +576,16 @@ header .header-content span {
   font-family: Arial, sans-serif;
   line-height: 40px;
 }
+header .header-content .header-logout {
+  margin-right: 100px;
+  padding-left: 10px;
+}
+header .header-content .header-logout a {
+  color: #f07f4c;
+}
+header .header-content .header-login a {
+  color: #ffffff;
+}
 header .header-content .header-adress {
   background: url('../img/ort.png') 0 6px no-repeat;
   margin-right: 40px;
@@ -448,14 +594,19 @@ header .header-content .header-adress {
 header .header-content .header-adress span {
   margin-left: 10px;
 }
+header .header-content .header-open {
+  background: url('../img/open.png') 0 4px no-repeat;
+  margin-right: 40px;
+  padding-left: 36px;
+}
 header .header-content .header-telephone {
   background: url('../img/telephone.png') 0 6px no-repeat;
   padding-left: 25px;
 }
 .navigation {
-  width: 934px;
+  width: 904px;
   margin: 0 auto 20px auto;
-  padding: 15px 10px;
+  padding: 15px 25px;
   display: flex;
   justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.8);
@@ -506,11 +657,11 @@ footer .footer-container .second-navigation-container img {
 }
 footer .footer-container .second-navigation-container .second-navigation {
   margin-left: -12px;
-  padding-top: 20px;
+  padding-top: 35px;
   min-width: 150px;
 }
 footer .footer-container .second-navigation-container .second-navigation > p {
-  padding-left: 3px;
+  padding-left: 10px;
 }
 footer .footer-container .second-navigation-container .second-navigation > p a {
   color: #1d1d1b;
@@ -522,10 +673,10 @@ footer .footer-container .second-navigation-container .second-navigation > p a:h
   color: #f07f4c;
 }
 footer .footer-container .second-navigation-container .second-navigation > p:nth-of-type(2) {
-  padding-left: 10px;
+  padding-left: 17px;
 }
 footer .footer-container .second-navigation-container .second-navigation > p:nth-of-type(3) {
-  padding-left: 17px;
+  padding-left: 22px;
 }
 footer .footer-container .second-navigation-container .second-navigation > p:nth-of-type(4) {
   padding-left: 19px;
@@ -555,7 +706,6 @@ footer .footer-container .contact a:hover {
 footer .footer-container .contact .social-media a {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
 }
 footer .footer-container .contact .social-media a img {
   width: 33px;
@@ -587,6 +737,9 @@ footer .footer-container .team-foto {
   text-align: center;
   font-weight: normal;
 }
+.daily-soup {
+  background: url('../img/suppen_bg.png') bottom right no-repeat;
+}
 .daily-soup h2 {
   font-family: 'Soria', 'Times New Roman';
   font-size: 1.5em;
@@ -597,14 +750,16 @@ footer .footer-container .team-foto {
 .daily-soup .daily-soup-day {
   font-family: 'Soria', 'Times New Roman';
   letter-spacing: 0.1em;
-  font-size: 0.75em;
+  font-size: 1em;
   margin-bottom: 5px;
+  margin-top: 20px;
 }
 .daily-soup .daily-soup-soup {
   color: #269988;
   line-height: 1.4em;
   font-size: 1.125em;
   font-family: 'Soria', 'Times New Roman';
+  cursor: default;
 }
 .daily-soup .daily-soup-soup:nth-of-type(2n-1) {
   color: #f07f4c;
@@ -615,6 +770,25 @@ footer .footer-container .team-foto {
   float: right;
   margin-top: 10px;
 }
+.reservierung {
+  background: url('../img/reservierung.png') top right no-repeat;
+  height: 63px;
+  position: relative;
+}
+.reservierung a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.reservierung h1 {
+  font-family: 'Soria', 'Times New Roman';
+  font-size: 2em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
 .rslides {
   position: relative;
   list-style: none;
@@ -622,6 +796,7 @@ footer .footer-container .team-foto {
   width: 100%;
   padding: 0;
   margin: 0;
+  height: 390px;
 }
 .rslides li {
   -webkit-backface-visibility: hidden;
@@ -646,4 +821,430 @@ footer .footer-container .team-foto {
 .slider-container {
   padding: 15px;
   background-color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+}
+.news-container .single-news {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.news-container .single-news .news-image {
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  max-height: 400px;
+}
+.news-container .single-news .news-image img {
+  width: 100%;
+}
+.news-container .single-news .news-banderole .news-banderole-content {
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.news-container .single-news .news-banderole .news-banderole-content h2 {
+  color: #ffffff;
+  font-size: 30px;
+  font-family: 'Soria', 'Times New Roman';
+  line-height: 50px;
+}
+.news-container .single-news .news-banderole .news-banderole-content .news-date {
+  color: #ffffff;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  line-height: 50px;
+}
+.news-container .single-news .event-news {
+  background-color: #f07f4c;
+}
+.news-container .single-news .event-news:before,
+.news-container .single-news .event-news:after {
+  border-color: #269988 transparent transparent transparent;
+}
+.news-container .single-news .news-text {
+  margin-top: 10px;
+  padding-top: 10px;
+  min-height: 280px;
+  background: url('../img/news_bg.png') center center no-repeat;
+}
+.news-container .single-news .news-text p {
+  line-height: 1.5em;
+}
+.news-container .single-news .facebook-link {
+  text-align: right;
+}
+.news-container .single-news .facebook-link img {
+  width: 23px;
+}
+.news-archive {
+  text-align: center;
+}
+.news-archive a {
+  font-family: 'Soria', 'Times New Roman';
+  font-weight: bold;
+  font-size: 1.25em;
+  letter-spacing: 0.03em;
+}
+.events-container h2 {
+  font-family: 'Soria', 'Times New Roman';
+  font-size: 1.5em;
+  border-bottom: 1px dashed #1d1d1b;
+  font-weight: normal;
+  margin-bottom: 15px;
+}
+.events-container .event-date {
+  font-family: 'Soria', 'Times New Roman';
+  letter-spacing: 0.1em;
+  font-size: 1em;
+  margin-top: 20px;
+  display: block;
+  cursor: default;
+}
+.events-container .event-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  cursor: default;
+}
+.events-container .event-container .event-information {
+  position: relative;
+  max-width: 85%;
+}
+.events-container .event-container .event-information .event-name {
+  color: #f07f4c;
+  line-height: 1.4em;
+  font-size: 1.125em;
+  font-family: 'Soria', 'Times New Roman';
+}
+.events-container .event-container .event-information .event-time {
+  color: #269988;
+  font-size: 0.875em;
+  font-family: 'Soria', 'Times New Roman';
+  line-height: 0.75em;
+}
+.events-container .event-container .facebook-link img {
+  width: 23px;
+}
+.anfahrt-container .anfahrt-banderole h1 {
+  text-align: center;
+  color: #ffffff;
+  line-height: 50px;
+}
+.anfahrt-container .google-maps-container {
+  margin-top: 15px;
+}
+.anfahrt-container #googleMaps {
+  width: 100%;
+  height: 387px;
+}
+.anfahrt-container .maps-info-window {
+  min-height: 70px;
+}
+.anfahrt-container .maps-info-window h3 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.anfahrt-container .maps-info-window span {
+  display: block;
+  line-height: 1.3em;
+}
+.anfahrt-container h2 {
+  font-family: 'Soria', 'Times New Roman';
+  font-size: 1.5em;
+  border-bottom: 1px dashed #1d1d1b;
+  font-weight: normal;
+  margin-bottom: 15px;
+}
+.anfahrt-container .anfahrt-miniheadline {
+  display: block;
+  text-decoration: underline;
+}
+.anfahrt-container p {
+  line-height: 1.2em;
+  margin-bottom: 20px;
+}
+.impressum-container > div {
+  margin-bottom: 40px;
+}
+.impressum-container .impressum-banderole {
+  text-align: center;
+}
+.impressum-container .impressum-banderole h1 {
+  line-height: 50px;
+  color: #ffffff;
+}
+.impressum-container .contact-container {
+  display: flex;
+  justify-content: space-between;
+}
+.impressum-container span {
+  display: block;
+  margin-bottom: 3px;
+}
+.impressum-container p {
+  line-height: 1.2em;
+}
+.impressum-container h4 {
+  margin: 5px 0;
+  font-size: 1.5em;
+  font-family: 'Soria', 'Times New Roman';
+}
+.impressum-container ul {
+  margin-top: 10px;
+  padding-left: 16px;
+}
+.impressum-container ul li {
+  margin: 5px 0;
+}
+.impressum-container a {
+  text-decoration: underline;
+}
+.philosophie-container .philosophie-banderole h1 {
+  text-align: center;
+  color: #ffffff;
+  line-height: 50px;
+}
+.philosophie-container .philosophie-description {
+  margin-top: 15px;
+}
+.philosophie-container .philosophie-description img {
+  float: right;
+  width: 30%;
+  margin-left: 20px;
+}
+.philosophie-container p {
+  line-height: 1.2em;
+  margin-bottom: 20px;
+}
+.reservierung-container .reservierung-banderole {
+  text-align: center;
+}
+.reservierung-container .reservierung-banderole h1 {
+  line-height: 50px;
+  color: #ffffff;
+}
+.reservierung-container .reservierung-form {
+  margin-top: 40px;
+}
+.reservierung-container .reservierung-form form > div {
+  margin: 20px 0;
+}
+.reservierung-container .reservierung-form .extra-container {
+  margin-top: 20px;
+}
+.backend-button {
+  background-color: #269988;
+  color: #ffffff;
+  padding: 10px;
+  display: inline-block;
+}
+.login-notification {
+  margin-top: 20px;
+  height: 40px;
+}
+.login-form {
+  margin: 30px 0 78px 0;
+  position: relative;
+}
+.login-form form {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+}
+.login-form form > div {
+  margin-bottom: 10px;
+}
+.login-form form input[type="submit"] {
+  width: 198px;
+}
+.loggedin-container h2 {
+  font-family: 'Soria', 'Times New Roman';
+  font-size: 1.5em;
+  border-bottom: 1px dashed #1d1d1b;
+  font-weight: normal;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.news-edit-container {
+  margin: 20px 0 40px 0;
+}
+.news-edit-container .news-new {
+  text-align: right;
+}
+.news-edit-container .news-edit {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.news-edit-container .news-edit .single-news {
+  width: 30%;
+  min-width: 30%;
+  border: 1px solid #1d1d1b;
+  position: relative;
+  min-height: 255px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.news-edit-container .news-edit .single-news a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.news-edit-container .news-edit .single-news .news-delete {
+  position: absolute;
+  height: 25px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+  background-color: #cd2b2b;
+  text-align: center;
+}
+.news-edit-container .news-edit .single-news .news-delete a {
+  position: static;
+  line-height: 25px;
+  color: #ffffff;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.news-edit-container .news-edit .single-news > div:not(.news-image) {
+  padding: 0 5px;
+}
+.news-edit-container .news-edit .single-news .news-image {
+  max-height: 90px;
+  overflow: hidden;
+}
+.news-edit-container .news-edit .single-news .news-image img {
+  width: 100%;
+}
+.news-edit-container .news-edit .single-news h3 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.news-edit-container .news-edit .single-news .news-date {
+  font-size: 14px;
+}
+.newsedit-form-container .image-edit {
+  width: 100px;
+  height: auto;
+}
+.event-edit-container {
+  margin-top: 60px;
+}
+.event-edit-container .event-new {
+  text-align: right;
+}
+.event-edit-container .event-edit .single-event {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+}
+.album-edit-container {
+  margin-top: 60px;
+}
+.album-edit-container .album-new {
+  text-align: right;
+}
+.album-edit-container .album-edit {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.album-edit-container .album-edit .single-album {
+  margin: 10px;
+}
+.album-edit-container .album-edit .single-album .delete-button {
+  line-height: 30px;
+}
+.album-edit-container .image-edit-container {
+  margin-top: 20px;
+}
+.album-edit-container .image-edit-container .image-edit-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.album-edit-container .image-edit-container .image-edit-list .image-edit {
+  width: 40%;
+  max-height: 200px;
+}
+.album-edit-container .image-edit-container .image-edit-list .image-edit .image-in-list {
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  max-height: 100px;
+}
+.album-edit-container .image-edit-container .image-edit-list .image-edit .image-in-list img {
+  width: 100%;
+}
+.delete-button {
+  background-color: #cd2b2b;
+  color: #ffffff;
+  padding: 5px;
+}
+.back-link {
+  text-align: right;
+  margin: 10px 0;
+  font-weight: bold;
+}
+.notification {
+  margin: 15px 0;
+  padding: 10px;
+  color: #ffffff;
+  text-align: center;
+}
+.notification.success {
+  background-color: #269988;
+}
+.notification.error {
+  background-color: #cd2b2b;
+}
+.album-container .album-banderole {
+  margin-bottom: 20px;
+}
+.album-container .album-album-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.album-container .album-album-container .single-album-container {
+  width: 27%;
+  position: relative;
+  padding: 0 2%;
+  margin-bottom: 40px;
+}
+.album-container .album-album-container .single-album-container .round-image-container {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid #1d1d1b;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.album-container .album-album-container .single-album-container .round-image-container img {
+  min-width: 100%;
+  height: 100%;
+}
+.album-container .album-album-container .single-album-container h3 {
+  font-family: 'Soria', 'Times New Roman';
+  color: #1d1d1b;
+  margin-top: 15px;
+  text-align: center;
+  width: 100%;
+  font-size: 1.2em;
+}
+.album-container .album-album-container .single-album-container .flex {
+  width: 160px;
+  margin: 0 auto;
+}
+.album-container .album-album-container .single-album-container p {
+  font-size: 0.875em;
 }
